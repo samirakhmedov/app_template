@@ -1,0 +1,12 @@
+name: push
+description: "Package with push implementation for HMS."
+version: 1.0.0
+publish_to: none
+
+environment:
+  sdk: ^3.8.1
+
+dependencies:
+  huawei_push: 6.13.0+300
+  push_interface:
+    path: ../interface

@@ -1,0 +1,96 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+platform :ios do
+  desc "Push a new beta build to TestFlight"
+  lane :testflight do
+    key_id = ENV["APPSTORE_KEY_ID"]
+    issuer_id = ENV["APPSTORE_ISSUER_ID"]
+    key_filepath = ENV["APPSTORE_KEY_PATH"]
+
+    puts "key_id: #{key_id}"
+    puts "issuer_id: #{issuer_id}"
+    puts "key_filepath: #{key_filepath}"
+
+    key_path = File.expand_path(key_filepath, __dir__)
+
+    api_key = app_store_connect_api_key(
+      key_id: key_id,
+      issuer_id: issuer_id,
+      key_filepath: key_path,
+      duration: 1200, # optional (maximum 1200)
+      in_house: false, # optional but may be required if using match/sigh
+    )
+
+    ipa_filepath = ENV["IOS_IPA_PATH"]
+
+    puts "ipa_filepath: #{ipa_filepath}"
+
+    ipa_path = File.expand_path(ipa_filepath, __dir__)
+
+    upload_to_testflight(
+      api_key: api_key,
+      skip_submission: true,
+      ipa: ipa_path,
+      skip_waiting_for_build_processing: true,
+    )
+  end
+
+  desc "Push a new release build to App Store Connect"
+  lane :appstore do
+    key_id = ENV["APPSTORE_KEY_ID"]
+    issuer_id = ENV["APPSTORE_ISSUER_ID"]
+    key_filepath = ENV["APPSTORE_KEY_PATH"]
+
+    puts "key_id: #{key_id}"
+    puts "issuer_id: #{issuer_id}"
+    puts "key_filepath: #{key_filepath}"
+
+    key_path = File.expand_path(key_filepath, __dir__)
+
+    api_key = app_store_connect_api_key(
+      key_id: key_id,
+      issuer_id: issuer_id,
+      key_filepath: key_path,
+      duration: 1200, # optional (maximum 1200)
+      in_house: false, # optional but may be required if using match/sigh
+    )
+
+    ipa_filepath = ENV["IOS_IPA_PATH"]
+
+    puts "ipa_filepath: #{ipa_filepath}"
+
+    ipa_path = File.expand_path(ipa_filepath, __dir__)
+
+    app_identifier = ENV["APPSTORE_IDENTIFIER"]
+    username = ENV["APPSTORE_APPLE_ID"]
+    team_id = ENV["APPSTORE_TEAM_ID"]
+    itc_team_id = ENV["ITC_TEAM_ID"]
+
+    upload_to_app_store(
+      app_identifier: app_identifier,
+      username: username,
+      team_id: team_id,
+      dev_portal_team_id: itc_team_id,
+      api_key: api_key,
+      ipa: ipa_path,
+      force: true,
+      run_precheck_before_submit: false,
+      skip_metadata: true,
+    )
+  end
+end

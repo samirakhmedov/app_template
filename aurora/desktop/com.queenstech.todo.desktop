@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=App Template
+Comment=App Template
+Icon=com.example.app_template
+Exec=/usr/bin/com.example.app_template
+X-Nemo-Application-Type=silica-qt5
+
+[X-Application]
+Permissions=UserDirs
+OrganizationName=com.example
+ApplicationName=app_template

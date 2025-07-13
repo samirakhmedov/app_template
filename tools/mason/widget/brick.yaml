@@ -1,0 +1,16 @@
+name: widget
+version: 1.0.0
+description: A brick to create a new widget
+
+environment:
+  mason: 0.1.1
+
+vars:
+  name:
+    type: string
+    description: The name of the widget.
+    prompt: "What is the name of the widget?"
+  feature:
+    type: string
+    description: The name of the feature.
+    prompt: "What is the name of the feature?"

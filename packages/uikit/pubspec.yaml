@@ -1,0 +1,19 @@
+name: uikit
+description: "A package for the UIKit"
+version: 1.0.0
+
+environment:
+  sdk: ^3.8.1
+  flutter: ">=3.3.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  theme_tailor_annotation: ^3.0.2
+  vector_graphics: 1.1.19
+
+dev_dependencies:
+  flutter_lints: ^5.0.0
+  flutter_test:
+    sdk: flutter
+  theme_tailor: ^3.0.3

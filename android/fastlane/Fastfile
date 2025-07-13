@@ -1,0 +1,81 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:android)
+
+platform :android do
+  desc "Deploy APK to Firebase Distribution"
+  lane :firebase do
+    app_id = ENV["ANDROID_FIREBASE_APP_ID"]
+    groups = ENV["FIREBASE_GROUPS"]
+    firebase_cli_token = ENV["FIREBASE_TOKEN"]
+    apk_path = ENV["ANDROID_APK_PATH"]
+
+    apk_path = File.expand_path(apk_path, __dir__)
+
+    puts "FASTLANE APP_ID: #{app_id}"
+    puts "FASTLANE GROUPS: #{groups}"
+    puts "FASTLANE FIREBASE_TOKEN: #{firebase_cli_token}"
+    puts "FASTLANE APK_PATH: #{apk_path}"
+    puts "Firebase App Distribution"
+
+    firebase_app_distribution(
+      app: "#{app_id}",
+      android_artifact_type: "APK",
+      android_artifact_path: "#{apk_path}",
+      groups: "#{groups}",
+      firebase_cli_token: "#{firebase_cli_token}",
+    )
+  end
+
+  desc "Upload symbols to Firebase Crashlytics"
+  lane :upload_symbols do
+    dsym_path = ENV["ANDROID_DSYM_PATH"]
+    firebase_cli_token = ENV["FIREBASE_TOKEN"]
+    app_id = ENV["ANDROID_FIREBASE_APP_ID"]
+
+    dsym_path = File.expand_path(dsym_path, __dir__)
+
+    puts "FASTLANE DSYM_PATH: #{dsym_path}"
+    puts "FASTLANE FIREBASE_TOKEN: #{firebase_cli_token}"
+    puts "FASTLANE APP_ID: #{app_id}"
+    puts "Firebase Symbols Upload"
+
+    sh "firebase crashlytics:symbols:upload --app=#{app_id} #{dsym_path} --token #{firebase_cli_token}"
+  end
+
+  desc "Upload AAB to Google Play"
+  lane :google_play do
+    package_name = ENV["ANDROID_PACKAGE_NAME"]
+    json_key_data_filepath = ENV["GOOGLE_PLAY_KEY_PATH"]
+    aab_filepath = ENV["ANDROID_AAB_PATH"]
+
+    puts "FASTLANE PACKAGE_NAME: #{package_name}"
+    puts "FASTLANE JSON_KEY_DATA: #{json_key_data_filepath}"
+    puts "FASTLANE AAB_PATH: #{aab_filepath}"
+    puts "Google Play Upload"
+
+    aab_path = File.expand_path(aab_filepath, __dir__)
+    key_path = File.expand_path(json_key_data_filepath, __dir__)
+
+    upload_to_play_store(
+      package_name: "#{package_name}",
+      track: "internal",
+      release_status: "draft",
+      json_key: "#{key_path}",
+      aab: "#{aab_path}",
+    )
+  end
+end

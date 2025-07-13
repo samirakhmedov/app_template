@@ -1,0 +1,13 @@
+name: location
+description: "Package with location implementation for GMS."
+version: 1.0.0
+publish_to: none
+
+environment:
+  sdk: ^3.8.1
+
+dependencies:
+  device_info_plus: 11.5.0
+  geolocator: 14.0.2
+  location_interface:
+    path: ../interface

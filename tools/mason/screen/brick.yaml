@@ -1,0 +1,16 @@
+name: screen
+version: 1.0.0
+description: A brick to create a new screen
+
+environment:
+  mason: 0.1.1
+
+vars:
+  name:
+    type: string
+    description: The name of the screen.
+    prompt: "What is the name of the screen?"
+  feature:
+    type: string
+    description: The name of the feature.
+    prompt: "What is the name of the feature?"

@@ -1,0 +1,6 @@
+{
+  "dart.flutterSdkPath": ".fvm/versions/3.32.4",
+  "dart.lineLength": 100,
+  "editor.formatOnSave": true,
+  "svg.preview.background": "black"
+}

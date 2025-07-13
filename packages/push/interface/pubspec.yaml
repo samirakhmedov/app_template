@@ -1,0 +1,7 @@
+name: push_interface
+description: "Package with push interface."
+version: 1.0.0
+publish_to: none
+
+environment:
+  sdk: ^3.8.1

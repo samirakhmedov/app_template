@@ -1,0 +1,6 @@
+name: analytics_interface
+description: "Package with analytics interface."
+version: 1.0.0
+
+environment:
+  sdk: ^3.8.1

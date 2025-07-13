@@ -1,0 +1,18 @@
+name: api
+description: "API package for the project"
+version: 1.0.0
+
+environment:
+  sdk: ^3.8.1
+  flutter: ">=3.3.0"
+
+dependencies:
+  dio: 5.8.0+1
+  json_annotation: 4.9.0
+  logger: 2.6.0 # for logging purpose
+  retrofit: 4.6.0
+
+dev_dependencies:
+  build_runner: 2.5.4
+  json_serializable: 6.9.5
+  retrofit_generator: 9.6.0

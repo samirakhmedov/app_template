@@ -1,0 +1,16 @@
+name: bloc
+version: 1.0.0
+description: A brick to create a new bloc
+
+environment:
+  mason: 0.1.1
+
+vars:
+  name:
+    type: string
+    description: The name of the bloc.
+    prompt: "What is the name of the bloc?"
+  feature:
+    type: string
+    description: The name of the feature.
+    prompt: "What is the name of the feature?"

@@ -1,0 +1,9 @@
+bricks:
+  feature:
+    path: tools/mason/feature
+  bloc:
+    path: tools/mason/bloc
+  screen:
+    path: tools/mason/screen
+  widget:
+    path: tools/mason/widget

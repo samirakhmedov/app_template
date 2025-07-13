@@ -1,0 +1,13 @@
+name: push
+description: "Package with push implementation for GMS."
+version: 1.0.0
+publish_to: none
+
+environment:
+  sdk: ^3.8.1
+  flutter: ">=1.17.0"
+
+dependencies:
+  firebase_messaging: 15.2.9
+  push_interface:
+    path: ../interface
