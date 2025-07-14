@@ -64,7 +64,7 @@ dev_dependencies:
 flutter:
   generate: true
   default-flavor: prodGms
-  uses-material-design: true
+  uses-material-design: false
 
   assets:
     - assets/resources/vectors/
@@ -84,9 +84,11 @@ flutter:
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
 
-# TODO: introduce README
-# TODO: implement cursor rules
 # TODO: introduce accessibility package
+# TODO: Introduce HTTP client factory for each scope
+# TODO: move snack queue bloc to app scope
+# TODO: fix splash on Android 12+
+# TODO: test haptic on iOS
 
 flutter_gen:
   output: lib/generated/
