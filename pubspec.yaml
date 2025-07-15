@@ -89,6 +89,7 @@ flutter:
 # TODO: move snack queue bloc to app scope
 # TODO: fix splash on Android 12+
 # TODO: test haptic on iOS
+# TODO: include fragment shaders into project (f.e., shimmers, gradient)
 
 flutter_gen:
   output: lib/generated/
