@@ -90,6 +90,7 @@ flutter:
 # TODO: fix splash on Android 12+
 # TODO: test haptic on iOS
 # TODO: include fragment shaders into project (f.e., shimmers, gradient)
+# TODO: introduce asset transformation at build time - https://docs.flutter.dev/ui/assets/asset-transformation
 
 flutter_gen:
   output: lib/generated/
