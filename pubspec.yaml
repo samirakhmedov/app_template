@@ -21,8 +21,8 @@ dependencies:
   #   path: packages/location/interface
   # location:
   #   path: packages/location/gms
-  api:
-    path: packages/api
+  # api:
+    # path: packages/api
   auto_route: 10.1.0+1
   bloc: 9.0.0
   bloc_concurrency: 0.3.0

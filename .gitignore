@@ -50,3 +50,8 @@ ios/DerivedData
 
 # FVM Version Cache
 .fvm/
+
+# Secrets
+secrets
+android/keystore
+**/*.env
