@@ -7,7 +7,7 @@ part of 'ip_dto.dart';
 // **************************************************************************
 
 IpDto _$IpDtoFromJson(Map<String, dynamic> json) =>
-    IpDto(ip: json['ip'] as String);
+    IpDto(ip: DtoUtils.readString(json, 'ip') as String?);
 
 Map<String, dynamic> _$IpDtoToJson(IpDto instance) => <String, dynamic>{
   'ip': instance.ip,

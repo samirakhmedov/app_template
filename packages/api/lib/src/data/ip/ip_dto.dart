@@ -1,3 +1,4 @@
+import 'package:api/src/utils/dto_utils.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'ip_dto.g.dart';
@@ -8,7 +9,8 @@ part 'ip_dto.g.dart';
 @JsonSerializable()
 class IpDto {
   /// IP address.
-  final String ip;
+  @JsonKey(name: 'ip', readValue: DtoUtils.readString)
+  final String? ip;
 
   /// {@macro ip_dto.class}
   const IpDto({required this.ip});
