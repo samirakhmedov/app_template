@@ -1,6 +1,8 @@
 import 'package:app_template/core/architecture/presentation/layout.dart';
+import 'package:app_template/features/common/presentation/state/shader/shader_bloc.dart';
 import 'package:app_template/features/common/presentation/widgets/shimmer/shimmer_loading_component.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 /// {@template shimmer_loading_layout}
 /// A layout for the shimmer loading effect.
@@ -15,38 +17,43 @@ class ShimmerLoadingLayout extends Layout<ShimmerLoadingViewModel> {
       return vm.child;
     }
 
-    final shimmerChanges = vm.shimmerChanges;
+    return BlocBuilder<StateStreamable<ShaderState>, ShaderState>(
+      builder: (context, shaderState) {
+        final shimmerChanges = vm.shimmerChanges;
 
-    return AnimatedBuilder(
-      animation: shimmerChanges,
-      builder: (ctx, chld) {
-        if (!vm.isSized) {
-          return const SizedBox();
-        }
+        return AnimatedBuilder(
+          animation: shimmerChanges,
+          builder: (ctx, chld) {
+            if (!vm.isSized) {
+              return const SizedBox();
+            }
 
-        final shimmerSize = vm.size;
+            final shimmerSize = vm.size;
 
-        if (shimmerSize == null) {
-          return const SizedBox();
-        }
+            if (shimmerSize == null) {
+              return const SizedBox();
+            }
 
-        final descendant = ctx.findRenderObject() as RenderBox?;
+            final descendant = ctx.findRenderObject() as RenderBox?;
 
-        if (descendant == null) {
-          return const SizedBox();
-        }
+            if (descendant == null) {
+              return const SizedBox();
+            }
 
-        final offsetWithinShimmer = vm.getDescendantOffset(
-          descendant: descendant,
-        );
+            final offsetWithinShimmer = vm.getDescendantOffset(
+              descendant: descendant,
+            );
 
-        return ShaderMask(
-          shaderCallback: (_) => vm.buildShader(offsetWithinShimmer, shimmerSize),
-          blendMode: BlendMode.srcATop,
-          child: chld,
+            return ShaderMask(
+              shaderCallback: (_) => vm.buildShader(offsetWithinShimmer, shimmerSize),
+              blendMode: BlendMode.srcATop,
+              child: chld,
+            );
+          },
+          child: vm.child,
         );
       },
-      child: vm.child,
+      bloc: vm.shaderBloc,
     );
   }
 }

@@ -33,24 +33,27 @@ class DebugSettingsLayout extends Layout<DebugViewModel> {
       body: Stack(
         children: [
           const TemplateBackgroundWidget(),
-          SafeArea(
-            child: ListView(
-              padding: EdgeInsets.all(vm.sizes.paddingMedium),
-              children: [
-                Text(
-                  vm.easterEgg,
-                  style: vm.text.headline,
-                ),
-                Height(vm.sizes.paddingGeneral),
-                _ServerSwitchCard(
-                  debugBloc: vm.debugBloc,
-                  onUrlRadioButtonPressed: vm.setBaseUri,
-                ),
-                _HapticFeedbackCard(),
-                _ShimmerCard(),
-                _EasterEggButton(vm: vm),
-                _SnackQueueButton(),
-              ],
+          ShimmerComponent(
+            child: SafeArea(
+              child: ListView(
+                padding: EdgeInsets.all(vm.sizes.paddingMedium),
+                children: [
+                  Text(
+                    vm.easterEgg,
+                    style: vm.text.headline,
+                  ),
+                  Height(vm.sizes.paddingGeneral),
+                  _ServerSwitchCard(
+                    debugBloc: vm.debugBloc,
+                    onUrlRadioButtonPressed: vm.setBaseUri,
+                  ),
+                  _HapticFeedbackCard(),
+                  _ShimmerCard(),
+                  _ShimmerCard(),
+                  _EasterEggButton(vm: vm),
+                  _SnackQueueButton(),
+                ],
+              ),
             ),
           ),
         ],
@@ -113,25 +116,23 @@ class _ShimmerCard extends StatelessWidget {
         child: Column(
           children: <Widget>[
             Text(l10n.debugScreenShimmerTitle),
-            ShimmerComponent(
-              child: Column(
-                children: [
-                  ShimmerLoadingComponent(
-                    isLoading: true,
-                    child: ShimmerBlock(width: 200, height: 50),
-                  ),
-                  Height(context.appSizesScheme.paddingGeneral),
-                  ShimmerLoadingComponent(
-                    isLoading: true,
-                    child: ShimmerBlock(width: 300, height: 25),
-                  ),
-                  Height(context.appSizesScheme.paddingGeneral),
-                  ShimmerLoadingComponent(
-                    isLoading: true,
-                    child: ShimmerBlock(width: 200, height: 50),
-                  ),
-                ],
-              ),
+            Column(
+              children: [
+                ShimmerLoadingComponent(
+                  isLoading: true,
+                  child: ShimmerBlock(width: 200, height: 50),
+                ),
+                Height(context.appSizesScheme.paddingGeneral),
+                ShimmerLoadingComponent(
+                  isLoading: true,
+                  child: ShimmerBlock(width: 300, height: 25),
+                ),
+                Height(context.appSizesScheme.paddingGeneral),
+                ShimmerLoadingComponent(
+                  isLoading: true,
+                  child: ShimmerBlock(width: 200, height: 50),
+                ),
+              ],
             ),
           ],
         ),

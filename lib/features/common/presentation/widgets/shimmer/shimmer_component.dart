@@ -32,7 +32,7 @@ class _ShimmerComponentState
     extends ComponentState<ShimmerComponent, ShimmerViewModel, ShimmerLayout>
     with SingleTickerProviderStateMixin
     implements ShimmerViewModel, IShimmerProvider {
-  static const _shimmerDuration = Duration(milliseconds: 1000);
+  static const _shimmerDuration = Duration(seconds: 2);
 
   static const _shimmerMin = -0.5;
   static const _shimmerMax = 1.5;
@@ -52,6 +52,7 @@ class _ShimmerComponentState
   @override
   void dispose() {
     _shimmerController.dispose();
+
     super.dispose();
   }
 

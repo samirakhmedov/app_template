@@ -1,73 +1,250 @@
-# AI Tooling Rules and Project Architecture Guide
+# CLAUDE.md
 
-This document provides a comprehensive guide for AI tools (like Gemini, Cursor, etc.) on the project's architecture, code style, and best practices. Adhering to these rules will ensure that generated code is consistent with the project's standards.
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## 1. Core Architectural Principles
+## Development Commands
 
-The project follows a clean, feature-based architecture with a strict separation of layers.
+### Core Commands
+- **Run app**: `fvm flutter run` (requires FVM for Flutter version management)
+- **Install dependencies**: `fvm flutter pub get`
+- **Code generation**: `make codegen` (runs build_runner, formats code)
+- **Format code**: `make format` (formats with 100 character line length)
+- **Clean build**: `make clean` (removes .dart_tool, .pubspec_lock, runs flutter clean)
 
-- **Feature-based Modularity**: Each distinct feature resides in its own directory under `lib/features`.
-- **Layered Structure**: Within each feature, code is organized into `data`, `domain`, and `presentation` layers.
-- **Dependency Rule**: Dependencies flow inwards: `Presentation -> Domain -> Data`. The UI (Presentation) knows about the business logic (Domain), but the Domain layer is independent of the UI and the data sources.
-- **Dependency Injection**: We use the `yx_scope` package for DI. A central `AppScope` (`lib/features/app/di/app_scope.dart`) provides application-wide dependencies. Features create their own child scopes (e.g., `lib/features/debug/di/debug_scope.dart`) that inherit from the `AppScope`.
-- **Shared UI**: A local package at `packages/uikit` contains shared UI components, themes, and widgets.
-- **Immutability**: States emitted from BLoCs and entities should be immutable. Use `freezed` for generating immutable classes and the `copyWith` pattern for state updates.
+### Code Generation Commands
+- **All packages**: `make codegen`
+- **Database only**: `make codegen-db`
+- **UIKit only**: `make codegen-uikit`
+- **API only**: `make codegen-api`
+- **Assets only**: `make codegen-assets`
 
-## 2. Layer-by-Layer Guide
+### Testing Commands
+- **Reset golden files**: `make reset-goldens`
+- **Tests**: Standard Flutter test commands (`fvm flutter test`)
 
-### Presentation Layer
+### Localization
+- **Generate localization**: `make intl-with-format`
+- **Localization files**: Located in `assets/resources/bundles/`
 
-The presentation layer is responsible for displaying the UI and handling user input. It should not contain any business logic.
+### Build and Deployment
+- **iOS builds**: `make ios-qa-dev-deploy`, `make ios-prod-deploy`
+- **Android builds**: `make android-qa-dev-deploy`, `make android-prod-deploy`
+- **Propagate secrets**: `make propagate-secrets`
 
-- **Entry (`..._entry.dart`)**: The entry point for a feature route. It uses `@RoutePage` and is responsible for setting up the feature's DI scope and providing dependencies (like BLoCs) to the component.
-- **Component (`..._component.dart`)**: A `StatefulWidget` that holds the UI logic. It interacts with a BLoC to receive state and dispatch events. It can expose a `ViewModel` interface to the Layout.
-- **Layout (`..._layout.dart`)**: A "dumb" `StatelessWidget` that builds the UI based on the state provided by its parent Component/ViewModel. It should contain minimal logic.
+## Architecture Overview
 
-**Implementation Details:**
+### Core Principles
+This Flutter project follows **Clean Architecture** with **feature-based modularity**:
 
-- A `ViewModel` interface must be defined to serve as the contract between the `Component` and its `Layout`.
-- The `ComponentState` implements the `ViewModel`.
-- Use `BlocListener` inside the `listeners()` override to react to BLoC state changes.
-- Access dependencies via a private getter that uses `context.read<ISomeScope>()`.
+1. **Feature-based structure**: Each feature lives in `lib/features/[feature_name]/`
+2. **Layered architecture**: Each feature has `data/`, `domain/`, and `presentation/` layers
+3. **Dependency rule**: Dependencies flow inwards (Presentation → Domain → Data)
+4. **Dependency injection**: Uses `yx_scope` package with hierarchical scopes
+5. **Local packages**: Shared functionality extracted to `packages/` directory
 
-### Domain Layer
+### Layer Structure
+- **Presentation Layer**:
+  - `*_entry.dart`: Route entry point with `@RoutePage`, sets up DI scope
+  - `*_component.dart`: `StatefulWidget` with business logic, interacts with BLoC
+  - `*_layout.dart`: "Dumb" `StatelessWidget` for UI rendering
+  - `ViewModel` interface contracts between Component and Layout
 
-The core of the application, containing business logic and entities. It is independent of the UI and data layers.
+- **Domain Layer**:
+  - `*_bloc.dart`: State management using BLoC pattern
+  - Entities: Immutable business objects (typically using `freezed`)
+  - Repository interfaces: `i_*_repository.dart`
 
-- **BLoC (`..._bloc.dart`)**: Manages the state for a feature. It receives events, interacts with repositories to fetch or mutate data, and emits new states.
-- **Entities**: Plain Dart objects representing core business concepts, typically created with `freezed`.
-- **Repositories (`i_..._repository.dart`)**: Abstract the data sources. The interface is defined in the domain layer.
+- **Data Layer**:
+  - Repository implementations
+  - Services: `i_*_service.dart` and `*_service.dart`
+  - Converters: Transform data between formats
 
-### Data Layer
+### Dependency Injection
+- **AppScope**: Central application-wide dependencies (`lib/features/app/di/app_scope.dart`)
+- **Feature scopes**: Child scopes inheriting from AppScope
+- **Access pattern**: `context.read<ISomeScope>()`
 
-Hhandles communication with data sources like APIs and local storage.
+### Local Packages Architecture
+- **`packages/uikit/`**: Shared UI components, themes, widgets
+- **`packages/database/`**: Database layer using Drift
+- **`packages/network/`**: HTTP client with Dio
+- **`packages/storage/`**: Storage abstraction
+- **`packages/api/`**: API service definitions
+- **`packages/haptics/`**: Custom haptic feedback
+- **Service packages**: `analytics/`, `push/`, `location/` with GMS/HMS implementations
 
-- **Repositories (Implementation)**: The concrete implementation of the repository interface. It resides in the `data/repositories` directory.
-- **Services (`i_..._service.dart`, `..._service.dart`)**: Encapsulate logic for interacting with external sources.
-- **Converters**: Convert data between different formats (e.g., DTOs to domain entities).
+## Code Style and Patterns
 
-## 3. Code Style and Best Practices
+### Key Conventions
+- **Interfaces**: Use `abstract interface class` for all interfaces
+- **Async operations**: Wrap fallible operations in `makeCall` from `lib/core/data/repositories/base_repository.dart`
+- **Return types**: Use `RequestOperation<T>` for async operations that may fail
+- **State management**: BLoC pattern throughout
+- **Immutability**: Use `freezed` for immutable classes and `copyWith` pattern
+- **Private members**: Use leading underscore `_`
+- **Modern Dart**: Use Dart 3 syntax with enum constructors and sealed classes
+- **Asset Management**: Use `flutter_gen` for type-safe asset access
+- **Import Style**: Use `package:app_template/` imports, not relative imports
 
-- **Interfaces**: Use `abstract interface class` for all interfaces.
-- **Async Operations**: All fallible asynchronous operations in repositories must be wrapped in `makeCall` from `lib/core/data/repositories/base_repository.dart` to ensure consistent error handling. The return type should be a `RequestOperation<T>`.
-- **State Management**: Use the BLoC pattern for managing state in the presentation layer.
-- **Private Members**: Use a leading underscore `_` for private properties and methods.
+### Error Handling
+- **Result pattern**: Use `Result<T, E>` for success/failure states
+- **BaseRepository**: Consistent error handling via `makeCall`
+- **RequestOperation**: Type alias for async operations
 
-## 4. Contextual Files for AI Tools
+## Code Generation Tools
 
-When working on a task, it is crucial to provide the AI tool with the correct context. Here are the key files to include:
+### Mason Templates
+- **Location**: `tools/mason/`
+- **Available templates**: features, blocs, screens, widgets
+- **Usage**: Follow Mason documentation for generating boilerplate code
 
-- **This file (`RULES.md`)**: Always include this file to provide the base rules and architecture overview.
-- **Core Architecture**:
-    - `lib/core/architecture/presentation/component.dart`
-    - `lib/core/architecture/presentation/layout.dart`
-    - `lib/core/architecture/data/repositories/base_repository.dart`
-    - `lib/core/architecture/domain/entity/request_operation.dart`
-- **UI Kit**:
-    - `packages/uikit/pubspec.yaml`
-    - `packages/uikit/lib/src/theme/app_theme.dart`
-    - `packages/uikit/lib/src/widgets/**`
-- **App Scope**:
-    - `lib/features/app/di/app_scope.dart`
-- **Feature-specific files**: When working on a specific feature, include all the files within that feature's directory (e.g., `lib/features/theme/**`).
-- **`pubspec.yaml`**: To understand the project's dependencies.
+### Build Runner
+- **Freezed**: Generates immutable classes, unions, copyWith methods
+- **Auto Route**: Generates routing code
+- **Drift**: Database code generation
+- **Retrofit**: API client generation
+- **Flutter Gen**: Generates type-safe asset access classes
+
+## Key Files for Context
+
+When working on features, always include these files for context:
+
+### Core Architecture
+- `lib/core/architecture/presentation/component.dart`
+- `lib/core/architecture/presentation/layout.dart`
+- `lib/core/architecture/data/repositories/base_repository.dart`
+- `lib/core/architecture/domain/entity/request_operation.dart`
+- `lib/core/architecture/di/disposable.dart` (LifecycleObject interface)
+
+### App Configuration
+- `lib/features/app/di/app_scope.dart`
+- `lib/features/app/di/app_scope_container.dart`
+- `lib/features/app/di/app_scope_registrar.dart`
+- `lib/generated/assets.gen.dart` (Flutter Gen asset references)
+- `pubspec.yaml`
+
+### UI Kit
+- `packages/uikit/pubspec.yaml`
+- `packages/uikit/lib/src/theme/app_theme.dart`
+- `packages/uikit/lib/src/widgets/**`
+
+### Feature-specific
+- Include all files within the feature directory when working on a specific feature
+
+## Multi-Platform Support
+
+This project supports:
+- **Android**: Standard Flutter Android with flavors
+- **iOS**: iOS with secure enclave integration
+- **Aurora**: Aurora OS support
+- **HarmonyOS**: HarmonyOS support
+
+## Development Workflow
+
+1. **Setup**: Install FVM, run `fvm install`, then `fvm flutter pub get`
+2. **Code generation**: Run `make codegen` after adding new models/APIs
+3. **Development**: Use `fvm flutter run` for development
+4. **Testing**: Run tests, update golden files when needed
+5. **Formatting**: Code is automatically formatted to 100 characters per line
+6. **Deployment**: Use appropriate make commands for platform-specific builds
+
+## Important Notes
+
+- Always use FVM for Flutter version management
+- Run code generation after adding new models, APIs, or database schemas
+- Follow the established architectural patterns for consistency
+- Use the provided Mason templates for new features
+- Respect the dependency injection hierarchy
+- All asynchronous operations in repositories must use `makeCall` for error handling
+
+## Feature Folder Structure
+
+### Standard Feature Organization
+```
+lib/features/[feature_name]/
+├── data/
+│   ├── repositories/          # Repository implementations
+│   │   └── feature_repository.dart
+│   └── services/             # Service interfaces and implementations
+│       ├── i_feature_service.dart
+│       └── feature_service.dart
+├── domain/
+│   ├── entities/             # Business entities and enums
+│   │   ├── feature_entity.dart
+│   │   └── feature_type.dart
+│   └── repositories/         # Repository interfaces
+│       └── i_feature_repository.dart
+└── presentation/
+    ├── state/
+    │   └── [feature_name]/            # BLoC state management
+    │       ├── feature_bloc.dart
+    │       └── feature_bloc.freezed.dart
+    └── widgets|screens/             # UI components
+        ├── root/
+              └── feature_entry.dart
+        ├── feature_component.dart
+        └── feature_layout.dart
+```
+
+### Common Feature Organization
+- **Common entities**: `lib/features/common/domain/entities/`
+- **Common repositories**: `lib/features/common/domain/repositories/`
+- **Common services**: `lib/features/common/data/services/`
+- **Common BLoCs**: `lib/features/common/presentation/state/bloc/`
+- **Common widgets**: `lib/features/common/presentation/widgets/`
+
+## BLoC Pattern Implementation
+
+### Event and State Structure
+- **Events**: Use `@freezed sealed class` with factory constructors
+- **States**: Use `@freezed class` with `@Default()` annotations
+- **Naming**: Use descriptive action-oriented names (e.g., `initialize`, `loadShader`)
+- **Private Events**: Use leading underscore for internal events (e.g., `_updateState`)
+
+### BLoC Lifecycle Management
+- **Repository Integration**: Access repositories through dependency injection
+- **ValueListenable**: Use `addListener`/`removeListener` for reactive updates
+- **Cleanup**: Override `close()` method to dispose of listeners and resources
+- **Error Handling**: Let repositories handle errors via `RequestOperation<T>`
+
+### Modern Freezed Patterns
+```dart
+@freezed
+sealed class MyEvent with _$MyEvent {
+  const factory MyEvent.initialize() = MyInitialize;
+  const factory MyEvent.loadData(String id) = MyLoadData;
+  const factory MyEvent._updateState(List<Item> items) = _MyUpdateState;
+}
+
+@freezed
+class MyState with _$MyState {
+  const factory MyState({
+    @Default([]) List<Item> items,
+    @Default(false) bool isLoading,
+  }) = _MyState;
+}
+```
+
+## Service and Repository Implementation
+
+### Service Pattern
+- **Interface**: Extend `LifecycleObject` for services requiring initialization/disposal
+- **Implementation**: Place in `data/services/` folder
+- **State Management**: Use `ValueListenable` for reactive state exposure
+- **Lifecycle**: Implement `initialize()` and `dispose()` methods
+- **Error Handling**: Let exceptions bubble up to repository layer
+
+### Repository Pattern
+- **Interface**: Place in `domain/repositories/` folder
+- **Implementation**: Place in `data/repositories/` folder, extend `BaseRepository`
+- **Error Handling**: Wrap all fallible operations in `makeCall()`
+- **Return Types**: Use `RequestOperation<T>` for async operations that may fail
+- **State Access**: Expose `ValueListenable` directly from services
+- **Dependencies**: Accept service interfaces through constructor injection
+
+### Entity and Enum Patterns
+- **Location**: Place in `domain/entities/` folder
+- **Entities**: Use `@freezed` for immutable data classes
+- **Enums**: Use modern Dart 3 syntax with constructor parameters
+- **Constants**: Use `abstract final class` for static constants
+- **Documentation**: Add dartdoc comments for all public members

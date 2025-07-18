@@ -33,10 +33,16 @@ enum LocationPermissionState {
 }
 
 /// Исключение, бросаемое при отсутствии разрешения на геолокацию.
-class LocationPermissionNotGrantedException implements Exception {}
+class LocationPermissionNotGrantedException implements Exception {
+  /// @nodoc.
+  const LocationPermissionNotGrantedException();
+}
 
 /// Исключение, бросаемое при отсутствии проверки разрешения на геолокацию.
-class LocationPermissionNotCheckedException implements Exception {}
+class LocationPermissionNotCheckedException implements Exception {
+  /// @nodoc.
+  const LocationPermissionNotCheckedException();
+}
 
 /// Лимит на время запроса локации.
 const kLocationRequestTimeLimit = Duration(seconds: 20);

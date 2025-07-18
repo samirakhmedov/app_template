@@ -4,6 +4,15 @@
 /// and provides access to the application's registration token
 /// on the device used for push notifications.
 abstract interface class PushServiceInterface {
+  /// Notification stream.
+  ///
+  /// Allows listening for notifications arriving on the device
+  /// and processing them immediately.
+  Stream<Notification> get pushStream;
+
+  /// Release resources.
+  Future<void> dispose();
+
   /// Initializes the notifications repository.
   Future<void> initialize();
 
@@ -16,20 +25,11 @@ abstract interface class PushServiceInterface {
   /// For HMS it returns `null`.
   Future<String?> getToken();
 
-  /// Notification stream.
-  ///
-  /// Allows listening for notifications arriving on the device
-  /// and processing them immediately.
-  Stream<Notification> get pushStream;
-
   /// Subscribe to a notification topic.
   Future<void> subscribeToTopic(String topic);
 
   /// Unsubscribe from a notification topic.
   Future<void> unsubscribeFromTopic(String topic);
-
-  /// Release resources.
-  Future<void> dispose();
 }
 
 /// Notification model.

@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:app_template/core/architecture/presentation/component.dart';
 import 'package:app_template/features/app/di/i_app_scope.dart';
-import 'package:app_template/features/common/presentation/state/bloc/snack_queue_bloc.dart';
+import 'package:app_template/features/common/presentation/state/snack/snack_queue_bloc.dart';
 import 'package:app_template/features/common/presentation/widgets/snacks/default_snack_controller.dart';
 import 'package:app_template/features/common/presentation/widgets/snacks/snack_message_type.dart';
 import 'package:app_template/features/common/presentation/widgets/snacks/snack_queue_controller.dart';
@@ -48,7 +48,6 @@ class _SnackQueueComponentState
   }
 
   SnackQueueBloc get _bloc => context.read<IAppScope>().snackQueueBloc;
-
 
   // Provide BLoC and controller to the subtree.
   @override

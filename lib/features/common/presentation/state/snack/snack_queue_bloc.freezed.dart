@@ -257,9 +257,9 @@ class _$SnackQueueStateCopyWithImpl<$Res>
 
 /// Create a copy of SnackQueueState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? queue = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? queue = null,}) {
   return _then(_self.copyWith(
-queue: freezed == queue ? _self.queue : queue // ignore: cast_nullable_to_non_nullable
+queue: null == queue ? _self.queue : queue // ignore: cast_nullable_to_non_nullable
 as Queue<TopSnackBar>,
   ));
 }
@@ -323,9 +323,9 @@ class __$SnackQueueStateCopyWithImpl<$Res>
 
 /// Create a copy of SnackQueueState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? queue = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? queue = null,}) {
   return _then(_SnackQueueState(
-queue: freezed == queue ? _self.queue : queue // ignore: cast_nullable_to_non_nullable
+queue: null == queue ? _self.queue : queue // ignore: cast_nullable_to_non_nullable
 as Queue<TopSnackBar>,
   ));
 }

@@ -69,6 +69,9 @@ flutter:
   assets:
     - assets/resources/vectors/
 
+  shaders:
+    - assets/shaders/shimmer.frag
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 
@@ -87,7 +90,6 @@ flutter:
 # TODO: introduce accessibility package
 # TODO: Introduce HTTP client factory for each scope
 # TODO: test haptic on iOS
-# TODO: include fragment shaders into project (f.e., shimmers, gradient)
 # TODO: introduce asset transformation at build time - https://docs.flutter.dev/ui/assets/asset-transformation
 # TODO: add DTO utils to API package 
 

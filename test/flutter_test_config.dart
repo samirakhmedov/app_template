@@ -1,14 +1,21 @@
 import 'dart:developer';
 import 'dart:typed_data';
 
+import 'package:app_template/features/common/presentation/state/shader/shader_bloc.dart';
 import 'package:app_template/generated/app_localizations.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:surf_widget_test_composer/surf_widget_test_composer.dart' as helper;
 import 'package:uikit/uikit.dart';
 
-Future<void> testExecutable(Future<void> Function() testMain) {
+import 'util/mocks.dart';
+import 'util/scope_wrapper.dart';
+
+typedef TestMainCallback = Future<void> Function();
+
+Future<void> testExecutable(TestMainCallback testMain) {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   final themes = [
@@ -34,6 +41,17 @@ Future<void> testExecutable(Future<void> Function() testMain) {
     helper.TestDevice(size: const Size(320, 568), name: 'iphone_se_1'),
   ];
 
+  final appScope = AppScopeMock();
+
+  final shaderBlocMock = ShaderBlocMock();
+
+  when(
+    () => shaderBlocMock.stream,
+  ).thenAnswer((_) => Stream.value(ShaderState()));
+  when(() => shaderBlocMock.state).thenReturn(ShaderState());
+
+  when(() => appScope.shaderBloc).thenReturn(shaderBlocMock);
+
   return helper.testExecutable(
     testMain: testMain,
     themes: themes,
@@ -41,7 +59,7 @@ Future<void> testExecutable(Future<void> Function() testMain) {
       childBuilder: child,
       mode: mode,
       themeData: theme,
-      dependencies: (widget) => widget,
+      dependencies: (widget) => TestScopeWrapper(appScope: appScope, child: widget),
       localizations: _localizationsDelegates,
       localeOverrides: _localizations,
     ),

@@ -14,6 +14,16 @@ class $AssetsResourcesGen {
   $AssetsResourcesVectorsGen get vectors => const $AssetsResourcesVectorsGen();
 }
 
+class $AssetsShadersGen {
+  const $AssetsShadersGen();
+
+  /// File path: assets/shaders/shimmer.frag
+  String get shimmer => 'assets/shaders/shimmer.frag';
+
+  /// List of all assets
+  List<String> get values => [shimmer];
+}
+
 class $AssetsResourcesVectorsGen {
   const $AssetsResourcesVectorsGen();
 
@@ -28,4 +38,5 @@ class Assets {
   const Assets._();
 
   static const $AssetsResourcesGen resources = $AssetsResourcesGen();
+  static const $AssetsShadersGen shaders = $AssetsShadersGen();
 }

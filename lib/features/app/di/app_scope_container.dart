@@ -8,7 +8,12 @@ import 'package:app_template/core/data/logger/logger.dart';
 import 'package:app_template/core/domain/crash/crash_strategy.dart';
 import 'package:app_template/core/domain/logger/logger_strategy.dart';
 import 'package:app_template/features/app/di/i_app_scope.dart';
-import 'package:app_template/features/common/presentation/state/bloc/snack_queue_bloc.dart';
+import 'package:app_template/features/common/data/repositories/shader_repository.dart';
+import 'package:app_template/features/common/data/services/i_shader_service.dart';
+import 'package:app_template/features/common/data/services/shader_service.dart';
+import 'package:app_template/features/common/domain/repositories/i_shader_repository.dart';
+import 'package:app_template/features/common/presentation/state/shader/shader_bloc.dart';
+import 'package:app_template/features/common/presentation/state/snack/snack_queue_bloc.dart';
 import 'package:app_template/features/debug/data/repositories/debug_repository.dart';
 import 'package:app_template/features/debug/data/services/debug_service.dart';
 import 'package:app_template/features/debug/data/services/i_debug_service.dart';
@@ -40,6 +45,9 @@ class AppScopeContainer extends DataScopeContainer<Environment> implements IAppS
   /// The theme module.
   late final themeModule = AppScopeThemeModule(this);
 
+  /// The shader module.
+  late final shaderModule = AppScopeShaderModule(this);
+
   /// The http module.
   late final httpModule = AppScopeHttpModule(this);
 
@@ -65,6 +73,7 @@ class AppScopeContainer extends DataScopeContainer<Environment> implements IAppS
     storageModule.initializeList,
     debugModule.initializeList,
     ...themeModule.initializeList,
+    ...shaderModule.initializeList,
     ...httpModule.initializeList,
   ];
 
@@ -94,6 +103,9 @@ class AppScopeContainer extends DataScopeContainer<Environment> implements IAppS
 
   @override
   SnackQueueBloc get snackQueueBloc => _snackQueueBlocDep.get;
+
+  @override
+  ShaderBloc get shaderBloc => shaderModule.shaderBlocDep.get;
 
   @override
   DebugScopeHolder get debugScope => debugScopeHolder;
@@ -366,6 +378,53 @@ class AppScopeHttpModule extends ScopeModule<AppScopeContainer> {
       requestBody: true,
       responseBody: true,
     );
+  }
+}
+
+/// {@template app_scope_shader_module}
+/// A module for the app scope shader.
+/// {@endtemplate}
+class AppScopeShaderModule extends ScopeModule<AppScopeContainer> {
+  /// The shader bloc dependency.
+  late final shaderBlocDep = rawAsyncDep(
+    _createShaderBloc,
+    init: (bloc) async => bloc.add(const ShaderInitialize()),
+    dispose: (bloc) => bloc.close(),
+  );
+
+  /// The shader service dependency.
+  late final shaderServiceDep = rawAsyncDep(
+    _createShaderService,
+    init: (service) => service.initialize(),
+    dispose: (service) => service.dispose(),
+  );
+
+  late final _shaderRepositoryDep = dep<IShaderRepository>(_createShaderRepository);
+
+  /// The initialize list.
+  List<Set<AsyncDepType>> get initializeList => [
+    {shaderServiceDep},
+    {shaderBlocDep},
+  ];
+
+  /// {@macro app_scope_shader_module}
+  AppScopeShaderModule(super.container);
+
+  ShaderBloc _createShaderBloc() {
+    return ShaderBloc(
+      shaderRepository: _shaderRepositoryDep.get,
+    );
+  }
+
+  IShaderRepository _createShaderRepository() {
+    return ShaderRepository(
+      shaderService: shaderServiceDep.get,
+      logger: container.logger,
+    );
+  }
+
+  IShaderService _createShaderService() {
+    return ShaderService();
   }
 }
 

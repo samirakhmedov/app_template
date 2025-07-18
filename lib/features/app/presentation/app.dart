@@ -5,6 +5,7 @@ import 'package:app_template/features/app/di/app_scope_registrar.dart';
 import 'package:app_template/features/app/di/i_app_scope.dart';
 import 'package:app_template/features/app/presentation/app_startup_layout.dart';
 import 'package:app_template/features/app/router/app_router.dart';
+import 'package:app_template/features/common/presentation/state/shader/shader_bloc.dart';
 import 'package:app_template/features/common/presentation/widgets/snacks/snack_queue_component.dart';
 import 'package:app_template/features/haptics/presentation/widgets/haptics_component.dart';
 import 'package:app_template/features/theme/presentation/widgets/theme_component.dart';
@@ -29,7 +30,7 @@ class App extends StatefulWidget {
   State<App> createState() => _AppState();
 }
 
-class _AppState extends State<App> {
+class _AppState extends State<App> with WidgetsBindingObserver {
   static const _white = Color(0xFFFFFFFF);
 
   static const _navRestorationScopeId = 'nav_restoration_scope';
@@ -49,15 +50,26 @@ class _AppState extends State<App> {
     super.initState();
 
     unawaited(_initialize());
+
+    WidgetsBinding.instance.addObserver(this);
   }
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+
     unawaited(_appScopeRegistrar.dispose());
     _scope.dispose();
     _router.dispose();
 
     super.dispose();
+  }
+
+  @override
+  void didHaveMemoryPressure() {
+    super.didHaveMemoryPressure();
+
+    _scope.value?.shaderBloc.add(ShaderEvent.handleMemoryPressure());
   }
 
   Future<void> _initialize() async {
