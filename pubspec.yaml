@@ -57,8 +57,8 @@ dev_dependencies:
   freezed: 3.0.6
   mocktail: 1.0.4
   surf_dcm_presets: 0.1.1
-  surf_widget_test_composer: 0.0.6
   surf_lint_rules: 4.0.0
+  surf_widget_test_composer: 0.0.6
   vector_graphics_compiler: 1.1.17
 
 flutter:
@@ -87,7 +87,6 @@ flutter:
 # TODO: introduce accessibility package
 # TODO: Introduce HTTP client factory for each scope
 # TODO: move snack queue bloc to app scope
-# TODO: fix splash on Android 12+
 # TODO: test haptic on iOS
 # TODO: include fragment shaders into project (f.e., shimmers, gradient)
 # TODO: introduce asset transformation at build time - https://docs.flutter.dev/ui/assets/asset-transformation

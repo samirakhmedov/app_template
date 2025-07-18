@@ -1,9 +1,9 @@
 import 'package:app_template/core/architecture/presentation/component.dart';
+import 'package:app_template/core/config/environment/test_env_detector.dart';
 import 'package:app_template/features/common/presentation/widgets/shimmer/shimmer_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
-import 'package:surf_widget_test_composer/utils/test_env_detector.dart';
 
 /// {@template shimmer_component}
 /// A component for the shimmer effect.

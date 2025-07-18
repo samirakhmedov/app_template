@@ -8,6 +8,7 @@
             "name": "App Template (devGms, legacy)",
             "request": "launch",
             "type": "dart",
+            "program": "lib/main.dart",
             "args": [
                 "--flavor",
                 "devGms",
@@ -18,6 +19,7 @@
             "name": "App template (prodGms, legacy)",
             "request": "launch",
             "type": "dart",
+            "program": "lib/main.dart",
             "args": [
                 "--flavor",
                 "prodGms",

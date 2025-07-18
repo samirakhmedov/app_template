@@ -69,41 +69,34 @@ class AppLocalizationsEn extends AppLocalizations {
   String get debugScreenHapticRejectFeedbackButton => 'Reject Feedback';
 
   @override
-  String get debugScreenHapticSuccessNotificationButton =>
-      'Success Notification';
+  String get debugScreenHapticSuccessNotificationButton => 'Success Notification';
 
   @override
   String get debugScreenHapticErrorNotificationButton => 'Error Notification';
 
   @override
-  String get debugScreenHapticWarningNotificationButton =>
-      'Warning Notification';
+  String get debugScreenHapticWarningNotificationButton => 'Warning Notification';
 
   @override
   String get debugScreenHapticSelectionHapticButton => 'Selection Haptic';
 
   @override
-  String get debugScreenHapticContextClickFeedbackButton =>
-      'Context Click Feedback';
+  String get debugScreenHapticContextClickFeedbackButton => 'Context Click Feedback';
 
   @override
   String get debugScreenHapticDragStartFeedbackButton => 'Drag Start Feedback';
 
   @override
-  String get debugScreenHapticGestureEndFeedbackButton =>
-      'Gesture End Feedback';
+  String get debugScreenHapticGestureEndFeedbackButton => 'Gesture End Feedback';
 
   @override
-  String get debugScreenHapticGestureStartFeedbackButton =>
-      'Gesture Start Feedback';
+  String get debugScreenHapticGestureStartFeedbackButton => 'Gesture Start Feedback';
 
   @override
-  String get debugScreenHapticTextHandleMoveFeedbackButton =>
-      'Text Handle Move Feedback';
+  String get debugScreenHapticTextHandleMoveFeedbackButton => 'Text Handle Move Feedback';
 
   @override
-  String get debugScreenHapticVirtualKeyReleaseFeedbackButton =>
-      'Virtual Key Release Feedback';
+  String get debugScreenHapticVirtualKeyReleaseFeedbackButton => 'Virtual Key Release Feedback';
 
   @override
   String get debugScreenEasterEggButton => 'Easter Egg';
