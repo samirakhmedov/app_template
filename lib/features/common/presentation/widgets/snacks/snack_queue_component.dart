@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:app_template/core/architecture/presentation/component.dart';
+import 'package:app_template/features/app/di/i_app_scope.dart';
 import 'package:app_template/features/common/presentation/state/bloc/snack_queue_bloc.dart';
 import 'package:app_template/features/common/presentation/widgets/snacks/default_snack_controller.dart';
 import 'package:app_template/features/common/presentation/widgets/snacks/snack_message_type.dart';
@@ -35,8 +36,6 @@ class SnackQueueComponent extends Component<SnackQueueViewModel, SnackQueueLayou
 class _SnackQueueComponentState
     extends ComponentState<SnackQueueComponent, SnackQueueViewModel, SnackQueueLayout>
     implements SnackQueueViewModel, SnackQueueController {
-  late final SnackQueueBloc _bloc;
-
   late final DefaultSnackController _snackController;
 
   bool _isShowing = false;
@@ -45,17 +44,11 @@ class _SnackQueueComponentState
   void initState() {
     super.initState();
 
-    _bloc = SnackQueueBloc();
-
     _snackController = const DefaultSnackController();
   }
 
-  @override
-  void dispose() {
-    unawaited(_bloc.close());
+  SnackQueueBloc get _bloc => context.read<IAppScope>().snackQueueBloc;
 
-    super.dispose();
-  }
 
   // Provide BLoC and controller to the subtree.
   @override

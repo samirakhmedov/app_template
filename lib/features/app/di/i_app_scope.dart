@@ -1,5 +1,6 @@
 import 'package:app_template/core/config/environment/environment.dart';
 import 'package:app_template/core/domain/logger/logger_strategy.dart';
+import 'package:app_template/features/common/presentation/state/bloc/snack_queue_bloc.dart';
 import 'package:app_template/features/debug/di/debug_scope_container.dart';
 import 'package:app_template/features/debug/domain/repositories/i_debug_repository.dart';
 import 'package:app_template/features/splash/di/splash_scope_container.dart';
@@ -33,6 +34,9 @@ abstract interface class IAppScope implements Scope {
 
   /// The theme bloc.
   ThemeBloc get themeBloc;
+
+  /// The snack queue bloc.
+  SnackQueueBloc get snackQueueBloc;
 
   /// The logger.
   LoggerStrategy get logger;

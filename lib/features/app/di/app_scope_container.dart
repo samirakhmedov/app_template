@@ -8,6 +8,7 @@ import 'package:app_template/core/data/logger/logger.dart';
 import 'package:app_template/core/domain/crash/crash_strategy.dart';
 import 'package:app_template/core/domain/logger/logger_strategy.dart';
 import 'package:app_template/features/app/di/i_app_scope.dart';
+import 'package:app_template/features/common/presentation/state/bloc/snack_queue_bloc.dart';
 import 'package:app_template/features/debug/data/repositories/debug_repository.dart';
 import 'package:app_template/features/debug/data/services/debug_service.dart';
 import 'package:app_template/features/debug/data/services/i_debug_service.dart';
@@ -51,8 +52,16 @@ class AppScopeContainer extends DataScopeContainer<Environment> implements IAppS
   /// The logger dependency.
   late final loggerDep = dep<LoggerStrategy>(_createLogger);
 
+  /// The snack queue bloc dependency.
+  late final _snackQueueBlocDep = rawAsyncDep(
+    _createSnackQueueBloc,
+    init: (bloc) => Future.value(),
+    dispose: (bloc) => bloc.close(),
+  );
+
   @override
   List<Set<AsyncDepType>> get initializeQueue => [
+    {_snackQueueBlocDep},
     storageModule.initializeList,
     debugModule.initializeList,
     ...themeModule.initializeList,
@@ -84,6 +93,9 @@ class AppScopeContainer extends DataScopeContainer<Environment> implements IAppS
   ThemeBloc get themeBloc => themeModule.themeBlocDep.get;
 
   @override
+  SnackQueueBloc get snackQueueBloc => _snackQueueBlocDep.get;
+
+  @override
   DebugScopeHolder get debugScope => debugScopeHolder;
 
   @override
@@ -97,6 +109,10 @@ class AppScopeContainer extends DataScopeContainer<Environment> implements IAppS
 
   LoggerStrategy _createLogger() {
     return Logger(strategies: []);
+  }
+
+  SnackQueueBloc _createSnackQueueBloc() {
+    return SnackQueueBloc();
   }
 }
 
