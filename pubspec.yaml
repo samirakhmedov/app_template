@@ -91,7 +91,6 @@ flutter:
 # TODO: Introduce HTTP client factory for each scope
 # TODO: test haptic on iOS
 # TODO: introduce asset transformation at build time - https://docs.flutter.dev/ui/assets/asset-transformation
-# TODO: add DTO utils to API package 
 
 flutter_gen:
   output: lib/generated/
