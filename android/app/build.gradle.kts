@@ -83,7 +83,7 @@ android {
             dimension = "service-type"
             applicationIdSuffix = ".gms"
             manifestPlaceholders["serviceType"] = "gms"
-            buildConfigField("String", "SERVICE_TYPE", "\"gms\"")
+            // buildConfigField("String", "SERVICE_TYPE", "\"gms\"")
             resValue("string", "service_provider", "Google Mobile Services")
         }
 
@@ -91,7 +91,7 @@ android {
             dimension = "service-type"
             applicationIdSuffix = ".hms"
             manifestPlaceholders["serviceType"] = "hms"
-            buildConfigField("String", "SERVICE_TYPE", "\"hms\"")
+            // buildConfigField("String", "SERVICE_TYPE", "\"hms\"")
             resValue("string", "service_provider", "Huawei Mobile Services")
         }
     }
@@ -104,45 +104,4 @@ flutter {
 dependencies {
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.5")
     implementation("androidx.core:core-splashscreen:1.0.1")
-
-    // GMS-specific dependencies
-    "devGmsImplementation"("com.google.android.gms:play-services-auth:20.7.0")
-    "devGmsImplementation"("com.google.firebase:firebase-messaging:23.4.0")
-    "devGmsImplementation"("com.google.android.gms:play-services-maps:18.2.0")
-    "devGmsImplementation"("com.google.android.gms:play-services-location:21.0.1")
-    
-    "prodGmsImplementation"("com.google.android.gms:play-services-auth:20.7.0")
-    "prodGmsImplementation"("com.google.firebase:firebase-messaging:23.4.0")
-    "prodGmsImplementation"("com.google.android.gms:play-services-maps:18.2.0")
-    "prodGmsImplementation"("com.google.android.gms:play-services-location:21.0.1")
-    
-    // HMS-specific dependencies
-    "devHmsImplementation"("com.huawei.hms:hwid:6.11.0.300")
-    "devHmsImplementation"("com.huawei.hms:push:6.11.0.300")
-    "devHmsImplementation"("com.huawei.hms:maps:6.11.0.300")
-    "devHmsImplementation"("com.huawei.hms:location:6.11.0.300")
-    
-    "prodHmsImplementation"("com.huawei.hms:hwid:6.11.0.300")
-    "prodHmsImplementation"("com.huawei.hms:push:6.11.0.300")
-    "prodHmsImplementation"("com.huawei.hms:maps:6.11.0.300")
-    "prodHmsImplementation"("com.huawei.hms:location:6.11.0.300")
-}
-
-configurations.all {
-    resolutionStrategy {
-        eachDependency {  DependencyResolveDetails details ->
-            when {
-                it.requested.group.startsWith("com.google") &&
-                android.defaultConfig.applicationId?.contains("hms") == true -> {
-                    details.useTarget("com.huawei.hms:${details.requested.name}:${details.requested.version}")
-                    details.because("Switching to HMS equivalent")
-                }
-                details.requested.group.startsWith("com.huawei") && 
-                android.defaultConfig.applicationId?.contains("gms") == true -> {
-                    details.useTarget("com.google.android.gms:${details.requested.name}:${details.requested.version}")
-                    details.because("Switching to GMS equivalent")
-                }
-            }
-        }
-    }
 }
