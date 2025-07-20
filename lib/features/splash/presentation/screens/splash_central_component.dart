@@ -1,8 +1,10 @@
 import 'dart:async';
 
-import 'package:app_template/core/architecture/presentation/component.dart';
+import 'package:app_template/core/architecture/presentation/widgets/component.dart';
 import 'package:app_template/core/config/constants.dart';
+import 'package:app_template/features/app/di/i_app_scope.dart';
 import 'package:app_template/features/app/router/app_router.dart';
+import 'package:app_template/features/common/presentation/state/shader/shader_bloc.dart';
 import 'package:app_template/features/splash/presentation/screens/splash_central_layout.dart';
 import 'package:app_template/features/splash/presentation/state/bloc/splash_bloc.dart';
 import 'package:auto_route/auto_route.dart';
@@ -33,10 +35,13 @@ class _SplashComponentState
     vsync: this,
   );
 
+  ShaderBloc get _shaderBloc => context.read<IAppScope>().shaderBloc;
+
   @override
   void initState() {
     super.initState();
     unawaited(_animationController.forward());
+    _shaderBloc.add(ShaderEvent.loadShimmer());
     _startTimeout();
   }
 
@@ -55,6 +60,12 @@ class _SplashComponentState
         _checkReadiness();
       },
       listenWhen: (previous, current) => current is SplashStateLoaded,
+    ),
+    BlocListener<StateStreamable<ShaderState>, ShaderState>(
+      listener: (context, state) {
+        _checkReadiness();
+      },
+      bloc: _shaderBloc,
     ),
   ];
 

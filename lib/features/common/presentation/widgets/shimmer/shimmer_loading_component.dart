@@ -1,7 +1,8 @@
-import 'package:app_template/core/architecture/presentation/component.dart';
-import 'package:app_template/core/config/environment/test_env_detector.dart';
+import 'dart:math';
+import 'dart:ui';
+
+import 'package:app_template/core/architecture/presentation/widgets/component.dart';
 import 'package:app_template/features/app/di/i_app_scope.dart';
-import 'package:app_template/features/common/domain/entities/shader_type.dart';
 import 'package:app_template/features/common/presentation/state/shader/shader_bloc.dart';
 import 'package:app_template/features/common/presentation/widgets/shimmer/shimmer_component.dart';
 import 'package:app_template/features/common/presentation/widgets/shimmer/shimmer_loading_layout.dart';
@@ -42,14 +43,6 @@ class _ShimmerLoadingComponentState
   ShaderBloc get _shaderBloc => context.read<IAppScope>().shaderBloc;
 
   @override
-  void initState() {
-    super.initState();
-
-    // Trigger shader preloading
-    _shaderBloc.add(const ShaderLoadShader(ShaderType.shimmer));
-  }
-
-  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
@@ -69,24 +62,10 @@ class _ShimmerLoadingComponentState
 
   late LinearGradient _shimmerGradient;
 
-  LinearGradient get shimmerGradient => LinearGradient(
-    begin: _shimmerGradient.begin,
-    end: _shimmerGradient.end,
-    colors: _shimmerGradient.colors,
-    stops: _shimmerGradient.stops,
-    transform: _SlidingGradientTransform(slidePercent: shimmerProvider.shimmerChanges.value),
-  );
-
   IShimmerProvider get shimmerProvider => ShimmerComponent.of(context);
 
   @override
   Animation<double> get shimmerChanges => shimmerProvider.shimmerChanges;
-
-  @override
-  bool get isSized => shimmerProvider.isSized;
-
-  @override
-  Size? get size => shimmerProvider.size;
 
   @override
   Widget get child => widget.child;
@@ -95,33 +74,43 @@ class _ShimmerLoadingComponentState
   bool get isLoading => widget.isLoading;
 
   @override
-  Shader buildShader(
+  Shader buildGradientShader(
     Offset offsetWithinShimmer,
     Size shimmerSize,
+    double animation,
   ) {
-    // Access current shader state
-    final shaderState = _shaderBloc.state;
-    final shader = shaderState.shaders[ShaderType.shimmer];
+    final gradient = LinearGradient(
+      begin: _shimmerGradient.begin,
+      end: _shimmerGradient.end,
+      colors: _shimmerGradient.colors,
+      stops: _shimmerGradient.stops,
+      transform: _SlidingGradientTransform(slidePercent: animation),
+    );
 
-    if (shader == null || TestEnvDetector.isTestEnvironment) {
-      // Fallback to existing gradient shader
-      return shimmerGradient.createShader(
-        Rect.fromLTWH(
-          -offsetWithinShimmer.dx,
-          -offsetWithinShimmer.dy,
-          shimmerSize.width,
-          shimmerSize.height,
-        ),
-      );
-    }
-    // Configure fragment shader uniforms
-    final animationValue = shimmerProvider.shimmerChanges.value;
+    // Fallback to existing gradient shader
+    return gradient.createShader(
+      Rect.fromLTWH(
+        -offsetWithinShimmer.dx,
+        -offsetWithinShimmer.dy,
+        shimmerSize.width,
+        shimmerSize.height,
+      ),
+    );
+  }
+
+  @override
+  Shader buildFragmentShader(
+    FragmentShader shader,
+    Offset offsetWithinShimmer,
+    Size shimmerSize,
+    double animation,
+  ) {
     final theme = context.appColorScheme;
 
     shader
       ..setFloat(0, shimmerSize.width) // uSize.x
       ..setFloat(1, shimmerSize.height) // uSize.y
-      ..setFloat(2, animationValue * 6.28318) // uSeed (animation value * 2π for smooth wave)
+      ..setFloat(2, animation * pi * 2) // uSeed (animation value * 2π for smooth wave)
       ..setFloat(3, theme.skeletonTertiary.r) // uLineColor.r
       ..setFloat(4, theme.skeletonTertiary.g) // uLineColor.g
       ..setFloat(5, theme.skeletonTertiary.b) // uLineColor.b
@@ -130,7 +119,7 @@ class _ShimmerLoadingComponentState
       ..setFloat(8, theme.skeletonSecondary.g) // uBackgroundColor.g
       ..setFloat(9, theme.skeletonSecondary.b) // uBackgroundColor.b
       ..setFloat(10, theme.skeletonSecondary.a) // uBackgroundColor.a
-      ..setFloat(11, 0.4); // uStripeWidth
+      ..setFloat(11, 0.2); // uStripeWidth
 
     return shader;
   }
@@ -141,14 +130,20 @@ class _ShimmerLoadingComponentState
   }
 
   @override
-  Offset getDescendantOffset({required RenderBox descendant, Offset offset = Offset.zero}) {
-    final shimmerBox = context.findRenderObject() as RenderBox?;
-
-    return descendant.localToGlobal(offset, ancestor: shimmerBox);
-  }
+  Offset getDescendantOffset({required RenderBox descendant, Offset offset = Offset.zero}) =>
+      shimmerProvider.getDescendantOffset(
+        descendant: descendant,
+        offset: offset,
+      );
 
   @override
   StateStreamable<ShaderState> get shaderBloc => _shaderBloc;
+
+  @override
+  bool get isSized => shimmerProvider.isSized;
+
+  @override
+  Size? get size => shimmerProvider.size;
 }
 
 /// {@template shimmer_loading_view_model}
@@ -164,14 +159,14 @@ abstract interface class ShimmerLoadingViewModel implements ViewModel {
   /// The animation controller for the shimmer effect.
   Animation<double> get shimmerChanges;
 
+  /// The shader bloc for accessing shader state.
+  StateStreamable<ShaderState> get shaderBloc;
+
   /// Whether the shimmer is sized.
   bool get isSized;
 
   /// The size of the shimmer.
   Size? get size;
-
-  /// The shader bloc for accessing shader state.
-  StateStreamable<ShaderState> get shaderBloc;
 
   /// Returns the offset of the descendant in the shimmer's coordinate system.
   Offset getDescendantOffset({
@@ -180,9 +175,18 @@ abstract interface class ShimmerLoadingViewModel implements ViewModel {
   });
 
   /// Builds the shader for the shimmer effect.
-  Shader buildShader(
+  Shader buildFragmentShader(
+    FragmentShader shader,
     Offset offsetWithinShimmer,
     Size shimmerSize,
+    double animation,
+  );
+
+  /// Builds the shader for the shimmer effect.
+  Shader buildGradientShader(
+    Offset offsetWithinShimmer,
+    Size shimmerSize,
+    double animation,
   );
 }
 

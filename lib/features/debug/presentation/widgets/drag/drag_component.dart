@@ -1,4 +1,4 @@
-import 'package:app_template/core/architecture/presentation/component.dart';
+import 'package:app_template/core/architecture/presentation/widgets/component.dart';
 import 'package:app_template/features/debug/presentation/widgets/drag/drag_layout.dart';
 import 'package:app_template/features/haptics/presentation/widgets/haptics_component.dart';
 import 'package:flutter/foundation.dart';

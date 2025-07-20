@@ -6,6 +6,9 @@ sealed class ShaderEvent with _$ShaderEvent {
   /// Initialize shader system.
   const factory ShaderEvent.initialize() = ShaderInitialize;
 
+  /// Load a shader for shimmer.
+  const factory ShaderEvent.loadShimmer() = ShaderLoadShimmer;
+
   /// Load a specific shader.
   const factory ShaderEvent.loadShader(ShaderType shaderType) = ShaderLoadShader;
 

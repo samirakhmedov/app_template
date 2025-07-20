@@ -89,6 +89,44 @@ String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
 /// @nodoc
 
 
+class ShaderLoadShimmer with DiagnosticableTreeMixin implements ShaderEvent {
+  const ShaderLoadShimmer();
+  
+
+
+
+
+
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'ShaderEvent.loadShimmer'))
+    ;
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ShaderLoadShimmer);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
+  return 'ShaderEvent.loadShimmer()';
+}
+
+
+}
+
+
+
+
+/// @nodoc
+
+
 class ShaderLoadShader with DiagnosticableTreeMixin implements ShaderEvent {
   const ShaderLoadShader(this.shaderType);
   

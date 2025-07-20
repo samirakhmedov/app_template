@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:app_template/core/architecture/mixin/theme_mixin.dart';
-import 'package:app_template/core/architecture/presentation/component.dart';
+import 'package:app_template/core/architecture/presentation/widgets/component.dart';
 import 'package:app_template/core/config/urls.dart';
 import 'package:app_template/features/app/router/app_router.dart';
 import 'package:app_template/features/debug/presentation/screens/debug/debug_settings_layout.dart';

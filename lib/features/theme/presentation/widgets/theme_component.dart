@@ -1,4 +1,4 @@
-import 'package:app_template/core/architecture/presentation/component.dart';
+import 'package:app_template/core/architecture/presentation/widgets/component.dart';
 import 'package:app_template/features/app/di/i_app_scope.dart';
 import 'package:app_template/features/theme/domain/entities/theme_mode.dart' as app;
 import 'package:app_template/features/theme/presentation/state/bloc/theme_bloc.dart';

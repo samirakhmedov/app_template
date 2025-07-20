@@ -1,6 +1,6 @@
 // ignore_for_file: avoid-returning-widgets
 
-import 'package:app_template/core/architecture/presentation/layout.dart';
+import 'package:app_template/core/architecture/presentation/widgets/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';

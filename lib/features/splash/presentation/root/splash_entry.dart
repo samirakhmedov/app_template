@@ -1,5 +1,5 @@
 import 'package:app_template/core/architecture/di/dependencies_registrar.dart';
-import 'package:app_template/core/architecture/presentation/feature_entry.dart';
+import 'package:app_template/core/architecture/presentation/widgets/feature_entry.dart';
 import 'package:app_template/features/app/di/i_app_scope.dart';
 import 'package:app_template/features/app/presentation/app_startup_layout.dart';
 import 'package:app_template/features/splash/di/i_splash_scope.dart';

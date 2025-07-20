@@ -1,4 +1,4 @@
-import 'package:app_template/core/architecture/presentation/layout.dart';
+import 'package:app_template/core/architecture/presentation/widgets/layout.dart';
 import 'package:app_template/features/splash/presentation/screens/splash_central_component.dart';
 import 'package:flutter/material.dart';
 

@@ -1,6 +1,6 @@
 // ignore_for_file: avoid-returning-widgets
 
-import 'package:app_template/core/architecture/presentation/component.dart';
+import 'package:app_template/core/architecture/presentation/widgets/component.dart';
 import 'package:flutter/material.dart';
 
 /// {@template layout}

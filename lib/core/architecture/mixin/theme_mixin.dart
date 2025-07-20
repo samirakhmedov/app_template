@@ -1,4 +1,4 @@
-import 'package:app_template/core/architecture/presentation/component.dart';
+import 'package:app_template/core/architecture/presentation/widgets/component.dart';
 import 'package:flutter/material.dart';
 import 'package:uikit/uikit.dart';
 

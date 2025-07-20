@@ -1,4 +1,4 @@
-import 'package:app_template/core/architecture/presentation/component.dart';
+import 'package:app_template/core/architecture/presentation/widgets/component.dart';
 import 'package:app_template/features/debug/presentation/screens/easter_egg/easter_egg_layout.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/widgets.dart';

@@ -4,6 +4,7 @@ import 'dart:ui' as ui;
 import 'package:app_template/features/common/domain/entities/shader_type.dart';
 import 'package:app_template/features/common/domain/repositories/i_shader_repository.dart';
 import 'package:bloc/bloc.dart';
+import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -22,8 +23,9 @@ class ShaderBloc extends Bloc<ShaderEvent, ShaderState> {
     : _shaderRepository = shaderRepository,
       super(const ShaderState()) {
     on<ShaderInitialize>(_initialize);
-    on<ShaderLoadShader>(_loadShader);
-    on<ShaderHandleMemoryPressure>(_handleMemoryPressure);
+    on<ShaderLoadShimmer>(_loadShimmerShader, transformer: sequential());
+    on<ShaderLoadShader>(_loadShader, transformer: concurrent());
+    on<ShaderHandleMemoryPressure>(_handleMemoryPressure, transformer: droppable());
     on<_ShaderUpdateState>(_updateState);
   }
 
@@ -44,18 +46,17 @@ class ShaderBloc extends Bloc<ShaderEvent, ShaderState> {
     add(ShaderEvent._updateState(_shaderRepository.shaders.value));
   }
 
-  Future<void> _loadShader(ShaderLoadShader event, Emitter<ShaderState> emit) async {
-    await _shaderRepository.loadShader(event.shaderType);
-  }
+  Future<void> _loadShimmerShader(ShaderLoadShimmer _, Emitter<ShaderState> emit) =>
+      _loadShader(ShaderLoadShader(ShaderType.shimmer), emit);
+
+  Future<void> _loadShader(ShaderLoadShader event, Emitter<ShaderState> emit) =>
+      _shaderRepository.loadShader(event.shaderType);
 
   Future<void> _handleMemoryPressure(
     ShaderHandleMemoryPressure event,
     Emitter<ShaderState> emit,
-  ) async {
-    await _shaderRepository.handleMemoryPressure();
-  }
+  ) => _shaderRepository.handleMemoryPressure();
 
-  void _updateState(_ShaderUpdateState event, Emitter<ShaderState> emit) {
-    emit(state.copyWith(shaders: event.shaders));
-  }
+  void _updateState(_ShaderUpdateState event, Emitter<ShaderState> emit) =>
+      emit(state.copyWith(shaders: event.shaders));
 }

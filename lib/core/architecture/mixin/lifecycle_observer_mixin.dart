@@ -1,7 +1,7 @@
 // ignore_for_file: no-empty-block
 
-import 'package:app_template/core/architecture/presentation/component.dart';
-import 'package:app_template/core/architecture/presentation/layout.dart';
+import 'package:app_template/core/architecture/presentation/widgets/component.dart';
+import 'package:app_template/core/architecture/presentation/widgets/layout.dart';
 import 'package:flutter/widgets.dart';
 
 /// A mixin that simplifies reacting to [AppLifecycleState] changes and

@@ -1,4 +1,4 @@
-import 'package:app_template/core/architecture/presentation/layout.dart';
+import 'package:app_template/core/architecture/presentation/widgets/layout.dart';
 import 'package:app_template/features/debug/presentation/screens/easter_egg/easter_egg_component.dart';
 import 'package:app_template/features/debug/presentation/widgets/app_flutter_logo.dart';
 import 'package:app_template/features/debug/presentation/widgets/drag/drag_component.dart';

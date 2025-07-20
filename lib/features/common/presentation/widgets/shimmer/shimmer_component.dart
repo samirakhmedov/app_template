@@ -1,6 +1,8 @@
-import 'package:app_template/core/architecture/presentation/component.dart';
+import 'package:app_template/core/architecture/mixin/lifecycle_observer_mixin.dart';
+import 'package:app_template/core/architecture/presentation/core/child_layout.dart';
+import 'package:app_template/core/architecture/presentation/core/empty_view_model.dart';
+import 'package:app_template/core/architecture/presentation/widgets/component.dart';
 import 'package:app_template/core/config/environment/test_env_detector.dart';
-import 'package:app_template/features/common/presentation/widgets/shimmer/shimmer_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
@@ -8,7 +10,7 @@ import 'package:provider/single_child_widget.dart';
 /// {@template shimmer_component}
 /// A component for the shimmer effect.
 /// {@endtemplate}
-class ShimmerComponent extends Component<ShimmerViewModel, ShimmerLayout> {
+class ShimmerComponent extends Component<EmptyViewModel, ChildLayout> {
   /// {@macro shimmer_component}
   const ShimmerComponent({
     required this.child,
@@ -24,29 +26,25 @@ class ShimmerComponent extends Component<ShimmerViewModel, ShimmerLayout> {
   }
 
   @override
-  ComponentState<ShimmerComponent, ShimmerViewModel, ShimmerLayout> createState() =>
+  ComponentState<ShimmerComponent, EmptyViewModel, ChildLayout> createState() =>
       _ShimmerComponentState();
 }
 
-class _ShimmerComponentState
-    extends ComponentState<ShimmerComponent, ShimmerViewModel, ShimmerLayout>
-    with SingleTickerProviderStateMixin
-    implements ShimmerViewModel, IShimmerProvider {
+class _ShimmerComponentState extends ComponentState<ShimmerComponent, EmptyViewModel, ChildLayout>
+    with SingleTickerProviderStateMixin, LifecycleObserverMixin
+    implements IShimmerProvider {
   static const _shimmerDuration = Duration(seconds: 2);
 
   static const _shimmerMin = -0.5;
   static const _shimmerMax = 1.5;
 
-  late final AnimationController _shimmerController;
+  late final AnimationController _shimmerController = AnimationController.unbounded(vsync: this);
 
   @override
   void initState() {
     super.initState();
-    _shimmerController = AnimationController.unbounded(vsync: this);
 
-    if (!TestEnvDetector.isTestEnvironment) {
-      _shimmerController.repeat(min: _shimmerMin, max: _shimmerMax, period: _shimmerDuration);
-    }
+    _runAnimation();
   }
 
   @override
@@ -57,15 +55,20 @@ class _ShimmerComponentState
   }
 
   @override
+  void onPaused() {
+    _shimmerController.stop();
+  }
+
+  @override
+  void onResumed() {
+    _runAnimation();
+  }
+
+  @override
   List<SingleChildWidget> providers() {
     return [
       Provider<IShimmerProvider>.value(value: this),
     ];
-  }
-
-  @override
-  ShimmerLayout view() {
-    return ShimmerLayout(viewModel: this);
   }
 
   @override
@@ -79,7 +82,13 @@ class _ShimmerComponentState
   }
 
   @override
-  Widget get child => widget.child;
+  ChildLayout view() => ChildLayout(child: widget.child);
+
+  void _runAnimation() {
+    if (TestEnvDetector.isTestEnvironment) return;
+
+    _shimmerController.repeat(min: _shimmerMin, max: _shimmerMax, period: _shimmerDuration);
+  }
 
   @override
   Animation<double> get shimmerChanges => _shimmerController;
@@ -109,12 +118,4 @@ abstract interface class IShimmerProvider {
     required RenderBox descendant,
     Offset offset = Offset.zero,
   });
-}
-
-/// {@template shimmer_view_model}
-/// A view model for the shimmer effect.
-/// {@endtemplate}
-abstract interface class ShimmerViewModel implements ViewModel {
-  /// The child widget.
-  Widget get child;
 }

@@ -1,12 +1,13 @@
 import 'dart:async';
 
-import 'package:app_template/core/architecture/presentation/component.dart';
+import 'package:app_template/core/architecture/presentation/core/child_layout.dart';
+import 'package:app_template/core/architecture/presentation/core/empty_view_model.dart';
+import 'package:app_template/core/architecture/presentation/widgets/component.dart';
 import 'package:app_template/features/app/di/i_app_scope.dart';
 import 'package:app_template/features/common/presentation/state/snack/snack_queue_bloc.dart';
 import 'package:app_template/features/common/presentation/widgets/snacks/default_snack_controller.dart';
 import 'package:app_template/features/common/presentation/widgets/snacks/snack_message_type.dart';
 import 'package:app_template/features/common/presentation/widgets/snacks/snack_queue_controller.dart';
-import 'package:app_template/features/common/presentation/widgets/snacks/snack_queue_layout.dart';
 import 'package:app_template/features/common/presentation/widgets/snacks/top_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,7 +19,7 @@ import 'package:provider/single_child_widget.dart';
 /// A component that exposes [SnackQueueController] to its descendants while
 /// orchestrating snack queue logic via [SnackQueueBloc].
 /// {@endtemplate}
-class SnackQueueComponent extends Component<SnackQueueViewModel, SnackQueueLayout> {
+class SnackQueueComponent extends Component<EmptyViewModel, ChildLayout> {
   /// {@macro snack_queue_component}
   const SnackQueueComponent({required this.child, super.key});
 
@@ -29,13 +30,13 @@ class SnackQueueComponent extends Component<SnackQueueViewModel, SnackQueueLayou
   static SnackQueueController of(BuildContext context) => context.read<SnackQueueController>();
 
   @override
-  ComponentState<SnackQueueComponent, SnackQueueViewModel, SnackQueueLayout> createState() =>
+  ComponentState<SnackQueueComponent, EmptyViewModel, ChildLayout> createState() =>
       _SnackQueueComponentState();
 }
 
 class _SnackQueueComponentState
-    extends ComponentState<SnackQueueComponent, SnackQueueViewModel, SnackQueueLayout>
-    implements SnackQueueViewModel, SnackQueueController {
+    extends ComponentState<SnackQueueComponent, EmptyViewModel, ChildLayout>
+    implements EmptyViewModel, SnackQueueController {
   late final DefaultSnackController _snackController;
 
   bool _isShowing = false;
@@ -78,9 +79,6 @@ class _SnackQueueComponentState
     ];
   }
 
-  @override
-  SnackQueueLayout view() => SnackQueueLayout(viewModel: this);
-
   // SnackQueueController implementation --------------------------------
   @override
   void addSnack(
@@ -104,6 +102,9 @@ class _SnackQueueComponentState
     _bloc.add(SnackQueueEvent.clear(closeTime));
   }
 
+  @override
+  ChildLayout view() => ChildLayout(child: widget.child);
+
   Future<void> _showNextSnack(TopSnackBar snack) async {
     _isShowing = true;
     await _snackController
@@ -119,18 +120,6 @@ class _SnackQueueComponentState
           _bloc.add(const SnackQueueEvent.removeFirst());
         });
   }
-
-  // SnackQueueViewModel implementation ---------------------------------
-  @override
-  Widget get child => widget.child;
-}
-
-/// {@template snack_queue_view_model}
-/// View-model contract for [SnackQueueComponent].
-/// {@endtemplate}
-abstract interface class SnackQueueViewModel implements ViewModel, SnackQueueController {
-  /// The subtree that will be displayed beneath the component.
-  Widget get child;
 }
 
 const _defaultAutoHideDuration = Duration(seconds: 3);

@@ -1,4 +1,5 @@
-import 'package:app_template/core/architecture/presentation/layout.dart';
+import 'package:app_template/core/architecture/presentation/widgets/layout.dart';
+import 'package:app_template/features/common/domain/entities/shader_type.dart';
 import 'package:app_template/features/common/presentation/state/shader/shader_bloc.dart';
 import 'package:app_template/features/common/presentation/widgets/shimmer/shimmer_loading_component.dart';
 import 'package:flutter/material.dart';
@@ -45,7 +46,27 @@ class ShimmerLoadingLayout extends Layout<ShimmerLoadingViewModel> {
             );
 
             return ShaderMask(
-              shaderCallback: (_) => vm.buildShader(offsetWithinShimmer, shimmerSize),
+              // ignore: prefer-extracting-callbacks
+              shaderCallback: (_) {
+                final shader = shaderState.shaders[ShaderType.shimmer];
+
+                final animation = shimmerChanges.value;
+
+                if (shader != null) {
+                  return vm.buildFragmentShader(
+                    shader,
+                    offsetWithinShimmer,
+                    shimmerSize,
+                    animation,
+                  );
+                }
+
+                return vm.buildGradientShader(
+                  offsetWithinShimmer,
+                  shimmerSize,
+                  animation,
+                );
+              },
               blendMode: BlendMode.srcATop,
               child: chld,
             );
