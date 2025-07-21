@@ -1,4 +1,5 @@
 import 'package:database/src/constants.dart';
+import 'package:database/src/tables/todo_table.dart';
 import 'package:drift/drift.dart';
 import 'package:drift_flutter/drift_flutter.dart';
 import 'package:path_provider/path_provider.dart';
@@ -8,7 +9,7 @@ part 'app_database.g.dart';
 /// {@template app_database}
 /// A database for the app.
 /// {@endtemplate}
-@DriftDatabase(tables: [])
+@DriftDatabase(tables: [TodoItems])
 class AppDatabase extends _$AppDatabase {
   @override
   int get schemaVersion => 1;

@@ -4,6 +4,7 @@ import 'package:app_template/core/architecture/presentation/core/empty_view_mode
 import 'package:app_template/core/architecture/presentation/widgets/component.dart';
 import 'package:app_template/features/app/di/i_app_scope.dart';
 import 'package:app_template/features/common/presentation/state/shader/shader_bloc.dart';
+import 'package:database/database.dart';
 import 'package:flutter/material.dart';
 import 'package:network/network.dart';
 import 'package:provider/provider.dart';
@@ -32,11 +33,15 @@ class _SnackQueueComponentState extends ComponentState<MemoryComponent, EmptyVie
 
   IScopedHttpClientFactory get _clientFactory => context.read<IAppScope>().httpClientFactory;
 
+  IRevivableDatabase get _database => context.read<IAppScope>().appDatabase;
+
   @override
   void onMemoryPressure() {
     _shaderBloc.add(ShaderEvent.handleMemoryPressure());
 
     _clientFactory.handleMemoryPressure();
+
+    _database.handleMemoryPressure();
   }
 
   @override

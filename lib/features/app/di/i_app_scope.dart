@@ -19,7 +19,7 @@ abstract interface class IAppScope implements Scope {
   Environment get environment;
 
   /// The app database.
-  AppDatabase get appDatabase;
+  IRevivableDatabase get appDatabase;
 
   /// The auth dio.
   Dio get authDio;

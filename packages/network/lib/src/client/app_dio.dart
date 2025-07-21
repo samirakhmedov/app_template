@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:network/src/adapters/http_adapter_native_factory.dart'
-    if (dart.library.html) 'package:network/src/core/adapters/http_adapter_web_factory.dart';
+    if (dart.library.html) 'package:network/src/adapters/http_adapter_web_factory.dart';
 
 /// A drop-in replacement for Dio's default [HttpClientAdapter] that delegates
 /// the actual network work to platform-specific [`http`](https://pub.dev/packages/http)

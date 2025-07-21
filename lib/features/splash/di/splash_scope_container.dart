@@ -51,6 +51,7 @@ class SplashScopeContainer extends ChildScopeContainer<IAppScope> implements ISp
     return SplashRepository(
       api: IpApi(splashDioDep.get),
       logger: parent.logger,
+      database: parent.appDatabase,
     );
   }
 }

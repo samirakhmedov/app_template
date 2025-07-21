@@ -88,10 +88,7 @@ flutter:
   #         weight: 700
 
 # TODO: introduce accessibility package
-# TODO: Introduce HTTP client factory for each scope
 # TODO: test haptic on iOS
-# TODO: introduce asset transformation at build time - https://docs.flutter.dev/ui/assets/asset-transformation
-# TODO: introduce debug fill properties for layout
 
 flutter_gen:
   output: lib/generated/

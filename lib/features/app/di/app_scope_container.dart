@@ -84,7 +84,7 @@ class AppScopeContainer extends DataScopeContainer<Environment> implements IAppS
   Environment get environment => data;
 
   @override
-  AppDatabase get appDatabase => storageModule.appDatabaseDep.get;
+  IRevivableDatabase get appDatabase => storageModule.revivableDatabaseManagerDep.get;
 
   @override
   Dio get authDio => httpModule.rootDioDep.get;
@@ -143,11 +143,15 @@ class AppScopeHolder extends DataScopeHolder<AppScopeContainer, Environment> {
 /// A module for the app scope storage.
 /// {@endtemplate}
 class AppScopeStorageModule extends ScopeModule<AppScopeContainer> {
-  /// The app database dependency.
-  late final appDatabaseDep = rawAsyncDep(
-    _createAppDatabase,
-    init: (db) => SynchronousFuture(null),
-    dispose: (db) async => db.close(),
+  /// The revivable database manager dependency.
+  late final revivableDatabaseManagerDep = rawAsyncDep(
+    _createRevivableDatabaseManager,
+    init: (manager) {
+      manager.initialize(DatabaseFactory.createDefaultExecutor);
+
+      return SynchronousFuture(null);
+    },
+    dispose: (manager) async => manager.disposeCompletely(),
   );
 
   /// The shared preferences dependency.
@@ -170,7 +174,10 @@ class AppScopeStorageModule extends ScopeModule<AppScopeContainer> {
   );
 
   /// The initialize list.
-  Set<AsyncDepType> get initializeList => {appDatabaseDep, encryptionServiceDep};
+  Set<AsyncDepType> get initializeList => {
+    revivableDatabaseManagerDep,
+    encryptionServiceDep,
+  };
 
   /// {@macro app_scope_storage_module}
   AppScopeStorageModule(super.container);
@@ -188,8 +195,8 @@ class AppScopeStorageModule extends ScopeModule<AppScopeContainer> {
     );
   }
 
-  AppDatabase _createAppDatabase() {
-    return AppDatabase();
+  RevivableDatabaseManager _createRevivableDatabaseManager() {
+    return RevivableDatabaseManager.instance;
   }
 }
 
