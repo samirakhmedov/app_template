@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:cronet_http/cronet_http.dart';
 import 'package:cupertino_http/cupertino_http.dart';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
@@ -12,16 +11,9 @@ import 'package:network/src/adapters/native/url_session_adapter.dart';
 /// {@endtemplate}
 HttpClientAdapter createHttpClientAdapter({String? userAgent}) {
   if (Platform.isAndroid) {
-    final engine = CronetEngine.build(
-      cacheMode: CacheMode.disabled,
-      enableBrotli: true,
-      enableHttp2: true,
-      enableQuic: true,
-      userAgent: userAgent,
-    );
-
-    return CronetAdapter(engine);
+    return CronetAdapter();
   }
+
   if (Platform.isIOS || Platform.isMacOS) {
     final config = URLSessionConfiguration.ephemeralSessionConfiguration()
       ..httpAdditionalHeaders = {'User-Agent': userAgent ?? 'Dart'}

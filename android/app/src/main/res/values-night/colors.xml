@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Dark theme splash background - matches UIKit dark background #222222 -->
+    <color name="splash_background_light">#222222</color>
+    <!-- Dark theme splash background - matches UIKit dark background #222222 -->
+    <color name="splash_background_dark">#222222</color>
+</resources>

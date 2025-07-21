@@ -6,23 +6,53 @@ import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 
 /// A [Dio] [HttpClientAdapter] that uses the Cronet network stack.
+///
+/// All instances of [CronetAdapter] share a single underlying [CronetEngine]
+/// and [CronetClient] for optimal resource usage. The shared client is created
+/// when the first adapter instance is constructed and disposed when the last
+/// instance is closed.
 class CronetAdapter implements HttpClientAdapter {
+  static CronetClient? _sharedClient;
+  static int _instanceCount = 0;
+
   final CronetClient _client;
 
-  /// If [_closeEngine] is `true`, then the underlying [CronetEngine] will be
-  /// closed when [close] is called.
-  final bool _closeEngine;
+  /// Creates a new [CronetAdapter] instance.
+  ///
+  /// Uses a shared [CronetClient] that is reference-counted across all instances.
+  CronetAdapter() : _client = _getOrCreateSharedClient() {
+    _instanceCount++;
+  }
 
-  /// {@macro cronet_adapter}
-  CronetAdapter(CronetEngine engine, {bool closeEngine = true})
-    : _client = CronetClient.fromCronetEngine(engine, closeEngine: closeEngine),
-      _closeEngine = closeEngine;
+  static CronetClient _getOrCreateSharedClient() {
+    if (_sharedClient == null) {
+      final engine = CronetEngine.build(
+        cacheMode: CacheMode.disabled,
+        enableBrotli: true,
+        enableHttp2: true,
+        enableQuic: true,
+      );
+
+      _sharedClient = CronetClient.fromCronetEngine(engine, closeEngine: true);
+    }
+
+    return _sharedClient!;
+  }
+
+  bool _isClosed = false;
 
   @override
   void close({bool force = false}) {
-    if (_closeEngine) {
-      _client.close();
+    if (_isClosed) return;
+
+    _instanceCount--;
+
+    if (_instanceCount == 0) {
+      _sharedClient?.close();
+      _sharedClient = null;
     }
+
+    _isClosed = true;
   }
 
   @override
@@ -31,6 +61,13 @@ class CronetAdapter implements HttpClientAdapter {
     Stream<Uint8List>? requestStream,
     Future<void>? cancelFuture,
   ) async {
+    if (_isClosed || _sharedClient == null) {
+      throw DioException(
+        requestOptions: options,
+        error: 'CronetAdapter is closed or disposed',
+      );
+    }
+
     final request = _convertRequest(options, requestStream);
     final responseFuture = _client.send(request);
 
