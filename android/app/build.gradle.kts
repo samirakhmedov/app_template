@@ -1,18 +1,16 @@
+val mediaService = (project.findProperty("mediaService") ?: "gms").toString().lowercase()
+val ifHms = mediaService == "hms"
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id("dev.flutter.flutter-gradle-plugin")
+//    id("com.huawei.agconnect")
+//    id("com.google.gms.google-services")
 }
 
 apply(from = "../keystore/signingConfigs.gradle")
-
-val mediaService = (project.findProperty("mediaService") ?: "gms").toString().lowercase()
-if (mediaService == "hms") {
-//    apply(plugin = "com.huawei.agconnect")
-} else {
-//    apply(plugin = "com.google.gms.google-services")
-}
 
 android {
     namespace = "com.example.app_template"
@@ -67,14 +65,22 @@ android {
             versionNameSuffix = "-dev"
             resValue("string", "app_name", "App Template (Dev)")
             resValue("string", "app_icon", "@mipmap/ic_launcher_dev")
-            signingConfig = signingConfigs.getByName("dev")
+            if (ifHms) {
+                signingConfig = signingConfigs.getByName("huawei")
+            } else {
+                signingConfig = signingConfigs.getByName("dev")
+            }
         }
 
         create("prod") {
             dimension = "release-type"
             resValue("string", "app_name", "App Template")
             resValue("string", "app_icon", "@mipmap/ic_launcher")
-            signingConfig = signingConfigs.getByName("prod")
+            if (ifHms) {
+                signingConfig = signingConfigs.getByName("huawei")
+            } else {
+                signingConfig = signingConfigs.getByName("prod")
+            }
         }
     }
 
@@ -83,7 +89,6 @@ android {
             dimension = "service-type"
             applicationIdSuffix = ".gms"
             manifestPlaceholders["serviceType"] = "gms"
-            // buildConfigField("String", "SERVICE_TYPE", "\"gms\"")
             resValue("string", "service_provider", "Google Mobile Services")
         }
 
@@ -91,7 +96,6 @@ android {
             dimension = "service-type"
             applicationIdSuffix = ".hms"
             manifestPlaceholders["serviceType"] = "hms"
-            // buildConfigField("String", "SERVICE_TYPE", "\"hms\"")
             resValue("string", "service_provider", "Huawei Mobile Services")
         }
     }
@@ -104,4 +108,11 @@ flutter {
 dependencies {
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.5")
     implementation("androidx.core:core-splashscreen:1.0.1")
+    /// HMS dependencies
+    if (ifHms) {
+//        implementation("com.huawei.agconnect:agconnect-core:1.9.3.301")
+    } else {
+        /// GMS dependencies
+//        implementation("com.google.gms:google-services:4.4.3")
+    }
 }

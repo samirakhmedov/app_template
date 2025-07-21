@@ -1,5 +1,16 @@
-import android.databinding.tool.ext.classSpec
-import org.gradle.internal.declarativedsl.dom.resolution.resolutionContainer
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+        maven (url = uri("https://developer.huawei.com/repo/"))
+    }
+
+    dependencies {
+        // Required by Huawei AGConnect plugin for compatibility check
+        classpath("com.android.tools.build:gradle:8.11.1")
+    }
+}
 
 repositories {
     mavenCentral()
@@ -18,12 +29,6 @@ subprojects {
 subprojects {
     project.evaluationDependsOn(":app")
 }
-
-plugins {
-//    id("com.google.gms.google-services") version "4.4.3" apply false
-//    id("com.huawei.agconnect.agcp") version "1.9.1.301" apply false
-}
-
 
 tasks.register<Delete>("clean") {
     delete(rootProject.layout.buildDirectory)
