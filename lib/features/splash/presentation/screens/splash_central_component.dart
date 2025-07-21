@@ -92,7 +92,7 @@ class _SplashComponentState
   }
 
   void _ready() {
-    unawaited(context.router.popAndPush(const DebugRoute()));
+    unawaited(context.router.replaceAll([const DebugRoute()]));
   }
 
   SplashBloc get _splashBloc => context.read<SplashBloc>();
