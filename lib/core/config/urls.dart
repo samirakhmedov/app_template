@@ -5,10 +5,10 @@ import 'package:app_template/core/config/constants.dart';
 /// {@endtemplate}
 enum Urls {
   /// The release URL.
-  release(kDefaultUrl),
+  release('$kDefaultUrl/release'),
 
   /// The development URL.
-  development(kDefaultUrl);
+  development('$kDefaultUrl/test');
 
   /// The value of the URL.
   const Urls(this.value);

@@ -8,10 +8,13 @@ import 'package:app_template/core/data/logger/logger.dart';
 import 'package:app_template/core/domain/crash/crash_strategy.dart';
 import 'package:app_template/core/domain/logger/logger_strategy.dart';
 import 'package:app_template/features/app/di/i_app_scope.dart';
+import 'package:app_template/features/common/data/repositories/memory_repository.dart';
 import 'package:app_template/features/common/data/repositories/shader_repository.dart';
 import 'package:app_template/features/common/data/services/i_shader_service.dart';
 import 'package:app_template/features/common/data/services/shader_service.dart';
+import 'package:app_template/features/common/domain/repositories/i_memory_repository.dart';
 import 'package:app_template/features/common/domain/repositories/i_shader_repository.dart';
+import 'package:app_template/features/common/presentation/state/memory/memory_bloc.dart';
 import 'package:app_template/features/common/presentation/state/shader/shader_bloc.dart';
 import 'package:app_template/features/common/presentation/state/snack/snack_queue_bloc.dart';
 import 'package:app_template/features/debug/data/repositories/debug_repository.dart';
@@ -48,6 +51,9 @@ class AppScopeContainer extends DataScopeContainer<Environment> implements IAppS
   /// The shader module.
   late final shaderModule = AppScopeShaderModule(this);
 
+  /// The memory module.
+  late final memoryModule = AppScopeMemoryModule(this);
+
   /// The http module.
   late final httpModule = AppScopeHttpModule(this);
 
@@ -69,12 +75,27 @@ class AppScopeContainer extends DataScopeContainer<Environment> implements IAppS
 
   @override
   List<Set<AsyncDepType>> get initializeQueue => [
-    {_snackQueueBlocDep},
-    storageModule.initializeList,
-    debugModule.initializeList,
-    ...themeModule.initializeList,
-    ...shaderModule.initializeList,
-    ...httpModule.initializeList,
+    // Level 1: Core infrastructure (can run in parallel)
+    {
+      storageModule.revivableDatabaseManagerDep,
+      storageModule.encryptionServiceDep,
+      debugModule.debugServiceDep,
+      debugModule.crashStrategyDep,
+      httpModule.httpClientFactoryDep,
+    },
+    // Level 2: Services that depend on Level 1 (can run in parallel)
+    {
+      httpModule.rootDioDep,
+      themeModule.themeServiceDep,
+      shaderModule.shaderServiceDep,
+    },
+    // Level 3: BLoCs that depend on services (can run in parallel)
+    {
+      themeModule.themeBlocDep,
+      shaderModule.shaderBlocDep,
+      memoryModule.memoryBlocDep,
+      _snackQueueBlocDep,
+    },
   ];
 
   /// The URL.
@@ -118,6 +139,9 @@ class AppScopeContainer extends DataScopeContainer<Environment> implements IAppS
 
   @override
   IScopedHttpClientFactory get httpClientFactory => httpModule.httpClientFactoryDep.get;
+
+  @override
+  MemoryBloc get memoryBloc => memoryModule.memoryBlocDep.get;
 
   /// {@macro app_scope_container}
   AppScopeContainer({required super.data});
@@ -173,11 +197,6 @@ class AppScopeStorageModule extends ScopeModule<AppScopeContainer> {
     dispose: (encryptionService) => SynchronousFuture(null),
   );
 
-  /// The initialize list.
-  Set<AsyncDepType> get initializeList => {
-    revivableDatabaseManagerDep,
-    encryptionServiceDep,
-  };
 
   /// {@macro app_scope_storage_module}
   AppScopeStorageModule(super.container);
@@ -222,11 +241,6 @@ class AppScopeThemeModule extends ScopeModule<AppScopeContainer> {
 
   late final _themeStorageDep = dep<IThemeStorage>(_createThemeStorage);
 
-  /// The initialize list.
-  List<Set<AsyncDepType>> get initializeList => [
-    {themeServiceDep},
-    {themeBlocDep},
-  ];
 
   /// {@macro app_scope_theme_module}
   AppScopeThemeModule(super.container);
@@ -279,8 +293,6 @@ class AppScopeDebugModule extends ScopeModule<AppScopeContainer> {
 
   late final _debugStorageDep = dep<IDebugStorage>(_createDebugStorage);
 
-  /// The initialize list.
-  Set<AsyncDepType> get initializeList => {debugServiceDep, crashStrategyDep};
 
   /// The raw base URI.
   String? get rawBaseUri => debugServiceDep.get.baseUri.value?.toString();
@@ -338,11 +350,6 @@ class AppScopeHttpModule extends ScopeModule<AppScopeContainer> {
     dispose: (factory) => factory.dispose(),
   );
 
-  /// The initialize list.
-  List<Set<AsyncDepType>> get initializeList => [
-    {httpClientFactoryDep},
-    {rootDioDep},
-  ];
 
   /// {@macro app_scope_http_module}
   AppScopeHttpModule(super.container);
@@ -387,11 +394,6 @@ class AppScopeShaderModule extends ScopeModule<AppScopeContainer> {
 
   late final _shaderRepositoryDep = dep<IShaderRepository>(_createShaderRepository);
 
-  /// The initialize list.
-  List<Set<AsyncDepType>> get initializeList => [
-    {shaderServiceDep},
-    {shaderBlocDep},
-  ];
 
   /// {@macro app_scope_shader_module}
   AppScopeShaderModule(super.container);
@@ -411,6 +413,38 @@ class AppScopeShaderModule extends ScopeModule<AppScopeContainer> {
 
   IShaderService _createShaderService() {
     return ShaderService();
+  }
+}
+
+/// {@template app_scope_memory_module}
+/// A module for the app scope memory.
+/// {@endtemplate}
+class AppScopeMemoryModule extends ScopeModule<AppScopeContainer> {
+  /// The memory bloc dependency.
+  late final memoryBlocDep = rawAsyncDep(
+    _createMemoryBloc,
+    init: (bloc) async => bloc.add(const MemoryInitialize()),
+    dispose: (bloc) => bloc.close(),
+  );
+
+  late final _memoryRepositoryDep = dep<IMemoryRepository>(_createMemoryRepository);
+
+
+  /// {@macro app_scope_memory_module}
+  AppScopeMemoryModule(super.container);
+
+  MemoryBloc _createMemoryBloc() {
+    return MemoryBloc(
+      memoryRepository: _memoryRepositoryDep.get,
+    );
+  }
+
+  IMemoryRepository _createMemoryRepository() {
+    return MemoryRepository(
+      clientFactory: container.httpClientFactory,
+      database: container.appDatabase,
+      logger: container.logger,
+    );
   }
 }
 

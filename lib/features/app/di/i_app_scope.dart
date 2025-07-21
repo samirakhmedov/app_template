@@ -1,5 +1,6 @@
 import 'package:app_template/core/config/environment/environment.dart';
 import 'package:app_template/core/domain/logger/logger_strategy.dart';
+import 'package:app_template/features/common/presentation/state/memory/memory_bloc.dart';
 import 'package:app_template/features/common/presentation/state/shader/shader_bloc.dart';
 import 'package:app_template/features/common/presentation/state/snack/snack_queue_bloc.dart';
 import 'package:app_template/features/debug/di/debug_scope_container.dart';
@@ -53,4 +54,7 @@ abstract interface class IAppScope implements Scope {
 
   /// The HTTP client factory.
   IScopedHttpClientFactory get httpClientFactory;
+
+  /// The memory bloc.
+  MemoryBloc get memoryBloc;
 }

@@ -3,10 +3,9 @@ import 'package:app_template/core/architecture/presentation/core/child_layout.da
 import 'package:app_template/core/architecture/presentation/core/empty_view_model.dart';
 import 'package:app_template/core/architecture/presentation/widgets/component.dart';
 import 'package:app_template/features/app/di/i_app_scope.dart';
+import 'package:app_template/features/common/presentation/state/memory/memory_bloc.dart';
 import 'package:app_template/features/common/presentation/state/shader/shader_bloc.dart';
-import 'package:database/database.dart';
 import 'package:flutter/material.dart';
-import 'package:network/network.dart';
 import 'package:provider/provider.dart';
 
 /// {@template memory_component}
@@ -31,21 +30,17 @@ class _SnackQueueComponentState extends ComponentState<MemoryComponent, EmptyVie
 
   ShaderBloc get _shaderBloc => context.read<IAppScope>().shaderBloc;
 
-  IScopedHttpClientFactory get _clientFactory => context.read<IAppScope>().httpClientFactory;
-
-  IRevivableDatabase get _database => context.read<IAppScope>().appDatabase;
+  MemoryBloc get _memoryBloc => context.read<IAppScope>().memoryBloc;
 
   @override
   void onMemoryPressure() {
-    _shaderBloc.add(ShaderEvent.handleMemoryPressure());
-
-    _clientFactory.handleMemoryPressure();
-
-    _database.handleMemoryPressure();
+    _shaderBloc.add(const ShaderEvent.handleMemoryPressure());
+    _memoryBloc.add(const MemoryEvent.handleMemoryPressure());
   }
 
   @override
   void onResumed() {
-    _shaderBloc.add(ShaderEvent.loadShimmer());
+    _shaderBloc.add(const ShaderEvent.loadShimmer());
+    _memoryBloc.add(const MemoryEvent.revive());
   }
 }
