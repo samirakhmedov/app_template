@@ -22,7 +22,7 @@ abstract interface class IAppScope implements Scope {
   AppDatabase get appDatabase;
 
   /// The auth dio.
-  AppDio get authDio;
+  Dio get authDio;
 
   /// The secure storage.
   Storage get secureStorage;
@@ -50,4 +50,7 @@ abstract interface class IAppScope implements Scope {
 
   /// The splash scope.
   SplashScopeHolder get splashScope;
+
+  /// The HTTP client factory.
+  IScopedHttpClientFactory get httpClientFactory;
 }

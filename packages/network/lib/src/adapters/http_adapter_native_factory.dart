@@ -4,8 +4,8 @@ import 'package:cronet_http/cronet_http.dart';
 import 'package:cupertino_http/cupertino_http.dart';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
-import 'package:network/src/core/adapters/native/cronet_adapter.dart';
-import 'package:network/src/core/adapters/native/url_session_adapter.dart';
+import 'package:network/src/adapters/native/cronet_adapter.dart';
+import 'package:network/src/adapters/native/url_session_adapter.dart';
 
 /// {@template http_adapter_native_factory}
 /// This function creates a [HttpClientAdapter] for the native platform.

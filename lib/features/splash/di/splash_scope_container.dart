@@ -1,9 +1,12 @@
+import 'package:api/api.dart';
 import 'package:app_template/core/architecture/di/dependencies_registrar.dart';
 import 'package:app_template/features/app/di/i_app_scope.dart';
 import 'package:app_template/features/splash/data/repositories/splash_repository.dart';
 import 'package:app_template/features/splash/di/i_splash_scope.dart';
 import 'package:app_template/features/splash/domain/repositories/i_splash_repository.dart';
 import 'package:app_template/features/splash/presentation/state/bloc/splash_bloc.dart';
+import 'package:flutter/foundation.dart';
+import 'package:network/network.dart';
 import 'package:yx_scope/yx_scope.dart';
 
 /// {@template splash_scope_container}
@@ -17,12 +20,20 @@ class SplashScopeContainer extends ChildScopeContainer<IAppScope> implements ISp
     dispose: (bloc) => bloc.close(),
   );
 
+  /// The splash Dio dependency.
+  late final splashDioDep = rawAsyncDep<Dio>(
+    () => parent.httpClientFactory.getClientForScope('splash_scope'),
+    init: (_) => SynchronousFuture(null),
+    dispose: (_) async => parent.httpClientFactory.disposeScopeClient('splash_scope'),
+  );
+
   /// The splash repository dependency.
   late final splashRepositoryDep = dep<ISplashRepository>(_createSplashRepository);
 
   /// The initialize queue.
   @override
   List<Set<AsyncDepType>> get initializeQueue => [
+    {splashDioDep},
     {splashBlocDep},
   ];
 
@@ -37,7 +48,10 @@ class SplashScopeContainer extends ChildScopeContainer<IAppScope> implements ISp
   }
 
   ISplashRepository _createSplashRepository() {
-    return SplashRepository(logger: parent.logger);
+    return SplashRepository(
+      api: IpApi(splashDioDep.get),
+      logger: parent.logger,
+    );
   }
 }
 

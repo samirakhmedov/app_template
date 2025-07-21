@@ -87,7 +87,7 @@ class AppScopeContainer extends DataScopeContainer<Environment> implements IAppS
   AppDatabase get appDatabase => storageModule.appDatabaseDep.get;
 
   @override
-  AppDio get authDio => httpModule.authDioDep.get;
+  Dio get authDio => httpModule.rootDioDep.get;
 
   @override
   Storage get secureStorage => storageModule.secureStorageDep.get;
@@ -115,6 +115,9 @@ class AppScopeContainer extends DataScopeContainer<Environment> implements IAppS
 
   @override
   LoggerStrategy get logger => loggerDep.get;
+
+  @override
+  IScopedHttpClientFactory get httpClientFactory => httpModule.httpClientFactoryDep.get;
 
   /// {@macro app_scope_container}
   AppScopeContainer({required super.data});
@@ -314,69 +317,45 @@ class AppScopeDebugModule extends ScopeModule<AppScopeContainer> {
 /// A module for the app scope http.
 /// {@endtemplate}
 class AppScopeHttpModule extends ScopeModule<AppScopeContainer> {
-  /// The dio dependency.
-  late final dioDep = rawAsyncDep(
-    () => _createDio(interceptors: [_createLogInterceptor()]),
-    init: _initDio,
-    dispose: (dio) async => dio.close(),
+  /// The auth dio dependency.
+  late final rootDioDep = rawAsyncDep(
+    () => httpClientFactoryDep.get.getClientForScope('root_http_client'),
+    init: (_) => SynchronousFuture(null),
+    dispose: (_) async => httpClientFactoryDep.get.disposeScopeClient('root_http_client'),
   );
 
-  /// The auth dio dependency.
-  late final authDioDep = rawAsyncDep(
-    () => _createDio(interceptors: [_createLogInterceptor()]),
-    init: _initDio,
-    dispose: (dio) async => dio.close(),
+  /// The HTTP client factory dependency.
+  late final httpClientFactoryDep = rawAsyncDep(
+    _createHttpClientFactory,
+    init: (factory) => SynchronousFuture(null),
+    dispose: (factory) => factory.dispose(),
   );
 
   /// The initialize list.
   List<Set<AsyncDepType>> get initializeList => [
-    {dioDep},
-    {authDioDep},
+    {httpClientFactoryDep},
+    {rootDioDep},
   ];
 
   /// {@macro app_scope_http_module}
   AppScopeHttpModule(super.container);
 
-  /// Creates a dio.
-  AppDio _createDio({
-    required Iterable<Interceptor> interceptors,
-  }) {
-    final dio = AppDio();
-
-    dio.interceptors.addAll(interceptors);
-
-    return dio;
-  }
-
-  // 4) initialization methods
-  Future<void> _initDio(AppDio dio) {
-    final envUrl = container.url.value;
-
-    // ignore: avoid-mutating-parameters
-    dio.baseOptionsFactory = () {
-      final String baseUrl;
-
-      if (kReleaseMode) {
-        baseUrl = envUrl;
-      } else {
-        baseUrl = container.debugModule.rawBaseUri ?? envUrl;
-      }
-
-      return BaseOptions(
-        connectTimeout: kDefaultConnectTimeout,
-        receiveTimeout: kDefaultReceiveTimeout,
-        sendTimeout: kDefaultSendTimeout,
-        baseUrl: baseUrl,
-      );
-    };
-
-    return Future.value();
-  }
-
   LogInterceptor _createLogInterceptor() {
     return LogInterceptor(
       requestBody: true,
       responseBody: true,
+    );
+  }
+
+  IScopedHttpClientFactory _createHttpClientFactory() {
+    return ScopedHttpClientFactory(
+      baseOptionsFactory: () => BaseOptions(
+        connectTimeout: kDefaultConnectTimeout,
+        receiveTimeout: kDefaultReceiveTimeout,
+        sendTimeout: kDefaultSendTimeout,
+        baseUrl: container.debugModule.rawBaseUri ?? container.url.value,
+      ),
+      interceptors: [_createLogInterceptor()],
     );
   }
 }

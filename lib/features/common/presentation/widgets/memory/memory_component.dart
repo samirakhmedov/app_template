@@ -5,6 +5,7 @@ import 'package:app_template/core/architecture/presentation/widgets/component.da
 import 'package:app_template/features/app/di/i_app_scope.dart';
 import 'package:app_template/features/common/presentation/state/shader/shader_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:network/network.dart';
 import 'package:provider/provider.dart';
 
 /// {@template memory_component}
@@ -29,9 +30,13 @@ class _SnackQueueComponentState extends ComponentState<MemoryComponent, EmptyVie
 
   ShaderBloc get _shaderBloc => context.read<IAppScope>().shaderBloc;
 
+  IScopedHttpClientFactory get _clientFactory => context.read<IAppScope>().httpClientFactory;
+
   @override
   void onMemoryPressure() {
     _shaderBloc.add(ShaderEvent.handleMemoryPressure());
+
+    _clientFactory.handleMemoryPressure();
   }
 
   @override

@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:network/src/core/adapters/http_adapter_native_factory.dart'
+import 'package:network/src/adapters/http_adapter_native_factory.dart'
     if (dart.library.html) 'package:network/src/core/adapters/http_adapter_web_factory.dart';
 
 /// A drop-in replacement for Dio's default [HttpClientAdapter] that delegates
@@ -19,10 +19,11 @@ import 'package:network/src/core/adapters/http_adapter_native_factory.dart'
 /// `IOHttpClientAdapter` & `BrowserHttpClientAdapter` while still using the
 /// project-specific HTTP clients (Cronet / Cupertino / Fetch).
 // ignore: prefer_mixin
-class AppDio with DioMixin implements Dio {
+class AppDio with DioMixin implements AppDioInterface {
   /// Optional factory function that creates a new instance of [BaseOptions].
   ///
   /// If not provided, a default instance of [BaseOptions] will be used.
+  @override
   CreateBaseOptions? baseOptionsFactory;
 
   /// {@macro http_client_factory}
@@ -34,6 +35,14 @@ class AppDio with DioMixin implements Dio {
 
   @override
   BaseOptions get options => baseOptionsFactory?.call() ?? BaseOptions();
+}
+
+/// App dio interface for extension.
+abstract interface class AppDioInterface implements Dio {
+  /// Optional factory function that creates a new instance of [BaseOptions].
+  ///
+  /// If not provided, a default instance of [BaseOptions] will be used.
+  CreateBaseOptions? baseOptionsFactory;
 }
 
 /// A factory function that creates a new instance of [BaseOptions].
