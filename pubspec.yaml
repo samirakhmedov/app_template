@@ -89,7 +89,6 @@ flutter:
 
 # TODO: introduce accessibility package
 # TODO: test haptic on iOS
-# TODO: fix Huawei configuration
 
 flutter_gen:
   output: lib/generated/
