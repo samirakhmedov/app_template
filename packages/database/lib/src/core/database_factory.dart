@@ -18,10 +18,13 @@ class DatabaseFactory {
   }
 
   /// Creates a configurable QueryExecutor.
-  static QueryExecutor createExecutor({String? name, Future<Directory> Function()? directory}) {
+  static QueryExecutor createExecutor({String? name, DatabaseDirectoryFactory? directory}) {
     return driftDatabase(
       name: name ?? kDefaultDatabaseName,
       native: DriftNativeOptions(databaseDirectory: directory ?? getApplicationSupportDirectory),
     );
   }
 }
+
+/// Factory for database directory.
+typedef DatabaseDirectoryFactory = Future<Directory> Function();

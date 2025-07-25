@@ -1,7 +1,7 @@
 import 'package:drift/drift.dart';
 
 /// Items table.
-class TodoItems extends Table {
+class TodoTable extends Table {
   /// Id of an item.
   IntColumn get id => integer().autoIncrement()();
 
@@ -13,4 +13,7 @@ class TodoItems extends Table {
 
   /// Date of an item was created.
   DateTimeColumn get createdAt => dateTime().nullable()();
+
+  /// Constructor.
+  const TodoTable();
 }

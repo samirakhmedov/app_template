@@ -1,59 +1,52 @@
-import 'dart:async';
+/// Location library.
+library;
+
 import 'dart:math';
 
-import 'package:huawei_location/huawei_location.dart';
-import 'package:location_interface/location.dart';
+/// Интерфейс для получения локации.
+///
+/// Нужен для получения текущей локации и последней известной локации.
+///
+/// Интерфейс нужен для разделения сервисов получения локации (например, для Huawei и Google).
+///
+/// Возвращает [Point] с координатами, где x - latitude, a y - longitude.
+// ignore: prefer-match-file-name
+abstract interface class LocationServiceInterface {
+  /// Инициализировать сервис получения локации.
+  Future<void> initialize();
 
-/// Huawei Location Service.
-class LocationService implements LocationServiceInterface {
-  final _locationProvider = FusedLocationProviderClient();
+  /// Получить текущую локацию.
+  ///
+  /// При отсутствии разрешения на геолокацию бросает [LocationPermissionNotGrantedException].
+  Future<Point> getLocation();
 
-  @override
-  Future<void> initialize() async {
-    await _locationProvider.initFusedLocationService();
-
-    /// Метод [initFusedLocationService] отрабатывает мнгновенно,
-    /// но по факту инициализация не закончена,
-    /// поэтому делаем задержку.
-    await Future.delayed(const Duration(seconds: 1));
-
-    await _locationProvider.setMockMode(false);
-  }
-
-  @override
-  Future<Point?> getLastKnownLocation() {
-    final res =
-        _locationProvider.getLastLocation().timeout(kLocationRequestTimeLimit).then(_toPoint);
-
-    return res;
-  }
-
-  @override
-  Future<Point> getLocation() async {
-    try {
-      final status = await _locationProvider.checkLocationSettings(
-        LocationSettingsRequest(
-          requests: [
-            LocationRequest(),
-          ],
-        ),
-      );
-      if (!status.hmsLocationUsable) {
-        throw LocationPermissionNotGrantedException();
-      }
-      await _locationProvider.requestLocationUpdates(LocationRequest());
-      final location = await _locationProvider.getLastLocation().timeout(kLocationRequestTimeLimit);
-
-      return _toPoint(location)!;
-    } on Object catch (_) {
-      throw LocationPermissionNotGrantedException();
-    }
-  }
+  /// Получить последнюю известную локацию.
+  Future<Point?> getLastKnownLocation();
 }
 
-Point? _toPoint(Location position) => position.latitude == null || position.longitude == null
-    ? null
-    : Point(
-        position.latitude!,
-        position.longitude!,
-      );
+/// Состояние разрешения на геолокацию.
+enum LocationPermissionState {
+  /// Разрешение на геолокацию получено.
+  granted,
+
+  /// Разрешение на геолокацию не получено, но пользователь может его дать.
+  denied,
+
+  /// Разрешение на геолокацию не получено.
+  deniedForever,
+}
+
+/// Исключение, бросаемое при отсутствии разрешения на геолокацию.
+class LocationPermissionNotGrantedException implements Exception {
+  /// @nodoc.
+  const LocationPermissionNotGrantedException();
+}
+
+/// Исключение, бросаемое при отсутствии проверки разрешения на геолокацию.
+class LocationPermissionNotCheckedException implements Exception {
+  /// @nodoc.
+  const LocationPermissionNotCheckedException();
+}
+
+/// Лимит на время запроса локации.
+const kLocationRequestTimeLimit = Duration(seconds: 20);

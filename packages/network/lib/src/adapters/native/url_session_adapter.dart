@@ -140,6 +140,7 @@ class UrlSessionAdapter implements HttpClientAdapter {
   ) {
     final taskTracker = _tracker(task);
     if (error != null &&
+        // ignore: avoid-inverted-boolean-checks
         !(error.domain.toString() == 'NSURLErrorDomain' && error.code == _nsurlErrorCancelled)) {
       final exception = DioException(
         requestOptions: taskTracker.options,

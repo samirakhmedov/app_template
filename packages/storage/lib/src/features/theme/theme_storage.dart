@@ -11,10 +11,8 @@ class ThemeStorage implements IThemeStorage {
   const ThemeStorage({required Storage storage}) : _storage = storage;
 
   @override
-  Future<String?> getThemeMode() async {
-    final themeName = await _storage.getString(_ThemeStorageKeys.theme.key);
-
-    return themeName;
+  Future<String?> getThemeMode() {
+    return _storage.getString(_ThemeStorageKeys.theme.key);
   }
 
   @override

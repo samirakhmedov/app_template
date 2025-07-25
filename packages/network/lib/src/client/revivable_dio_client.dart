@@ -1,4 +1,4 @@
-// ignore_for_file: type_annotate_public_apis
+// ignore_for_file: type_annotate_public_apis, avoid-shadowing, avoid-dynamic
 
 import 'package:dio/dio.dart';
 import 'package:network/network.dart';
@@ -12,24 +12,50 @@ class RevivableDioClient implements Dio {
   Dio? _internalClient;
   bool _isCompletelyDisposed = false;
 
+  @override
+  BaseOptions get options => _getOrCreateClient().options;
+
+  @override
+  HttpClientAdapter get httpClientAdapter => _getOrCreateClient().httpClientAdapter;
+
+  @override
+  Transformer get transformer => _getOrCreateClient().transformer;
+
+  @override
+  Interceptors get interceptors => _getOrCreateClient().interceptors;
+
+  @override
+  set options(BaseOptions options) {
+    _getOrCreateClient().options = options;
+  }
+
+  @override
+  set httpClientAdapter(HttpClientAdapter adapter) {
+    _getOrCreateClient().httpClientAdapter = adapter;
+  }
+
+  @override
+  set transformer(Transformer transformer) {
+    _getOrCreateClient().transformer = transformer;
+  }
+
   /// {@macro revivable_dio_client}
   RevivableDioClient(this._factory, this._scopeId);
 
-  /// Handles memory pressure by closing underlying client but keeping it revivable.
-  void handleMemoryPressure() {
-    if (_internalClient != null && !_isCompletelyDisposed) {
-      _internalClient!.close(force: true);
-      _internalClient = null;
-      // Do NOT set _isCompletelyDisposed = true, keep it revivable
-    }
+  @override
+  void close({bool force = false}) {
+    _internalClient?.close(force: true);
+    _internalClient = null;
+    _isCompletelyDisposed = true;
   }
 
-  Dio _getOrCreateClient() {
-    if (_isCompletelyDisposed) {
-      throw StateError('Client has been completely disposed and cannot be revived');
-    }
+  /// Handles memory pressure by closing underlying client but keeping it revivable.
+  void handleMemoryPressure() {
+    if (_internalClient == null || _isCompletelyDisposed) return;
 
-    return _internalClient ??= _factory.createClientForScope(_scopeId);
+    _internalClient?.close(force: true);
+    _internalClient = null;
+    // Do NOT set _isCompletelyDisposed = true, keep it revivable
   }
 
   // Override all Dio methods to delegate to internal client
@@ -176,40 +202,6 @@ class RevivableDioClient implements Dio {
   }
 
   @override
-  void close({bool force = false}) {
-    _internalClient?.close(force: true);
-    _internalClient = null;
-    _isCompletelyDisposed = true;
-  }
-
-  @override
-  BaseOptions get options => _getOrCreateClient().options;
-
-  @override
-  set options(BaseOptions options) {
-    _getOrCreateClient().options = options;
-  }
-
-  @override
-  HttpClientAdapter get httpClientAdapter => _getOrCreateClient().httpClientAdapter;
-
-  @override
-  set httpClientAdapter(HttpClientAdapter adapter) {
-    _getOrCreateClient().httpClientAdapter = adapter;
-  }
-
-  @override
-  Transformer get transformer => _getOrCreateClient().transformer;
-
-  @override
-  set transformer(Transformer transformer) {
-    _getOrCreateClient().transformer = transformer;
-  }
-
-  @override
-  Interceptors get interceptors => _getOrCreateClient().interceptors;
-
-  @override
   Dio clone({
     HttpClientAdapter? httpClientAdapter,
     Interceptors? interceptors,
@@ -217,9 +209,9 @@ class RevivableDioClient implements Dio {
     Transformer? transformer,
   }) {
     return _getOrCreateClient().clone(
-      httpClientAdapter: httpClientAdapter,
-      interceptors: interceptors,
       options: options,
+      interceptors: interceptors,
+      httpClientAdapter: httpClientAdapter,
       transformer: transformer,
     );
   }
@@ -392,10 +384,18 @@ class RevivableDioClient implements Dio {
     return _getOrCreateClient().requestUri<T>(
       uri,
       data: data,
-      options: options,
       cancelToken: cancelToken,
+      options: options,
       onSendProgress: onSendProgress,
       onReceiveProgress: onReceiveProgress,
     );
+  }
+
+  Dio _getOrCreateClient() {
+    if (_isCompletelyDisposed) {
+      throw StateError('Client has been completely disposed and cannot be revived');
+    }
+
+    return _internalClient ??= _factory.createClientForScope(_scopeId);
   }
 }

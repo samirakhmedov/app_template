@@ -1,3 +1,6 @@
+/// Network library.
+library;
+
 export 'package:dio/dio.dart'
     show BaseOptions, CancelToken, Dio, DioException, DioExceptionType, Interceptor, LogInterceptor;
 

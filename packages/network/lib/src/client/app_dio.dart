@@ -26,15 +26,15 @@ class AppDio with DioMixin implements AppDioInterface {
   @override
   CreateBaseOptions? baseOptionsFactory;
 
+  @override
+  BaseOptions get options => baseOptionsFactory?.call() ?? BaseOptions();
+
   /// {@macro http_client_factory}
   AppDio({
     CreateBaseOptions? createBaseOptions,
   }) : baseOptionsFactory = createBaseOptions {
     httpClientAdapter = createHttpClientAdapter();
   }
-
-  @override
-  BaseOptions get options => baseOptionsFactory?.call() ?? BaseOptions();
 }
 
 /// App dio interface for extension.

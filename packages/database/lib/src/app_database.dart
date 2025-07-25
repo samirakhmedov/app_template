@@ -9,7 +9,7 @@ part 'app_database.g.dart';
 /// {@template app_database}
 /// A database for the app.
 /// {@endtemplate}
-@DriftDatabase(tables: [TodoItems])
+@DriftDatabase(tables: [TodoTable])
 class AppDatabase extends _$AppDatabase {
   @override
   int get schemaVersion => 1;

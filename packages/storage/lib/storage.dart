@@ -1,3 +1,6 @@
+/// Storage library.
+library;
+
 export 'src/core/encryption/encryption_service.dart' show EncryptionService;
 export 'src/core/storage/storage.dart' show Storage;
 export 'src/features/app/app.dart'

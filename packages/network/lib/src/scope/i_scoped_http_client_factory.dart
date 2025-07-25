@@ -4,6 +4,9 @@ import 'package:dio/dio.dart';
 /// Interface for creating and managing HTTP clients per scope.
 /// {@endtemplate}
 abstract interface class IScopedHttpClientFactory {
+  /// Disposes the factory.
+  Future<void> dispose();
+
   /// Creates basic HTTP client. Do not stores it within factory.
   Dio createClientForScope(String scopeId);
 
@@ -16,7 +19,4 @@ abstract interface class IScopedHttpClientFactory {
 
   /// Handles memory pressure by closing underlying clients without removing them.
   void handleMemoryPressure();
-
-  /// Disposes the factory.
-  Future<void> dispose();
 }

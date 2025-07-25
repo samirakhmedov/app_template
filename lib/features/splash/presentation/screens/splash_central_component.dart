@@ -28,7 +28,7 @@ class _SplashComponentState
     extends ComponentState<SplashCentralComponent, SplashViewModel, SplashCentralLayout>
     with SingleTickerProviderStateMixin
     implements SplashViewModel {
-  static const _splashTimeout = Duration(seconds: 3);
+  static const _splashTimeout = Duration(milliseconds: 500);
 
   late final _animationController = AnimationController(
     duration: kDefaultAnimationDuration,

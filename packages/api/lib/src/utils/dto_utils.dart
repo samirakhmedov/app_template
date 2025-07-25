@@ -1,3 +1,5 @@
+// ignore_for_file: no-object-declaration
+
 import 'dart:convert';
 
 /// Utility class for dtos.

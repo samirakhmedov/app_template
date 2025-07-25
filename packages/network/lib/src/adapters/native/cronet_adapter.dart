@@ -17,35 +17,20 @@ class CronetAdapter implements HttpClientAdapter {
 
   final CronetClient _client;
 
+  bool _isClosed = false;
+
   /// Creates a new [CronetAdapter] instance.
   ///
   /// Uses a shared [CronetClient] that is reference-counted across all instances.
   CronetAdapter() : _client = _getOrCreateSharedClient() {
-    _instanceCount++;
+    _instanceCount += 1;
   }
-
-  static CronetClient _getOrCreateSharedClient() {
-    if (_sharedClient == null) {
-      final engine = CronetEngine.build(
-        cacheMode: CacheMode.disabled,
-        enableBrotli: true,
-        enableHttp2: true,
-        enableQuic: true,
-      );
-
-      _sharedClient = CronetClient.fromCronetEngine(engine, closeEngine: true);
-    }
-
-    return _sharedClient!;
-  }
-
-  bool _isClosed = false;
 
   @override
   void close({bool force = false}) {
     if (_isClosed) return;
 
-    _instanceCount--;
+    _instanceCount -= 1;
 
     if (_instanceCount == 0) {
       _sharedClient?.close();
@@ -137,6 +122,22 @@ class CronetAdapter implements HttpClientAdapter {
     );
   }
 
+  static CronetClient _getOrCreateSharedClient() {
+    return _sharedClient ??= _createSharedClient();
+  }
+
+  static CronetClient _createSharedClient() {
+    return CronetClient.fromCronetEngine(
+      CronetEngine.build(
+        cacheMode: CacheMode.disabled,
+        enableBrotli: true,
+        enableHttp2: true,
+        enableQuic: true,
+      ),
+      closeEngine: true,
+    );
+  }
+
   http.BaseRequest _convertRequest(
     RequestOptions options,
     Stream<Uint8List>? requestStream,
@@ -149,6 +150,7 @@ class CronetAdapter implements HttpClientAdapter {
       request = basicRequest;
     } else {
       final streamedRequest = http.StreamedRequest(options.method, options.uri);
+      // ignore: avoid-unassigned-stream-subscriptions
       requestStream.listen(
         streamedRequest.sink.add,
         onError: streamedRequest.sink.addError,

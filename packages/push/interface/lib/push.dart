@@ -1,8 +1,12 @@
+/// Push library.
+library;
+
 /// Repository for working with push notifications.
 ///
 /// Allows listening for incoming notifications
 /// and provides access to the application's registration token
 /// on the device used for push notifications.
+// ignore: prefer-match-file-name
 abstract interface class PushServiceInterface {
   /// Notification stream.
   ///
