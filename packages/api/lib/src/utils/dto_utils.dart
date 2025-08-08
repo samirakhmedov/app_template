@@ -4,7 +4,7 @@ import 'dart:convert';
 
 /// Utility class for dtos.
 abstract class DtoUtils {
-  DtoUtils._();
+  const DtoUtils._();
 
   /// Safely reads list like value of [json] map.
   static Object? readList(Map<dynamic, dynamic> json, String key) {

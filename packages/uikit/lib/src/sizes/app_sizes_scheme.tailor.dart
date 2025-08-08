@@ -116,16 +116,10 @@ mixin _$AppSizesSchemeTailorMixin on ThemeExtension<AppSizesScheme> {
     if (other is! AppSizesScheme) return this as AppSizesScheme;
     return AppSizesScheme(
       empty: t < 0.5 ? empty : other.empty,
-      cursorHeightGeneral: t < 0.5
-          ? cursorHeightGeneral
-          : other.cursorHeightGeneral,
-      separatorMicroscopic: t < 0.5
-          ? separatorMicroscopic
-          : other.separatorMicroscopic,
+      cursorHeightGeneral: t < 0.5 ? cursorHeightGeneral : other.cursorHeightGeneral,
+      separatorMicroscopic: t < 0.5 ? separatorMicroscopic : other.separatorMicroscopic,
       separatorSmall: t < 0.5 ? separatorSmall : other.separatorSmall,
-      paddingMicroscopic: t < 0.5
-          ? paddingMicroscopic
-          : other.paddingMicroscopic,
+      paddingMicroscopic: t < 0.5 ? paddingMicroscopic : other.paddingMicroscopic,
       paddingTiny: t < 0.5 ? paddingTiny : other.paddingTiny,
       paddingSmall: t < 0.5 ? paddingSmall : other.paddingSmall,
       paddingMedium: t < 0.5 ? paddingMedium : other.paddingMedium,
@@ -135,20 +129,12 @@ mixin _$AppSizesSchemeTailorMixin on ThemeExtension<AppSizesScheme> {
       paddingHuge: t < 0.5 ? paddingHuge : other.paddingHuge,
       paddingMassive: t < 0.5 ? paddingMassive : other.paddingMassive,
       paddingGigantic: t < 0.5 ? paddingGigantic : other.paddingGigantic,
-      paddingConsiderable: t < 0.5
-          ? paddingConsiderable
-          : other.paddingConsiderable,
+      paddingConsiderable: t < 0.5 ? paddingConsiderable : other.paddingConsiderable,
       paddingEnormous: t < 0.5 ? paddingEnormous : other.paddingEnormous,
       borderRadiusSmall: t < 0.5 ? borderRadiusSmall : other.borderRadiusSmall,
-      borderRadiusMedium: t < 0.5
-          ? borderRadiusMedium
-          : other.borderRadiusMedium,
-      borderRadiusStandart: t < 0.5
-          ? borderRadiusStandart
-          : other.borderRadiusStandart,
-      borderRadiusGeneral: t < 0.5
-          ? borderRadiusGeneral
-          : other.borderRadiusGeneral,
+      borderRadiusMedium: t < 0.5 ? borderRadiusMedium : other.borderRadiusMedium,
+      borderRadiusStandart: t < 0.5 ? borderRadiusStandart : other.borderRadiusStandart,
+      borderRadiusGeneral: t < 0.5 ? borderRadiusGeneral : other.borderRadiusGeneral,
       borderRadiusHuge: t < 0.5 ? borderRadiusHuge : other.borderRadiusHuge,
       strokeGeneral: t < 0.5 ? strokeGeneral : other.strokeGeneral,
       loaderSizeMinimum: t < 0.5 ? loaderSizeMinimum : other.loaderSizeMinimum,
@@ -325,6 +311,5 @@ mixin _$AppSizesSchemeTailorMixin on ThemeExtension<AppSizesScheme> {
 }
 
 extension AppSizesSchemeBuildContext on BuildContext {
-  AppSizesScheme get appSizesScheme =>
-      Theme.of(this).extension<AppSizesScheme>()!;
+  AppSizesScheme get appSizesScheme => Theme.of(this).extension<AppSizesScheme>()!;
 }

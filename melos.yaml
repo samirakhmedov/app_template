@@ -1,8 +1,26 @@
 name: app_template
 
+sdkPath: .fvm/flutter_sdk
+
+categories:
+  buildable:
+    - packages/database
+    - packages/api
+    - packages/uikit
+
+ide:
+  intellij:
+    enabled: false
+
 packages:
   - packages/storage
   - packages/network
   - packages/database
   - packages/api
   - packages/uikit
+
+scripts:
+  format:
+    exec: dart format -l 100 .
+  analyze:
+    exec: dart analyze .

@@ -83,16 +83,14 @@ mixin _$AppColorSchemeTailorMixin on ThemeExtension<AppColorScheme> {
       backgroundTertiary: backgroundTertiary ?? this.backgroundTertiary,
       tetradicBackground: tetradicBackground ?? this.tetradicBackground,
       onBackground: onBackground ?? this.onBackground,
-      onBackgroundSecondary:
-          onBackgroundSecondary ?? this.onBackgroundSecondary,
+      onBackgroundSecondary: onBackgroundSecondary ?? this.onBackgroundSecondary,
       danger: danger ?? this.danger,
       dangerSecondary: dangerSecondary ?? this.dangerSecondary,
       onDanger: onDanger ?? this.onDanger,
       textField: textField ?? this.textField,
       textFieldLabel: textFieldLabel ?? this.textFieldLabel,
       textFieldHelper: textFieldHelper ?? this.textFieldHelper,
-      frameTextFieldSecondary:
-          frameTextFieldSecondary ?? this.frameTextFieldSecondary,
+      frameTextFieldSecondary: frameTextFieldSecondary ?? this.frameTextFieldSecondary,
       inactive: inactive ?? this.inactive,
       positive: positive ?? this.positive,
       onPositive: onPositive ?? this.onPositive,
@@ -301,6 +299,5 @@ mixin _$AppColorSchemeTailorMixin on ThemeExtension<AppColorScheme> {
 }
 
 extension AppColorSchemeBuildContext on BuildContext {
-  AppColorScheme get appColorScheme =>
-      Theme.of(this).extension<AppColorScheme>()!;
+  AppColorScheme get appColorScheme => Theme.of(this).extension<AppColorScheme>()!;
 }

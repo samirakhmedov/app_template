@@ -1,3 +1,24 @@
+init:
+	fvm flutter pub get
+
+	melos bootstrap
+
+	make codegen
+
+	make codegen-assets
+
+	make codegen-packages
+
+	make format
+
+	make format-packages
+
+get:
+	fvm flutter pub get
+
+get-packages:
+	melos bootstrap
+
 codegen:
 	sh ./scripts/build_runner.sh
 
@@ -13,8 +34,14 @@ codegen-api:
 codegen-assets:
 	fluttergen -c pubspec.yaml
 
+codegen-packages:
+	melos exec --category="buildable" -- sh scripts/build_runner.sh
+
 format:
 	sh ./scripts/format.sh
+
+format-packages:
+	melos run format
 
 propagate-secrets:
 	sh ./scripts/propagate_secrets.sh

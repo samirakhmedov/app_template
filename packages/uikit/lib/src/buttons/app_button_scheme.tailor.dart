@@ -107,6 +107,5 @@ mixin _$AppButtonSchemeTailorMixin on ThemeExtension<AppButtonScheme> {
 }
 
 extension AppButtonSchemeBuildContext on BuildContext {
-  AppButtonScheme get appButtonScheme =>
-      Theme.of(this).extension<AppButtonScheme>()!;
+  AppButtonScheme get appButtonScheme => Theme.of(this).extension<AppButtonScheme>()!;
 }

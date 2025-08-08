@@ -3,8 +3,7 @@
 part of 'app_database.dart';
 
 // ignore_for_file: type=lint
-class $TodoTableTable extends TodoTable
-    with TableInfo<$TodoTableTable, TodoTableData> {
+class $TodoTableTable extends TodoTable with TableInfo<$TodoTableTable, TodoTableData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -285,8 +284,7 @@ typedef $$TodoTableTableUpdateCompanionBuilder =
       Value<DateTime?> createdAt,
     });
 
-class $$TodoTableTableFilterComposer
-    extends Composer<_$AppDatabase, $TodoTableTable> {
+class $$TodoTableTableFilterComposer extends Composer<_$AppDatabase, $TodoTableTable> {
   $$TodoTableTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -315,8 +313,7 @@ class $$TodoTableTableFilterComposer
   );
 }
 
-class $$TodoTableTableOrderingComposer
-    extends Composer<_$AppDatabase, $TodoTableTable> {
+class $$TodoTableTableOrderingComposer extends Composer<_$AppDatabase, $TodoTableTable> {
   $$TodoTableTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -345,8 +342,7 @@ class $$TodoTableTableOrderingComposer
   );
 }
 
-class $$TodoTableTableAnnotationComposer
-    extends Composer<_$AppDatabase, $TodoTableTable> {
+class $$TodoTableTableAnnotationComposer extends Composer<_$AppDatabase, $TodoTableTable> {
   $$TodoTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -354,8 +350,7 @@ class $$TodoTableTableAnnotationComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  GeneratedColumn<int> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
+  GeneratedColumn<int> get id => $composableBuilder(column: $table.id, builder: (column) => column);
 
   GeneratedColumn<String> get title =>
       $composableBuilder(column: $table.title, builder: (column) => column);
@@ -378,10 +373,7 @@ class $$TodoTableTableTableManager
           $$TodoTableTableAnnotationComposer,
           $$TodoTableTableCreateCompanionBuilder,
           $$TodoTableTableUpdateCompanionBuilder,
-          (
-            TodoTableData,
-            BaseReferences<_$AppDatabase, $TodoTableTable, TodoTableData>,
-          ),
+          (TodoTableData, BaseReferences<_$AppDatabase, $TodoTableTable, TodoTableData>),
           TodoTableData,
           PrefetchHooks Function()
         > {
@@ -390,10 +382,8 @@ class $$TodoTableTableTableManager
         TableManagerState(
           db: db,
           table: table,
-          createFilteringComposer: () =>
-              $$TodoTableTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$TodoTableTableOrderingComposer($db: db, $table: table),
+          createFilteringComposer: () => $$TodoTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () => $$TodoTableTableOrderingComposer($db: db, $table: table),
           createComputedFieldComposer: () =>
               $$TodoTableTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
@@ -420,9 +410,8 @@ class $$TodoTableTableTableManager
                 content: content,
                 createdAt: createdAt,
               ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
-              .toList(),
+          withReferenceMapper: (p0) =>
+              p0.map((e) => (e.readTable(table), BaseReferences(db, table, e))).toList(),
           prefetchHooksCallback: null,
         ),
       );
@@ -438,10 +427,7 @@ typedef $$TodoTableTableProcessedTableManager =
       $$TodoTableTableAnnotationComposer,
       $$TodoTableTableCreateCompanionBuilder,
       $$TodoTableTableUpdateCompanionBuilder,
-      (
-        TodoTableData,
-        BaseReferences<_$AppDatabase, $TodoTableTable, TodoTableData>,
-      ),
+      (TodoTableData, BaseReferences<_$AppDatabase, $TodoTableTable, TodoTableData>),
       TodoTableData,
       PrefetchHooks Function()
     >;
@@ -449,6 +435,5 @@ typedef $$TodoTableTableProcessedTableManager =
 class $AppDatabaseManager {
   final _$AppDatabase _db;
   $AppDatabaseManager(this._db);
-  $$TodoTableTableTableManager get todoTable =>
-      $$TodoTableTableTableManager(_db, _db.todoTable);
+  $$TodoTableTableTableManager get todoTable => $$TodoTableTableTableManager(_db, _db.todoTable);
 }

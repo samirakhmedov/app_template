@@ -197,7 +197,6 @@ class AppScopeStorageModule extends ScopeModule<AppScopeContainer> {
     dispose: (encryptionService) => SynchronousFuture(null),
   );
 
-
   /// {@macro app_scope_storage_module}
   AppScopeStorageModule(super.container);
 
@@ -240,7 +239,6 @@ class AppScopeThemeModule extends ScopeModule<AppScopeContainer> {
   late final _themeRepositoryDep = dep<IThemeRepository>(_createThemeRepository);
 
   late final _themeStorageDep = dep<IThemeStorage>(_createThemeStorage);
-
 
   /// {@macro app_scope_theme_module}
   AppScopeThemeModule(super.container);
@@ -292,7 +290,6 @@ class AppScopeDebugModule extends ScopeModule<AppScopeContainer> {
   );
 
   late final _debugStorageDep = dep<IDebugStorage>(_createDebugStorage);
-
 
   /// The raw base URI.
   String? get rawBaseUri => debugServiceDep.get.baseUri.value?.toString();
@@ -350,7 +347,6 @@ class AppScopeHttpModule extends ScopeModule<AppScopeContainer> {
     dispose: (factory) => factory.dispose(),
   );
 
-
   /// {@macro app_scope_http_module}
   AppScopeHttpModule(super.container);
 
@@ -394,7 +390,6 @@ class AppScopeShaderModule extends ScopeModule<AppScopeContainer> {
 
   late final _shaderRepositoryDep = dep<IShaderRepository>(_createShaderRepository);
 
-
   /// {@macro app_scope_shader_module}
   AppScopeShaderModule(super.container);
 
@@ -428,7 +423,6 @@ class AppScopeMemoryModule extends ScopeModule<AppScopeContainer> {
   );
 
   late final _memoryRepositoryDep = dep<IMemoryRepository>(_createMemoryRepository);
-
 
   /// {@macro app_scope_memory_module}
   AppScopeMemoryModule(super.container);

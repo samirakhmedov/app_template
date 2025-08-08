@@ -2,8 +2,11 @@ import 'dart:ui' as ui;
 
 import 'package:app_template/features/common/data/services/i_shader_service.dart';
 import 'package:app_template/features/common/domain/entities/shader_type.dart';
-import 'package:app_template/generated/assets.gen.dart';
 import 'package:flutter/foundation.dart';
+
+abstract interface class _Shaders {
+  static const shimmer = 'assets/shaders/shimmer.frag';
+}
 
 /// Extension methods for [ShaderType] to provide flutter_gen asset access.
 extension _ShaderTypeExtension on ShaderType {
@@ -11,7 +14,7 @@ extension _ShaderTypeExtension on ShaderType {
   String get assetPath {
     switch (this) {
       case ShaderType.shimmer:
-        return Assets.shaders.shimmer;
+        return _Shaders.shimmer;
     }
   }
 }
