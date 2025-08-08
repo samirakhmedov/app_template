@@ -30,7 +30,7 @@ final class SplashRepository extends BaseRepository implements ISplashRepository
   RequestOperation<void> initialize() => makeCall(() async {
     await Future.wait([
       _ipApi.getIp(),
-      db.select(db.todoItems).get(),
+      db.select(db.todoTable).get(),
     ]);
   });
 }

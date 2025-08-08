@@ -1,0 +1,8 @@
+name: app_template
+
+packages:
+  - packages/storage
+  - packages/network
+  - packages/database
+  - packages/api
+  - packages/uikit

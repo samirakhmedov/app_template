@@ -2,6 +2,7 @@ name: storage
 description: "Package with storage implementation."
 version: 1.0.0
 publish_to: none
+resolution: workspace
 
 environment:
   sdk: ^3.8.1

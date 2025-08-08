@@ -1,6 +1,7 @@
 name: network
 description: "Network package for the project"
 version: 1.0.0
+resolution: workspace
 
 environment:
   sdk: ^3.8.1
