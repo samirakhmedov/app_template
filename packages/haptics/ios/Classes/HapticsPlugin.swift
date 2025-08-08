@@ -1,4 +1,3 @@
-import CoreHaptics
 // ios/Classes/SwiftHapticPlugin.swift
 import Flutter
 import UIKit
@@ -48,7 +47,6 @@ public class HapticsPlugin: NSObject, FlutterPlugin {
     }
   }
 
-  private var engine: Any?  // CHHapticEngine for iOS 13+
 
   public static func register(with registrar: FlutterPluginRegistrar) {
     let channel = FlutterMethodChannel(
@@ -60,10 +58,8 @@ public class HapticsPlugin: NSObject, FlutterPlugin {
   public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
     switch call.method {
     case Constants.Methods.initMethod:
-      prepareHapticEngine()
       result(nil)
     case Constants.Methods.disposeMethod:
-      disposeHapticEngine()
       result(nil)
     case Constants.Methods.impact:
       guard let style = extractStringArgument(from: call, withKey: Constants.Keys.style) else {
@@ -103,42 +99,6 @@ public class HapticsPlugin: NSObject, FlutterPlugin {
       code: "INVALID_ARGUMENT", message: "Argument \(key) is missing or invalid", details: nil)
   }
 
-  // MARK: - Haptic Engine Setup
-
-  private func prepareHapticEngine() {
-    if #available(iOS 13.0, *) {
-      guard CHHapticEngine.capabilitiesForHardware().supportsHaptics else {
-        print("Haptics not supported on this device.")
-        return
-      }
-      do {
-        let hapticEngine = try CHHapticEngine()
-        hapticEngine.stoppedHandler = { reason in
-          print("Haptic engine stopped: \(reason)")
-        }
-        hapticEngine.resetHandler = { [weak self] in
-          print("Haptic engine reset. Restarting...")
-          do {
-            // The engine is guaranteed to be a CHHapticEngine here.
-            try (self?.engine as? CHHapticEngine)?.start()
-          } catch {
-            print("Failed to restart haptic engine: \(error)")
-          }
-        }
-        try hapticEngine.start()
-        self.engine = hapticEngine
-      } catch {
-        print("Error creating haptic engine: \(error.localizedDescription)")
-      }
-    }
-  }
-
-  private func disposeHapticEngine() {
-    if #available(iOS 13.0, *) {
-      (self.engine as? CHHapticEngine)?.stop()
-    }
-    self.engine = nil
-  }
 
   // MARK: - Argument Extraction Helper
 
@@ -199,57 +159,9 @@ public class HapticsPlugin: NSObject, FlutterPlugin {
   }
 
   private func triggerFeedback(type: String) {
-    switch type {
-    case Constants.Feedback.contextClick:
-      playHapticPattern(sharpness: 0.8, intensity: 0.8, duration: 0.1)
-    case Constants.Feedback.dragStart:
-      playHapticPattern(sharpness: 0.7, intensity: 1.0, duration: 0.15)
-    case Constants.Feedback.gestureEnd:
-      playHapticPattern(sharpness: 0.5, intensity: 0.6, duration: 0.05)
-    case Constants.Feedback.gestureStart:
-      playHapticPattern(sharpness: 0.8, intensity: 0.7, duration: 0.05)
-    case Constants.Feedback.textHandleMove:
-      playHapticPattern(sharpness: 0.5, intensity: 0.4, duration: 0.05)
-    case Constants.Feedback.virtualKeyRelease:
-      playHapticPattern(sharpness: 0.6, intensity: 0.3, duration: 0.05)
-    default:
-      return
-    }
+    // These Android-specific feedback types are not implemented on iOS
+    // They don't have equivalent system haptics, so we do nothing
+    return
   }
 
-  // MARK: - Core Haptics Player
-
-  private func playHapticPattern(sharpness: Float, intensity: Float, duration: TimeInterval) {
-    if #available(iOS 13.0, *) {
-      guard let engine = self.engine as? CHHapticEngine,
-        CHHapticEngine.capabilitiesForHardware().supportsHaptics
-      else {
-        return
-      }
-
-      do {
-        try engine.start()
-      } catch {
-        print("Failed to restart haptic engine: \(error)")
-        return
-      }
-
-      let sharpnessValue = CHHapticEventParameter(parameterID: .hapticSharpness, value: sharpness)
-      let intensityValue = CHHapticEventParameter(parameterID: .hapticIntensity, value: intensity)
-
-      let event = CHHapticEvent(
-        eventType: .hapticContinuous,
-        parameters: [sharpnessValue, intensityValue],
-        relativeTime: 0,
-        duration: duration)
-
-      do {
-        let pattern = try CHHapticPattern(events: [event], parameters: [])
-        let player = try engine.makePlayer(with: pattern)
-        try player.start(atTime: CHHapticTimeImmediate)
-      } catch {
-        print("Failed to play custom haptic pattern: \(error.localizedDescription)")
-      }
-    }
-  }
 }
