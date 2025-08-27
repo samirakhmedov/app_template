@@ -929,9 +929,11 @@ packages:
   secure_enclave:
     dependency: transitive
     description:
-      path: "packages/secure_enclave"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "88803a1f20ccb4b4f06da48c2ff142cc36fc39f9"
+      url: "https://github.com/samirakhmedov/secure_enclave_plus.git"
+    source: git
     version: "0.1.2"
   shared_preferences:
     dependency: transitive
