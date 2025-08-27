@@ -44,7 +44,6 @@ class HapticsPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
         object Notification {
             const val SUCCESS = "success"
-            const val WARNING = "warning"
             const val ERROR = "error"
         }
 
@@ -115,9 +114,7 @@ class HapticsPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     }
 
     private fun triggerSelection(view: View) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            view.performHapticFeedback(HapticFeedbackConstants.CLOCK_TICK)
-        }
+        view.performHapticFeedback(HapticFeedbackConstants.CLOCK_TICK)
     }
 
     private fun triggerFeedback(view: View, type: String?) {
@@ -126,7 +123,7 @@ class HapticsPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             Feedback.DRAG_START -> if (Build.VERSION.SDK_INT >= 34) HapticFeedbackConstants.DRAG_START else null
             Feedback.GESTURE_END -> if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) HapticFeedbackConstants.GESTURE_END else null
             Feedback.GESTURE_START -> if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) HapticFeedbackConstants.GESTURE_START else null
-            Feedback.TEXT_HANDLE_MOVE -> if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) HapticFeedbackConstants.TEXT_HANDLE_MOVE else null
+            Feedback.TEXT_HANDLE_MOVE -> if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) HapticFeedbackConstants.TEXT_HANDLE_MOVE else null
             Feedback.VIRTUAL_KEY_RELEASE -> if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) HapticFeedbackConstants.VIRTUAL_KEY_RELEASE else null
             else -> null
         }
