@@ -512,9 +512,11 @@ packages:
   haptics:
     dependency: "direct main"
     description:
-      path: "packages/haptics"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: f98e8a33d1184cb442802a7ca0489b6f1c5752ec
+      url: "https://github.com/samirakhmedov/haptics.git"
+    source: git
     version: "1.0.0"
   hotreloader:
     dependency: transitive
