@@ -32,7 +32,7 @@ class ThemeService implements IThemeService {
   Future<void> initialize() async {
     final savedMode = await _themeStorage.getThemeMode();
 
-    final converted = _themeModeConverter.convertReverse(savedMode ?? '');
+    final converted = _themeModeConverter.decode(savedMode ?? '');
 
     _themeModeNotifier = ValueNotifier(converted);
   }
@@ -41,7 +41,7 @@ class ThemeService implements IThemeService {
   Future<void> setThemeMode(ThemeMode mode) async {
     if (_themeModeNotifier.value == mode) return;
 
-    final converted = _themeModeConverter.convert(mode);
+    final converted = _themeModeConverter.encode(mode);
 
     await _themeStorage.setThemeMode(converted);
 

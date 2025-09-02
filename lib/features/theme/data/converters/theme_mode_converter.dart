@@ -1,21 +1,22 @@
-import 'package:app_template/core/architecture/data/converters/converter.dart';
+import 'dart:convert';
+
 import 'package:app_template/features/theme/domain/entities/theme_mode.dart';
 
 /// {@template theme_mode_converter}
 /// A converter for [ThemeMode].
 /// {@endtemplate}
-final class ThemeModeConverter extends ConverterToAndFrom<String, ThemeMode> {
+final class ThemeModeConverter extends Codec<ThemeMode, String> {
   @override
-  Converter<String, ThemeMode> get converter => const _ThemeModeToStringConverter();
+  Converter<String, ThemeMode> get decoder => const _StringToThemeModeConverter();
 
   @override
-  Converter<ThemeMode, String> get reverseConverter => const _StringToThemeModeConverter();
+  Converter<ThemeMode, String> get encoder => const _ThemeModeToStringConverter();
 
   /// {@macro theme_mode_converter}
   const ThemeModeConverter();
 }
 
-final class _ThemeModeToStringConverter extends Converter<String, ThemeMode> {
+final class _ThemeModeToStringConverter extends Converter<ThemeMode, String> {
   const _ThemeModeToStringConverter();
 
   @override
@@ -24,7 +25,7 @@ final class _ThemeModeToStringConverter extends Converter<String, ThemeMode> {
   }
 }
 
-final class _StringToThemeModeConverter extends Converter<ThemeMode, String> {
+final class _StringToThemeModeConverter extends Converter<String, ThemeMode> {
   const _StringToThemeModeConverter();
 
   @override
