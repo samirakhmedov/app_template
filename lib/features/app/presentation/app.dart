@@ -12,6 +12,7 @@ import 'package:app_template/features/theme/presentation/widgets/theme_component
 import 'package:app_template/generated/app_localizations.dart';
 import 'package:app_template/util/helpers/system_chrome_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_displaymode/flutter_displaymode.dart';
 import 'package:flutter_easy_dialogs/flutter_easy_dialogs.dart';
 import 'package:provider/provider.dart';
 import 'package:uikit/uikit.dart';
@@ -62,6 +63,7 @@ class _AppState extends State<App> {
   }
 
   Future<void> _initialize() async {
+    unawaited(FlutterDisplayMode.setHighRefreshRate());
     unawaited(SystemChromeUtil.enableSeamlessUI());
     unawaited(SystemChromeUtil.lockDeviceRotation());
     SystemChromeUtil.setDefaultSystemUIOverlayStyle();
