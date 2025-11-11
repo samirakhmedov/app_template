@@ -92,7 +92,10 @@ flutter:
   #         weight: 700
 
 # TODO: introduce accessibility package
-# TODO: test haptic on iOS
+# TODO: test precompilation options for assets: https://docs.flutter.dev/ui/assets/asset-transformation
+# TODO: built in FFI
+# TODO: mobile services switching script
+# TODO: state restoration for Bloc
 
 flutter_gen:
   output: lib/generated/
