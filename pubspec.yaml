@@ -96,6 +96,8 @@ flutter:
 # TODO: built in FFI
 # TODO: mobile services switching script
 # TODO: state restoration for Bloc
+# TODO: add Intl usage at localizations
+# TODO: export core and utils to separate packages
 
 flutter_gen:
   output: lib/generated/
