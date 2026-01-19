@@ -10,5 +10,8 @@ void main() {
 
   final environment = environmentRegistrar.build();
 
+  // TODO(samirakhmedov): implement shader warm up for all shaders
+  // PaintingBinding.shaderWarmUp = ShaderWarmUp.all;
+
   runApp(App(environment: environment));
 }
