@@ -1,9 +1,11 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:app_template/core/architecture/presentation/state/restorable_value_notifier.dart';
 import 'package:app_template/core/architecture/presentation/widgets/component.dart';
 import 'package:app_template/features/debug/presentation/widgets/rotation/rotation_layout.dart';
 import 'package:app_template/features/haptics/presentation/widgets/haptics_component.dart';
+import 'package:async/async.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
@@ -39,16 +41,18 @@ class RotationComponent extends Component<RotationViewModel, RotationLayout> {
 
 class _RotationComponentState
     extends ComponentState<RotationComponent, RotationViewModel, RotationLayout>
-    with SingleTickerProviderStateMixin, RestorationMixin
+    with TickerProviderStateMixin, RestorationMixin
     implements RotationViewModel, IRotationProvider {
   late final _angleState = DoubleValueNotifier(0);
 
-  int _lastHapticSegment = 0;
+  final _cache = AsyncCache.ephemeral();
 
+  int _lastHapticSegment = 0;
   Ticker? _momentumTicker;
   double _angularVelocity = 0;
   double? _lastAngle;
   int? _lastTimestamp;
+
   int? _lastMomentumTimestamp;
 
   @override
@@ -103,9 +107,27 @@ class _RotationComponentState
 
   @override
   void onPanEnd(DragEndDetails details) {
-    _lastMomentumTimestamp = DateTime.now().millisecondsSinceEpoch;
-    _momentumTicker?.dispose();
-    _momentumTicker = createTicker(_handleMomentumTick)..start();
+    unawaited(
+      _cache.fetch(() async {
+        _lastMomentumTimestamp = DateTime.now().millisecondsSinceEpoch;
+        _momentumTicker?.stop();
+        _momentumTicker?.dispose();
+
+        final completer = Completer();
+
+        WidgetsBinding.instance.addPostFrameCallback(
+          (timeStamp) {
+            _momentumTicker = createTicker(_handleMomentumTick);
+
+            unawaited(_momentumTicker?.start());
+
+            completer.complete();
+          },
+        );
+
+        return completer.future;
+      }),
+    );
   }
 
   @override
@@ -193,7 +215,8 @@ abstract class RotationViewModel implements ViewModel {
 
 enum _ResorationKeys {
   angle('angle'),
-  rotationTargetKey('rotation_target_key');
+  rotationTargetKey('rotation_target_key')
+  ;
 
   final String key;
 

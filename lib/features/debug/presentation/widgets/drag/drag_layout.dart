@@ -23,7 +23,7 @@ class DragLayout extends Layout<DragViewModel> {
         valueListenable: vm.offsetAnimation,
         builder: (context, value, child) {
           return Transform(
-            transform: Matrix4.identity()..translateByDouble(value.dx, value.dy, 0, 0),
+            transform: Matrix4.identity()..translateByDouble(value.dx, value.dy, 0, 1),
             alignment: Alignment.center,
             child: child,
           );

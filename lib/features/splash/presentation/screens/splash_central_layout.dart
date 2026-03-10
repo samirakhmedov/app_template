@@ -2,6 +2,7 @@ import 'package:app_template/core/architecture/presentation/widgets/layout.dart'
 import 'package:app_template/features/common/presentation/widgets/layout/height.dart';
 import 'package:app_template/features/common/presentation/widgets/layout/width.dart';
 import 'package:app_template/features/common/presentation/widgets/shimmer/shimmer_block.dart';
+import 'package:app_template/features/common/presentation/widgets/shimmer/shimmer_component.dart';
 import 'package:app_template/features/common/presentation/widgets/shimmer/shimmer_loading_component.dart';
 import 'package:app_template/features/splash/presentation/screens/splash_central_component.dart';
 import 'package:app_template/util/extensions/l10n.dart';
@@ -51,41 +52,43 @@ class _ShimmerCard extends StatelessWidget {
 
     final paddingGeneral = context.appSizesScheme.paddingGeneral;
 
-    return Card(
-      child: Padding(
-        padding: EdgeInsets.all(context.appSizesScheme.paddingMedium),
-        child: Column(
-          children: <Widget>[
-            Text(l10n.debugScreenShimmerTitle),
-            Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ShimmerLoadingComponent(
-                      isLoading: true,
-                      child: ShimmerBlock(width: 200, height: 50),
-                    ),
-                    Width(paddingGeneral),
-                    ShimmerLoadingComponent(
-                      isLoading: true,
-                      child: ShimmerBlock(width: 50, height: 50),
-                    ),
-                  ],
-                ),
-                Height(paddingGeneral),
-                ShimmerLoadingComponent(
-                  isLoading: true,
-                  child: ShimmerBlock(width: 300, height: 25),
-                ),
-                Height(paddingGeneral),
-                ShimmerLoadingComponent(
-                  isLoading: true,
-                  child: ShimmerBlock(width: 200, height: 50),
-                ),
-              ],
-            ),
-          ],
+    return ShimmerComponent(
+      child: Card(
+        child: Padding(
+          padding: EdgeInsets.all(context.appSizesScheme.paddingMedium),
+          child: Column(
+            children: <Widget>[
+              Text(l10n.debugScreenShimmerTitle),
+              Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ShimmerLoadingComponent(
+                        isLoading: true,
+                        child: ShimmerBlock(width: 200, height: 50),
+                      ),
+                      Width(paddingGeneral),
+                      ShimmerLoadingComponent(
+                        isLoading: true,
+                        child: ShimmerBlock(width: 50, height: 50),
+                      ),
+                    ],
+                  ),
+                  Height(paddingGeneral),
+                  ShimmerLoadingComponent(
+                    isLoading: true,
+                    child: ShimmerBlock(width: 300, height: 25),
+                  ),
+                  Height(paddingGeneral),
+                  ShimmerLoadingComponent(
+                    isLoading: true,
+                    child: ShimmerBlock(width: 200, height: 50),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
