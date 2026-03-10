@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:secure_enclave/secure_enclave.dart';
+import 'package:secure_enclave_plus/secure_enclave_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:storage/src/core/encryption/apple_encryption_service.dart';
 import 'package:storage/src/core/encryption/encryption_service.dart';
@@ -41,8 +41,8 @@ SharedPreferencesAsync createPreferences() => SharedPreferencesAsync();
 /// {@endtemplate}
 EncryptionService createEncryptionService() {
   return switch (defaultTargetPlatform) {
-    TargetPlatform.iOS || TargetPlatform.macOS => AppleEncryptionService(
-      secureEnclave: SecureEnclave(),
+    TargetPlatform.iOS => AppleEncryptionService(
+      secureEnclave: SecureEnclavePlus(),
     ),
     _ => NoEncryptionService(),
   };

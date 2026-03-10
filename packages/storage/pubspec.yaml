@@ -12,8 +12,8 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_secure_storage: 9.2.4
-  secure_enclave:
-    git: https://github.com/samirakhmedov/secure_enclave_plus.git
+  secure_enclave_plus:
+    git: git@github.com:samirakhmedov/secure_enclave_plus.git
   shared_preferences: 2.5.3
 
 dev_dependencies:

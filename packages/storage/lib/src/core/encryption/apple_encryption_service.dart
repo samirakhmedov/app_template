@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:secure_enclave/secure_enclave.dart';
+import 'package:secure_enclave_plus/secure_enclave_plus.dart';
 import 'package:storage/src/constants.dart';
 import 'package:storage/src/core/encryption/encryption_service.dart';
 
@@ -8,7 +8,7 @@ import 'package:storage/src/core/encryption/encryption_service.dart';
 /// An implementation of the encryption service for Apple devices.
 /// {@endtemplate}
 class AppleEncryptionService implements EncryptionService {
-  final SecureEnclave _secureEnclave;
+  final SecureEnclavePlus _secureEnclave;
 
   /// {@macro apple_encryption_service}
   const AppleEncryptionService({required SecureEnclave secureEnclave})
