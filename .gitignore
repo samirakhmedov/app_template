@@ -55,3 +55,7 @@ ios/DerivedData
 secrets
 android/keystore
 **/*.env
+
+# AI
+.claude/
+openspec/
