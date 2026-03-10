@@ -1,6 +1,22 @@
 {
-  "dart.flutterSdkPath": ".fvm/versions/3.32.4",
+  "dart.flutterSdkPath": ".fvm/versions/3.41.0",
   "dart.lineLength": 100,
+  "[dart]": {
+    "editor.rulers": [
+      100
+    ]
+  },
   "editor.formatOnSave": true,
-  "svg.preview.background": "black"
+  "makefile.configureOnOpen": false,
+  "debug.toolBarLocation": "commandCenter",
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.patterns": {
+    "pubspec.yaml": "pubspec_overrides.yaml,l10n.yaml,dart_test.yaml,devtools_options.yaml,build.yaml,analysis_options.yaml",
+    "pubspec.lock": ".packages,.flutter-plugins,.flutter-plugins-dependencies,.metadata",
+    "mason.yaml": ".mason, mason-lock.json",
+    "Podfile": "Podfile.lock",
+    "*.dart": "${capture}.g.dart,$(capture).freezed.dart",
+    ".env.default": ".env.dev,.env.prod"
+  },
+  "explorer.fileNesting.expand": false
 }
