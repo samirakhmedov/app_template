@@ -2,6 +2,7 @@ name: location_interface
 description: "Package with location interface."
 version: 1.0.0
 publish_to: none
+resolution: workspace
 
 environment:
-  sdk: ^3.8.1
+  sdk: 3.11.0

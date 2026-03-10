@@ -2,10 +2,11 @@ name: network
 description: "Network package for the project"
 version: 1.0.0
 resolution: workspace
+publish_to: none
 
 environment:
-  sdk: ^3.8.1
-  flutter: ">=1.17.0"
+  sdk: 3.11.0
+  flutter: 3.41.0
 
 dependencies:
   async: 2.13.0

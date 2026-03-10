@@ -10,7 +10,7 @@ Future<T?> showBottomSheet<T>(
 }) {
   return showCupertinoSheet<T>(
     context: context,
-    pageBuilder: content,
+    builder: content,
     enableDrag: enableDrag,
   );
 }

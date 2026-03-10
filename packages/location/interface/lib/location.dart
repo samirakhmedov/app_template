@@ -7,6 +7,7 @@ import 'dart:math';
 /// Интерфейс нужен для разделения сервисов получения локации (например, для Huawei и Google).
 ///
 /// Возвращает [Point] с координатами, где x - latitude, a y - longitude.
+// ignore: prefer-match-file-name
 abstract interface class LocationServiceInterface {
   /// Инициализировать сервис получения локации.
   Future<void> initialize();

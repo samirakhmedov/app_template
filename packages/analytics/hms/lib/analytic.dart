@@ -1,8 +1,10 @@
+import 'dart:async';
+
 import 'package:analytics_interface/analytics_plugin.dart';
 import 'package:huawei_analytics/huawei_analytics.dart';
 
-/// Пример реализации Пакета для HMS
-class AnalyticService implements AnalyticServiceInterface {
+/// Пример реализации Пакета для HMS.
+class Analytic implements AnalyticServiceInterface {
   /// Экземпляр аналитики Firebasae.
   late HMSAnalytics _instance;
 
@@ -16,13 +18,13 @@ class AnalyticService implements AnalyticServiceInterface {
   /// Отправить событие в Firebase.
   @override
   void logEvent({required String name, Map<String, Object>? params}) {
-    _instance.onEvent(name, params ?? {});
+    unawaited(_instance.onEvent(name, params ?? {}));
   }
 
   /// Устанавливает пользовательское свойство в указанное значение.
   @override
   void setUserId(String userId) {
-    _instance.setUserId(userId);
+    unawaited(_instance.setUserId(userId));
   }
 
   /// Устанавливает пользовательское свойство в указанное значение.

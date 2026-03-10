@@ -1,13 +1,12 @@
-name: location
+name: location_hms
 description: "Package with location implementation for HMS."
 version: 1.0.0
 publish_to: none
+resolution: workspace
 
 environment:
-  sdk: ">=3.1.0 <4.0.0"
-  flutter: ">=1.17.0"
+  sdk: 3.11.0
 
 dependencies:
   huawei_location: 6.14.2+301
   location_interface:
-    path: ../interface

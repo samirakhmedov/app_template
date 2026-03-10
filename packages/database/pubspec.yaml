@@ -1,10 +1,12 @@
 name: database
 description: "Package with database initialization and entities."
 version: 1.0.0
+publish_to: none
 resolution: workspace
 
+
 environment:
-  sdk: ^3.8.1
+  sdk: 3.11.0
 
 dependencies:
   drift: 2.26.1

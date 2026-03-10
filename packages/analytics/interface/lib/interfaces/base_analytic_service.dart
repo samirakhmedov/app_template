@@ -6,10 +6,10 @@ class BaseAnalyticService implements AnalyticServiceInterface {
   final Set<AnalyticServiceInterface> services;
 
   /// Конструктор сервиса аналитики.
-  BaseAnalyticService({required this.services});
+  const BaseAnalyticService({required this.services});
 
   @override
-  Future<void> init() => Future.wait(services.map((e) => e.init()));
+  Future<void> init() => Future.wait(services.map((service) => service.init()));
 
   @override
   void logEvent({required String name, Map<String, Object>? params}) {

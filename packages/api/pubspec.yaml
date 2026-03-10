@@ -1,11 +1,12 @@
 name: api
 description: "API package for the project"
 version: 1.0.0
+publish_to: none
 resolution: workspace
 
 environment:
-  sdk: ^3.8.1
-  flutter: ">=3.3.0"
+  sdk: 3.11.0
+  flutter: 3.41.0
 
 dependencies:
   dio: 5.8.0+1

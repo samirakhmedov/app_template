@@ -26,7 +26,6 @@ class SplashEntry extends FeatureEntry<ISplashScope> {
   DependenciesRegistrar<ISplashScope> scope(BuildContext context) {
     final scope = context.read<IAppScope>();
 
-    // ignore: avoid-undisposed-instances
     return SplashScopeRegistrar(scope.splashScope);
   }
 

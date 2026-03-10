@@ -1,12 +1,12 @@
-name: analytic
+name: analytics_gms
 description: "Package with analytics implementation for GMS."
 version: 1.0.0
 publish_to: none
+resolution: workspace
 
 environment:
-  sdk: ^3.8.1
+  sdk: 3.11.0
 
 dependencies:
-  analytics_interface:
-    path: ../interface
+  analytics_interface: 
   firebase_analytics: 11.5.2

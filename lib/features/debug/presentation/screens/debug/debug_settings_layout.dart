@@ -5,7 +5,6 @@ import 'package:app_template/features/common/presentation/widgets/layout/width.d
 import 'package:app_template/features/common/presentation/widgets/shimmer/shimmer_block.dart';
 import 'package:app_template/features/common/presentation/widgets/shimmer/shimmer_component.dart';
 import 'package:app_template/features/common/presentation/widgets/shimmer/shimmer_loading_component.dart';
-import 'package:app_template/features/common/presentation/widgets/snacks/snack_message_type.dart';
 import 'package:app_template/features/common/presentation/widgets/snacks/snack_queue_component.dart';
 import 'package:app_template/features/debug/presentation/screens/debug/debug_settings_component.dart';
 import 'package:app_template/features/debug/presentation/state/bloc/debug_bloc.dart';
@@ -74,9 +73,9 @@ class _SnackQueueButton extends StatelessWidget {
         child: AppPrimaryButton(
           onPressed: () => SnackQueueComponent.of(context).addSnack(
             context.l10n.debugScreenSnackTestMessage,
-            messageType: SnackMessageType.success,
+            messageType: .success,
           ),
-          size: AppButtonSize.small,
+          size: .small,
           child: Text(context.l10n.debugScreenSnackQueueTestButton),
         ),
       ),
@@ -96,7 +95,7 @@ class _EasterEggButton extends StatelessWidget {
         padding: EdgeInsets.all(context.appSizesScheme.paddingMedium),
         child: AppPrimaryButton(
           onPressed: vm.openEasterEgg,
-          size: AppButtonSize.small,
+          size: .small,
           child: Text(context.l10n.debugScreenEasterEggButton),
         ),
       ),
@@ -213,87 +212,87 @@ class _HapticFeedbackCard extends StatelessWidget {
               runSpacing: context.appSizesScheme.paddingSmall,
               children: <Widget>[
                 AppPrimaryButton(
-                  onPressed: () => HapticsComponent.of(context).impact(HapticImpactType.light),
-                  size: AppButtonSize.small,
+                  onPressed: () => HapticsComponent.of(context).impact(.light),
+                  size: .small,
                   child: Text(l10n.debugScreenHapticLightImpactButton),
                 ),
                 AppPrimaryButton(
-                  onPressed: () => HapticsComponent.of(context).impact(HapticImpactType.medium),
-                  size: AppButtonSize.small,
+                  onPressed: () => HapticsComponent.of(context).impact(.medium),
+                  size: .small,
                   child: Text(l10n.debugScreenHapticMediumImpactButton),
                 ),
                 AppPrimaryButton(
-                  onPressed: () => HapticsComponent.of(context).impact(HapticImpactType.heavy),
-                  size: AppButtonSize.small,
+                  onPressed: () => HapticsComponent.of(context).impact(.heavy),
+                  size: .small,
                   child: Text(l10n.debugScreenHapticHeavyImpactButton),
                 ),
                 AppPrimaryButton(
-                  onPressed: () => HapticsComponent.of(context).impact(HapticImpactType.soft),
-                  size: AppButtonSize.small,
+                  onPressed: () => HapticsComponent.of(context).impact(.soft),
+                  size: .small,
                   child: Text(l10n.debugScreenHapticSoftImpactButton),
                 ),
                 AppPrimaryButton(
-                  onPressed: () => HapticsComponent.of(context).impact(HapticImpactType.rigid),
-                  size: AppButtonSize.small,
+                  onPressed: () => HapticsComponent.of(context).impact(.rigid),
+                  size: .small,
                   child: Text(l10n.debugScreenHapticRigidImpactButton),
                 ),
                 AppPrimaryButton(
                   onPressed: () =>
                       HapticsComponent.of(context).notification(HapticNotificationType.success),
-                  size: AppButtonSize.small,
+                  size: .small,
                   child: Text(l10n.debugScreenHapticSuccessNotificationButton),
                 ),
                 AppPrimaryButton(
                   onPressed: () =>
                       HapticsComponent.of(context).notification(HapticNotificationType.error),
-                  size: AppButtonSize.small,
+                  size: .small,
                   child: Text(l10n.debugScreenHapticErrorNotificationButton),
                 ),
                 AppPrimaryButton(
                   onPressed: () =>
                       HapticsComponent.of(context).notification(HapticNotificationType.warning),
-                  size: AppButtonSize.small,
+                  size: .small,
                   child: Text(l10n.debugScreenHapticWarningNotificationButton),
                 ),
                 AppPrimaryButton(
                   onPressed: () => HapticsComponent.of(context).selection(),
-                  size: AppButtonSize.small,
+                  size: .small,
                   child: Text(l10n.debugScreenHapticSelectionHapticButton),
                 ),
                 AppPrimaryButton(
                   onPressed: () =>
-                      HapticsComponent.of(context).feedback(HapticFeedbackType.contextClick),
-                  size: AppButtonSize.small,
+                      HapticsComponent.of(context).feedback(.contextClick),
+                  size: .small,
                   child: Text(l10n.debugScreenHapticContextClickFeedbackButton),
                 ),
                 AppPrimaryButton(
                   onPressed: () =>
-                      HapticsComponent.of(context).feedback(HapticFeedbackType.dragStart),
-                  size: AppButtonSize.small,
+                      HapticsComponent.of(context).feedback(.dragStart),
+                  size: .small,
                   child: Text(l10n.debugScreenHapticDragStartFeedbackButton),
                 ),
                 AppPrimaryButton(
                   onPressed: () =>
-                      HapticsComponent.of(context).feedback(HapticFeedbackType.gestureEnd),
-                  size: AppButtonSize.small,
+                      HapticsComponent.of(context).feedback(.gestureEnd),
+                  size: .small,
                   child: Text(l10n.debugScreenHapticGestureEndFeedbackButton),
                 ),
                 AppPrimaryButton(
                   onPressed: () =>
-                      HapticsComponent.of(context).feedback(HapticFeedbackType.gestureStart),
-                  size: AppButtonSize.small,
+                      HapticsComponent.of(context).feedback(.gestureStart),
+                  size: .small,
                   child: Text(l10n.debugScreenHapticGestureStartFeedbackButton),
                 ),
                 AppPrimaryButton(
                   onPressed: () =>
-                      HapticsComponent.of(context).feedback(HapticFeedbackType.textHandleMove),
-                  size: AppButtonSize.small,
+                      HapticsComponent.of(context).feedback(.textHandleMove),
+                  size: .small,
                   child: Text(l10n.debugScreenHapticTextHandleMoveFeedbackButton),
                 ),
                 AppPrimaryButton(
                   onPressed: () =>
-                      HapticsComponent.of(context).feedback(HapticFeedbackType.virtualKeyRelease),
-                  size: AppButtonSize.small,
+                      HapticsComponent.of(context).feedback(.virtualKeyRelease),
+                  size: .small,
                   child: Text(l10n.debugScreenHapticVirtualKeyReleaseFeedbackButton),
                 ),
               ],

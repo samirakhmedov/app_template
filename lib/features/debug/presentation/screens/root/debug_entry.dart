@@ -25,7 +25,6 @@ class DebugEntry extends FeatureEntry<IDebugScope> {
   DependenciesRegistrar<IDebugScope> scope(BuildContext context) {
     final scope = context.read<IAppScope>();
 
-    // ignore: avoid-undisposed-instances
     return DebugScopeRegistrar(scope.debugScope);
   }
 }

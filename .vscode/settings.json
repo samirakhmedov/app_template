@@ -12,8 +12,9 @@
   "explorer.fileNesting.enabled": true,
   "explorer.fileNesting.patterns": {
     "pubspec.yaml": "pubspec_overrides.yaml,l10n.yaml,dart_test.yaml,devtools_options.yaml,build.yaml,analysis_options.yaml",
-    "pubspec.lock": ".packages,.flutter-plugins,.flutter-plugins-dependencies,.metadata",
+    ".gitignore": "pubspec.lock,.packages,.flutter-plugins,.flutter-plugins-dependencies,.metadata",
     "mason.yaml": ".mason, mason-lock.json",
+    "README.md": "CHANGELOG.md,LICENSE",
     "Podfile": "Podfile.lock",
     "*.dart": "${capture}.g.dart,$(capture).freezed.dart",
     ".env.default": ".env.dev,.env.prod"

@@ -2,10 +2,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:push_interface/push.dart';
 
 /// Firebase Push Service.
-final class PushService implements PushServiceInterface {
-  @override
-  Future<String?> getToken() => FirebaseMessaging.instance.getToken();
-
+final class Push implements PushServiceInterface {
   @override
   Stream<Notification> get pushStream => FirebaseMessaging.onMessage
       .map(
@@ -21,6 +18,15 @@ final class PushService implements PushServiceInterface {
         ),
       );
 
+  /// GMS notification services.
+  const Push();
+
+  @override
+  Future<void> dispose() => Future.value();
+
+  @override
+  Future<String?> getToken() => FirebaseMessaging.instance.getToken();
+
   @override
   Future<void> initialize() => Future.value();
 
@@ -30,7 +36,4 @@ final class PushService implements PushServiceInterface {
   @override
   Future<void> unsubscribeFromTopic(String topic) =>
       FirebaseMessaging.instance.unsubscribeFromTopic(topic);
-
-  @override
-  Future<void> dispose() => Future.value();
 }

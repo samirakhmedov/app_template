@@ -5,28 +5,25 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: 3.8.1
-  flutter: ">=3.3.0"
+  sdk: 3.11.0
+  flutter: 3.41.0
 
 dependencies:
-  # analytics_interface:
-  #   path: packages/analytics/interface
-  # analytic:
-  #   path: packages/analytics/gms
-  # push_interface:
-  #   path: packages/push/interface
-  # push:
-  #   path: packages/push/gms
-  # location_interface:
-  #   path: packages/location/interface
-  # location:
-  #   path: packages/location/gms
-  api: ^1.0.0
+  # analytics_interface: 
+  # analytics_gms: 
+  # analytics_hms: 
+  # push_interface: 
+  # push_gms: 
+  # push_hms: 
+  # location_interface: 
+  # location_gms: 
+  # location_hms: 
+  api:
   auto_route: 10.1.0+1
   bloc: 9.0.0
   bloc_concurrency: 0.3.0
   collection: 1.19.1
-  database: 1.0.0
+  database:
   flutter:
     sdk: flutter
   flutter_bloc: 9.1.1
@@ -38,18 +35,27 @@ dependencies:
   haptics:
     git: https://github.com/samirakhmedov/haptics.git
   intl: 0.20.2
-  network: 1.0.0
+  network:
   provider: 6.1.5
-  storage: 1.0.0
-  uikit: 1.0.0
+  storage:
+  uikit:
   vector_graphics: 1.1.19
   yx_scope: 1.0.2
 
 workspace:
-  - packages/storage
-  - packages/network
-  - packages/database
+  - packages/analytics/gms
+  - packages/analytics/hms
+  - packages/analytics/interface
   - packages/api
+  - packages/database
+  - packages/location/gms
+  - packages/location/hms
+  - packages/location/interface
+  - packages/network
+  - packages/push/gms
+  - packages/push/hms
+  - packages/push/interface
+  - packages/storage
   - packages/uikit
 
 dev_dependencies:
@@ -94,10 +100,8 @@ flutter:
 # TODO: introduce accessibility package
 # TODO: test precompilation options for assets: https://docs.flutter.dev/ui/assets/asset-transformation
 # TODO: built in FFI
-# TODO: mobile services switching script
 # TODO: state restoration for Bloc
 # TODO: add Intl usage at localizations
-# TODO: export core and utils to separate packages
 # TODO: true monorepo support
 # TODO: implement shader warm up for all shaders
 

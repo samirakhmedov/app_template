@@ -1,6 +1,8 @@
 name: analytics_interface
 description: "Package with analytics interface."
+publish_to: none
 version: 1.0.0
+resolution: workspace
 
 environment:
-  sdk: ^3.8.1
+  sdk: 3.11.0

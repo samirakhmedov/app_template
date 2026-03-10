@@ -23,7 +23,7 @@ abstract class AppThemeData {
     ),
     scaffoldBackgroundColor: _lightColorScheme.background,
     appBarTheme: AppBarTheme(
-      color: _lightColorScheme.primary,
+      backgroundColor: _lightColorScheme.primary,
       elevation: 0,
       iconTheme: IconThemeData(
         color: _lightColorScheme.onPrimary,
@@ -59,7 +59,7 @@ abstract class AppThemeData {
     ),
     scaffoldBackgroundColor: _darkColorScheme.background,
     appBarTheme: AppBarTheme(
-      color: _lightColorScheme.primary,
+      backgroundColor: _lightColorScheme.primary,
       elevation: 0,
       iconTheme: IconThemeData(
         color: _lightColorScheme.onPrimary,

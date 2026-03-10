@@ -4,7 +4,10 @@ import 'package:geolocator/geolocator.dart';
 import 'package:location_interface/location.dart';
 
 /// Google Location Service.
-class LocationService implements LocationServiceInterface {
+class Location implements LocationServiceInterface {
+  /// GMS implementation of location services.
+  const Location();
+
   @override
   Future<void> initialize() => Future.value();
 
@@ -12,7 +15,7 @@ class LocationService implements LocationServiceInterface {
   Future<Point?> getLastKnownLocation() async {
     final res = await Geolocator.getLastKnownPosition().timeout(kLocationRequestTimeLimit);
 
-    return res != null ? _toPoint(res) : null;
+    return res == null ? null : _toPoint(res);
   }
 
   @override

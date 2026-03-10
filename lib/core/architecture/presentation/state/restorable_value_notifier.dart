@@ -52,6 +52,6 @@ abstract class RestorableValueNotifier<T> extends RestorableProperty<T>
 
   @override
   void initWithValue(T val) {
-    this.value = val;
+    value = val;
   }
 }

@@ -1,8 +1,10 @@
+import 'dart:async';
+
 import 'package:analytics_interface/analytics_plugin.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 
 /// Сервис аналитики для GMS.
-class AnalyticsService implements AnalyticServiceInterface {
+class Analytics implements AnalyticServiceInterface {
   late final FirebaseAnalytics _instance;
 
   @override
@@ -13,13 +15,13 @@ class AnalyticsService implements AnalyticServiceInterface {
   /// Отправить событие в Firebase.
   @override
   void logEvent({required String name, Map<String, Object>? params}) {
-    _instance.logEvent(name: name, parameters: params ?? {});
+    unawaited(_instance.logEvent(name: name, parameters: params ?? {}));
   }
 
   /// Устанавливает пользовательское свойство в указанное значение.
   @override
   void setUserId(String userId) {
-    _instance.setUserId(id: userId);
+    unawaited(_instance.setUserId(id: userId));
   }
 
   /// Устанавливает пользовательское свойство в указанное значение.

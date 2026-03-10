@@ -20,8 +20,8 @@ linter:
 
 analyzer:
   exclude:
-    - lib/**/*.g.dart
-    - lib/**/*.freezed.dart
+    - packages/**/*.g.dart
+    - packages/**/*.freezed.dart
     - lib/assets/**
     - tools/mason/**/__brick__/**
 
