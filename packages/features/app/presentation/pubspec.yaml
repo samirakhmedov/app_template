@@ -1,0 +1,19 @@
+name: app_presentation
+description: "App presentation layer - widgets, layouts, and UI primitives."
+publish_to: none
+version: 1.0.0
+resolution: workspace
+
+environment:
+  sdk: 3.11.0
+  flutter: 3.41.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  auto_route: 10.1.0+1
+  flutter_bloc: 9.1.1
+  provider: 6.1.5
+  uikit:
+  yx_scope: 1.0.2
+  app_domain: 

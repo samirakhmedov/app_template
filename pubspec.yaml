@@ -51,6 +51,9 @@ workspace:
   - packages/analytics/interface
   - packages/api
   - packages/database
+  - packages/features/app/data
+  - packages/features/app/domain
+  - packages/features/app/presentation
   - packages/location/gms
   - packages/location/hms
   - packages/location/interface
