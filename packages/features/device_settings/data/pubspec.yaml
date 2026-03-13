@@ -1,5 +1,5 @@
-name: app_data
-description: "App data layer - implementations and repositories."
+name: device_settings_data
+description: "Device settings data layer - services, repositories, and converters."
 publish_to: none
 version: 1.0.0
 resolution: workspace
@@ -10,7 +10,8 @@ environment:
 
 dependencies:
   app_domain:
+  device_settings_domain:
   flutter:
     sdk: flutter
   flutter_displaymode: 0.6.0
-  network:
+  app_data:

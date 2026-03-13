@@ -54,6 +54,9 @@ workspace:
   - packages/features/app/data
   - packages/features/app/domain
   - packages/features/app/presentation
+  - packages/features/device_settings/data
+  - packages/features/device_settings/domain
+  - packages/features/device_settings/presentation
   - packages/location/gms
   - packages/location/hms
   - packages/location/interface

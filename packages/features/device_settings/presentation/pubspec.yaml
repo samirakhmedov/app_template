@@ -1,0 +1,17 @@
+name: device_settings_presentation
+description: "Device settings presentation layer - widgets and view models."
+publish_to: none
+version: 1.0.0
+resolution: workspace
+
+environment:
+  sdk: 3.11.0
+  flutter: 3.41.0
+
+dependencies:
+  device_settings_domain:
+  app_presentation:
+  flutter:
+    sdk: flutter
+  flutter_bloc: 9.1.1
+  provider: 6.1.5
