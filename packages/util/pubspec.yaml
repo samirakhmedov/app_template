@@ -1,0 +1,13 @@
+name: util
+description: "Utility package with extensions, fields, and helpers."
+publish_to: none
+version: 1.0.0
+resolution: workspace
+
+environment:
+  sdk: 3.11.0
+  flutter: 3.41.0
+
+dependencies:
+  flutter:
+    sdk: flutter

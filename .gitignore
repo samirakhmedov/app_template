@@ -61,3 +61,4 @@ android/keystore
 # AI
 .claude/
 openspec/
+.opencode/

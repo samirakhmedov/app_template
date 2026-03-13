@@ -44,6 +44,8 @@ dependencies:
   yx_scope: 1.0.2
 
 workspace:
+  - packages/core
+  - packages/util
   - packages/analytics/gms
   - packages/analytics/hms
   - packages/analytics/interface
