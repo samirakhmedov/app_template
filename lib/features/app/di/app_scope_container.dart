@@ -292,7 +292,7 @@ class AppScopeDebugModule extends ScopeModule<AppScopeContainer> {
   late final _debugStorageDep = dep<IDebugStorage>(_createDebugStorage);
 
   /// The raw base URI.
-  String? get rawBaseUri => debugServiceDep.get.baseUri.value?.toString();
+  String? get rawBaseUri => debugServiceDep.get.baseUri?.toString();
 
   /// {@macro app_scope_debug_module}
   AppScopeDebugModule(super.container);

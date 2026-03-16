@@ -1,3 +1,13 @@
-export 'src/screens/debug_layout.dart';
-export 'src/screens/debug_component.dart';
 export 'src/root/debug_entry.dart';
+export 'src/root/debug_routes.dart';
+export 'src/screens/debug_layout.dart';
+export 'src/screens/debug_settings_component.dart';
+export 'src/screens/easter_egg/easter_egg_component.dart';
+export 'src/screens/easter_egg/easter_egg_layout.dart';
+export 'src/widgets/app_flutter_logo.dart';
+export 'src/widgets/debug_wrapper_widget.dart';
+export 'src/widgets/drag/drag_component.dart';
+export 'src/widgets/drag/drag_layout.dart';
+export 'src/widgets/rotation/rotation_component.dart';
+export 'src/widgets/rotation/rotation_layout.dart';
+export 'src/widgets/template_background_widget.dart';

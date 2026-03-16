@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:app_domain/app_domain.dart';
 import 'package:bloc/bloc.dart';
+import 'package:collection/collection.dart';
 import 'package:core/core.dart';
 import 'package:debug_domain/debug_domain.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';

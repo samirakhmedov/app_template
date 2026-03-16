@@ -1,0 +1,16 @@
+name: debug_presentation_stub
+description: "Debug presentation stub — drop-in replacement with no debug UI."
+publish_to: none
+version: 1.0.0
+resolution: workspace
+
+environment:
+  sdk: 3.11.0
+  flutter: 3.41.0
+
+dependencies:
+  app_presentation:
+  auto_route: 10.1.0+1
+  debug_di_stub:
+  flutter:
+    sdk: flutter

@@ -11,6 +11,7 @@ environment:
 dependencies:
   theme_domain:
   app_domain:
+  app_data:
   storage:
   flutter:
     sdk: flutter

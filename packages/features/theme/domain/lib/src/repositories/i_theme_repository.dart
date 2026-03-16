@@ -1,7 +1,7 @@
-import 'package:app_domain/src/entities/request_operation.dart';
-import 'package:flutter/foundation.dart';
+import 'package:app_domain/app_domain.dart';
+import 'package:theme_domain/theme_domain.dart';
 
 abstract interface class IThemeRepository {
-  ValueListenable<ThemeMode> get themeMode;
+  ThemeMode get themeMode;
   RequestOperation<void> setThemeMode(ThemeMode mode);
 }

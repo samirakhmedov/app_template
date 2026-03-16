@@ -1,0 +1,19 @@
+name: di_hms
+description: "App DI HMS — Huawei Mobile Services dependency factories."
+publish_to: none
+version: 1.0.0
+resolution: workspace
+
+environment:
+  sdk: 3.11.0
+  flutter: 3.41.0
+
+dependencies:
+  analytics_hms:
+  analytics_interface:
+  flutter:
+    sdk: flutter
+  location_hms:
+  location_interface:
+  push_hms:
+  push_interface:

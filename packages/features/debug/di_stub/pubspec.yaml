@@ -1,0 +1,15 @@
+name: debug_di_stub
+description: "Debug DI stub — drop-in replacement with no debug logic."
+publish_to: none
+version: 1.0.0
+resolution: workspace
+
+environment:
+  sdk: 3.11.0
+  flutter: 3.41.0
+
+dependencies:
+  app_presentation:
+  flutter:
+    sdk: flutter
+  yx_scope: 1.0.2

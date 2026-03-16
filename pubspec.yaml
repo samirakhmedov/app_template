@@ -20,6 +20,7 @@ dependencies:
   # location_hms: 
   api:
   async: ^2.13.0
+  app_assets:
   auto_route: 10.1.0+1
   bloc: 9.0.0
   bloc_concurrency: 0.3.0
@@ -46,14 +47,19 @@ dependencies:
 workspace:
   - packages/core
   - packages/util
-  - packages/analytics/gms
-  - packages/analytics/hms
-  - packages/analytics/interface
-  - packages/api
-  - packages/database
+  - packages/data/analytics/gms
+  - packages/data/analytics/hms
+  - packages/data/analytics/interface
+  - packages/data/api
+  - packages/data/database
+  - packages/features/app/assets
   - packages/features/app/data
   - packages/features/app/domain
   - packages/features/app/presentation
+  - packages/features/app/di/core
+  - packages/features/app/di/gms
+  - packages/features/app/di/hms
+  - packages/features/app/router
   - packages/features/device_settings/data
   - packages/features/device_settings/domain
   - packages/features/device_settings/presentation
@@ -65,18 +71,26 @@ workspace:
   - packages/features/theme/presentation
   - packages/features/splash/data
   - packages/features/splash/domain
+  - packages/features/splash/di
   - packages/features/splash/presentation
   - packages/features/debug/data
+  - packages/features/debug/di
+  - packages/features/debug/di_stub
   - packages/features/debug/domain
   - packages/features/debug/presentation
-  - packages/location/gms
-  - packages/location/hms
-  - packages/location/interface
-  - packages/network
-  - packages/push/gms
-  - packages/push/hms
-  - packages/push/interface
-  - packages/storage
+  - packages/features/debug/presentation_stub
+  - packages/features/haptics/data
+  - packages/features/haptics/di
+  - packages/features/haptics/domain
+  - packages/features/haptics/presentation
+  - packages/data/location/gms
+  - packages/data/location/hms
+  - packages/data/location/interface
+  - packages/data/network
+  - packages/data/push/gms
+  - packages/data/push/hms
+  - packages/data/push/interface
+  - packages/data/storage
   - packages/uikit
 
 dev_dependencies:
@@ -96,12 +110,6 @@ flutter:
   generate: true
   default-flavor: prodGms
   uses-material-design: false
-
-  assets:
-    - assets/resources/vectors/
-
-  shaders:
-    - assets/shaders/shimmer.frag
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
@@ -125,7 +133,3 @@ flutter:
 # TODO: add Intl usage at localizations
 # TODO: true monorepo support
 # TODO: implement shader warm up for all shaders
-
-flutter_gen:
-  output: lib/generated/
-  line_length: 100

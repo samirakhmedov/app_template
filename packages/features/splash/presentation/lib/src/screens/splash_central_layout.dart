@@ -1,4 +1,6 @@
+import 'package:app_assets/app_assets.dart';
 import 'package:app_presentation/app_presentation.dart';
+import 'package:common_presentation/common_presentation.dart';
 import 'package:flutter/material.dart';
 import 'package:splash_presentation/splash_presentation.dart';
 import 'package:uikit/uikit.dart';
@@ -42,17 +44,16 @@ class _ShimmerCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = context.l10n;
-
     final paddingGeneral = context.appSizesScheme.paddingGeneral;
 
     return ShimmerComponent(
+      shimmerShaderPath: AppShaders.shimmerFrag,
       child: Card(
         child: Padding(
           padding: EdgeInsets.all(context.appSizesScheme.paddingMedium),
           child: Column(
             children: <Widget>[
-              Text(l10n.debugScreenShimmerTitle),
+              Text(context.l10n.debugScreenShimmerTitle),
               Column(
                 children: [
                   Row(

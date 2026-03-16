@@ -1,7 +1,6 @@
 import 'dart:async';
 
-import 'package:app_template/features/debug/data/services/i_debug_service.dart';
-import 'package:flutter/foundation.dart';
+import 'package:debug_data/debug_data.dart';
 import 'package:storage/storage.dart';
 
 /// {@template debug_service}
@@ -11,32 +10,30 @@ class DebugService implements IDebugService {
   /// The debug storage.
   final IDebugStorage _debugStorage;
 
-  final _baseUri = ValueNotifier<Uri?>(null);
+  Uri? _baseUri;
 
   @override
-  ValueListenable<Uri?> get baseUri => _baseUri;
+  Uri? get baseUri => _baseUri;
 
   /// {@macro debug_service}
   DebugService({required IDebugStorage debugStorage}) : _debugStorage = debugStorage;
 
   @override
   Future<void> dispose() async {
-    unawaited(_debugStorage.setBaseUri(_baseUri.value?.toString() ?? ''));
-
-    _baseUri.dispose();
+    unawaited(_debugStorage.setBaseUri(_baseUri?.toString() ?? ''));
   }
 
   @override
   Future<void> initialize() async {
     final uri = await _debugStorage.getBaseUri();
 
-    _baseUri.value = Uri.tryParse(uri ?? '');
+    _baseUri = Uri.tryParse(uri ?? '');
   }
 
   @override
   Future<void> setBaseUri(Uri uri) async {
     await _debugStorage.setBaseUri(uri.toString());
 
-    _baseUri.value = uri;
+    _baseUri = uri;
   }
 }

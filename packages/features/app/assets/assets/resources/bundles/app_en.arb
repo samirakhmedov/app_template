@@ -1,0 +1,137 @@
+{
+    "@@locale": "en",
+    "commonAtLeastSymbols": "At least {symbols} symbols",
+    "@commonAtLeastSymbols": {
+        "description": "The message displayed when the user has not entered the required number of symbols.",
+        "placeholders": {
+            "symbols": {
+                "type": "int",
+                "description": "The number of symbols required."
+            }
+        }
+    },
+    "commonInvalidEmail": "Invalid email",
+    "@commonInvalidEmail": {
+        "description": "The message displayed when the user has entered an invalid email."
+    },
+    "commonRequiredField": "Required field",
+    "@commonRequiredField": {
+        "description": "The message displayed when the user has not entered a required field."
+    },
+    "commonInvalidLink": "Invalid link",
+    "@commonInvalidLink": {
+        "description": "The message displayed when the user has entered an invalid link."
+    },
+    "commonInvalidName": "Invalid name",
+    "@commonInvalidName": {
+        "description": "The message displayed when the user has entered an invalid name."
+    },
+    "debugScreenServerSubtitle": "Server",
+    "@debugScreenServerSubtitle": {
+        "description": "Subtitle for the server switch section of the debug screen."
+    },
+    "debugScreenProxySubtitle": "Proxy settings",
+    "@debugScreenProxySubtitle": {
+        "description": "Subtitle for the proxy configuration section of the debug screen."
+    },
+    "debugScreenProxyInfo": "Enter a proxy URL to intercept network traffic for debugging purposes.",
+    "@debugScreenProxyInfo": {
+        "description": "Supporting information that explains why the proxy URL is needed."
+    },
+    "debugScreenProxyEditTextLabel": "Proxy URL",
+    "@debugScreenProxyEditTextLabel": {
+        "description": "Label for the text field where the user enters the proxy URL."
+    },
+    "debugScreenProxyConnectButton": "Connect",
+    "@debugScreenProxyConnectButton": {
+        "description": "Text for the button that submits the proxy URL and attempts to connect."
+    },
+    "debugScreenShimmerTitle": "Shimmer Effect",
+    "@debugScreenShimmerTitle": {
+        "description": "Title for the shimmer effect demonstration section."
+    },
+    "debugScreenHapticFeedbackTitle": "Haptic Feedback",
+    "@debugScreenHapticFeedbackTitle": {
+        "description": "Title for the haptic feedback testing section."
+    },
+    "debugScreenHapticLightImpactButton": "Light Impact",
+    "@debugScreenHapticLightImpactButton": {
+        "description": "Button text for triggering a light haptic impact."
+    },
+    "debugScreenHapticMediumImpactButton": "Medium Impact",
+    "@debugScreenHapticMediumImpactButton": {
+        "description": "Button text for triggering a medium haptic impact."
+    },
+    "debugScreenHapticHeavyImpactButton": "Heavy Impact",
+    "@debugScreenHapticHeavyImpactButton": {
+        "description": "Button text for triggering a heavy haptic impact."
+    },
+    "debugScreenHapticSoftImpactButton": "Soft Impact",
+    "@debugScreenHapticSoftImpactButton": {
+        "description": "Button text for triggering a soft haptic impact."
+    },
+    "debugScreenHapticRigidImpactButton": "Rigid Impact",
+    "@debugScreenHapticRigidImpactButton": {
+        "description": "Button text for triggering a rigid haptic impact."
+    },
+    "debugScreenHapticConfirmFeedbackButton": "Confirm Feedback",
+    "@debugScreenHapticConfirmFeedbackButton": {
+        "description": "Button text for triggering a confirm feedback haptic effect."
+    },
+    "debugScreenHapticRejectFeedbackButton": "Reject Feedback",
+    "@debugScreenHapticRejectFeedbackButton": {
+        "description": "Button text for triggering a reject feedback haptic effect."
+    },
+    "debugScreenHapticSuccessNotificationButton": "Success Notification",
+    "@debugScreenHapticSuccessNotificationButton": {
+        "description": "Button text for triggering a success notification haptic effect."
+    },
+    "debugScreenHapticErrorNotificationButton": "Error Notification",
+    "@debugScreenHapticErrorNotificationButton": {
+        "description": "Button text for triggering an error notification haptic effect."
+    },
+    "debugScreenHapticWarningNotificationButton": "Warning Notification",
+    "@debugScreenHapticWarningNotificationButton": {
+        "description": "Button text for triggering a warning notification haptic effect."
+    },
+    "debugScreenHapticSelectionHapticButton": "Selection Haptic",
+    "@debugScreenHapticSelectionHapticButton": {
+        "description": "Button text for triggering a selection haptic effect."
+    },
+    "debugScreenHapticContextClickFeedbackButton": "Context Click Feedback",
+    "@debugScreenHapticContextClickFeedbackButton": {
+        "description": "Button text for triggering a context click feedback haptic effect."
+    },
+    "debugScreenHapticDragStartFeedbackButton": "Drag Start Feedback",
+    "@debugScreenHapticDragStartFeedbackButton": {
+        "description": "Button text for triggering a drag start feedback haptic effect."
+    },
+    "debugScreenHapticGestureEndFeedbackButton": "Gesture End Feedback",
+    "@debugScreenHapticGestureEndFeedbackButton": {
+        "description": "Button text for triggering a gesture end feedback haptic effect."
+    },
+    "debugScreenHapticGestureStartFeedbackButton": "Gesture Start Feedback",
+    "@debugScreenHapticGestureStartFeedbackButton": {
+        "description": "Button text for triggering a gesture start feedback haptic effect."
+    },
+    "debugScreenHapticTextHandleMoveFeedbackButton": "Text Handle Move Feedback",
+    "@debugScreenHapticTextHandleMoveFeedbackButton": {
+        "description": "Button text for triggering a text handle move feedback haptic effect."
+    },
+    "debugScreenHapticVirtualKeyReleaseFeedbackButton": "Virtual Key Release Feedback",
+    "@debugScreenHapticVirtualKeyReleaseFeedbackButton": {
+        "description": "Button text for triggering a virtual key release feedback haptic effect."
+    },
+    "debugScreenEasterEggButton": "Easter Egg",
+    "@debugScreenEasterEggButton": {
+        "description": "Button text for triggering the easter egg feature."
+    },
+    "debugScreenSnackQueueTestButton": "Snack Queue Test",
+    "@debugScreenSnackQueueTestButton": {
+        "description": "Button text for a button that adds a test snack to the queue."
+    },
+    "debugScreenSnackTestMessage": "Test",
+    "@debugScreenSnackTestMessage": {
+        "description": "Snack message text for testing the snack queue."
+    }
+}

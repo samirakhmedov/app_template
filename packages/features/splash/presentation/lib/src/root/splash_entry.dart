@@ -1,16 +1,14 @@
-import 'package:app_template/core/architecture/di/dependencies_registrar.dart';
-import 'package:app_template/core/architecture/presentation/widgets/feature_entry.dart';
-import 'package:app_template/features/app/di/i_app_scope.dart';
-import 'package:app_template/features/app/presentation/app_startup_layout.dart';
-import 'package:app_template/features/splash/di/i_splash_scope.dart';
-import 'package:app_template/features/splash/di/splash_scope_registrar.dart';
+import 'package:app_presentation/app_presentation.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/single_child_widget.dart';
+import 'package:splash_di/splash_di.dart';
 
 /// {@template splash_entry}
 /// A feature entry for the splash screen.
 /// {@endtemplate}
+@RoutePage()
 class SplashEntry extends FeatureEntry<ISplashScope> {
   /// {@macro splash_entry}
   const SplashEntry({super.key});
@@ -22,12 +20,11 @@ class SplashEntry extends FeatureEntry<ISplashScope> {
 
   @override
   DependenciesRegistrar<ISplashScope> scope(BuildContext context) {
-    final scope = context.read<IAppScope>();
+    final parent = context.read<ISplashParentScope>();
 
-    return SplashScopeRegistrar(scope.splashScope);
+    return SplashScopeRegistrar(SplashScopeHolder(parent));
   }
 
   @override
-  WidgetBuilder get placeholder =>
-      (context) => const AppStartupLayout();
+  WidgetBuilder get placeholder => (context) => const AppStartupLayout();
 }

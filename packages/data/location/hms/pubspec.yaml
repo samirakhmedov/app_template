@@ -8,5 +8,7 @@ environment:
   sdk: 3.11.0
 
 dependencies:
+  flutter:
+    sdk: flutter
   huawei_location: 6.14.2+301
   location_interface:
