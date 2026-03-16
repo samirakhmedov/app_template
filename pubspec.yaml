@@ -57,6 +57,18 @@ workspace:
   - packages/features/device_settings/data
   - packages/features/device_settings/domain
   - packages/features/device_settings/presentation
+  - packages/features/common/data
+  - packages/features/common/domain
+  - packages/features/common/presentation
+  - packages/features/theme/data
+  - packages/features/theme/domain
+  - packages/features/theme/presentation
+  - packages/features/splash/data
+  - packages/features/splash/domain
+  - packages/features/splash/presentation
+  - packages/features/debug/data
+  - packages/features/debug/domain
+  - packages/features/debug/presentation
   - packages/location/gms
   - packages/location/hms
   - packages/location/interface

@@ -1,0 +1,19 @@
+name: debug_presentation
+description: "Debug feature presentation layer - widgets and screens."
+publish_to: none
+version: 1.0.0
+resolution: workspace
+
+environment:
+  sdk: 3.11.0
+  flutter: 3.41.0
+
+dependencies:
+  debug_domain:
+  app_presentation:
+  flutter:
+    sdk: flutter
+  flutter_bloc: 9.1.1
+
+dev_dependencies:
+  build_runner: 2.5.4
