@@ -102,5 +102,6 @@ dev_dependencies:
   surf_widget_test_composer: 0.0.6
   vector_graphics_compiler: 1.1.17
 
-# TODO: introduce accessibility package
-# TODO: built in FFI
+# TODO: introduce accessibility package (components for buttons, texts, system events, etc)
+# TODO: built in FFI (Rust?)
+# TODO: remove Urls enum from non-debug builds
