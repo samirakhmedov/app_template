@@ -1,0 +1,35 @@
+// Information about the signature of the application
+// https://developer.android.com/studio/publish/app-signing#secure-shared-keystore
+
+android {
+    signingConfigs {
+        prod {
+            apply from: '../keystore/keystoreConfig.gradle'
+
+            keyAlias prodKeystoreConfig.keyAlias
+            keyPassword prodKeystoreConfig.keyPassword
+            storeFile file(prodKeystoreConfig.storeFile)
+            storePassword prodKeystoreConfig.storePassword
+        }
+
+        dev {
+            apply from: '../keystore/keystoreConfig.gradle'
+
+            keyAlias devKeystoreConfig.keyAlias
+            keyPassword devKeystoreConfig.keyPassword
+            storeFile file(devKeystoreConfig.storeFile)
+            storePassword devKeystoreConfig.storePassword
+        }
+
+        huawei {
+            apply from: '../keystore/keystoreConfig.gradle'
+
+            keyAlias huaweiKeystoreConfig.keyAlias
+            keyPassword huaweiKeystoreConfig.keyPassword
+            storeFile file(huaweiKeystoreConfig.storeFile)
+            storePassword huaweiKeystoreConfig.storePassword
+            enableV1Signing true
+            enableV2Signing true
+        }
+    }
+}

@@ -32,6 +32,9 @@ dependencies:
   uikit:
 
 workspace:
+  - apps/basic
+  - apps/huawei
+  - apps/debug
   - packages/core
   - packages/util
   - packages/data/analytics/gms
@@ -48,6 +51,7 @@ workspace:
   - packages/features/app/di/hms
   - packages/features/app/di/scope
   - packages/features/app/router
+  - packages/features/app/target
   - packages/features/device_settings/data
   - packages/features/device_settings/di
   - packages/features/device_settings/domain

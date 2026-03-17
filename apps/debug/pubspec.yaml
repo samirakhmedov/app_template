@@ -1,0 +1,25 @@
+name: app_debug
+description: "App Template — GMS debug build with real debug UI."
+publish_to: none
+version: 1.0.0+1
+resolution: workspace
+
+environment:
+  sdk: 3.11.1
+  flutter: 3.41.4
+
+dependencies:
+  app_target:
+  core:
+  di_gms:
+  debug_presentation:
+  debug_navigator:
+  app_router:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+flutter:
+  uses-material-design: false
+  default-flavor: dev
