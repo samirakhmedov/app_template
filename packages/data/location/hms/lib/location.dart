@@ -14,8 +14,7 @@ class Location implements LocationServiceInterface {
   const Location();
 
   @override
-  Future<void> initialize() =>
-      FusedLocationProviderClient().initFusedLocationService();
+  Future<void> initialize() => FusedLocationProviderClient().initFusedLocationService();
 
   @override
   Future<Point?> getLastKnownLocation() async {

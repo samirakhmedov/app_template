@@ -3,8 +3,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
-abstract class RestorableValueNotifier<T> extends RestorableProperty<T>
-    implements ValueListenable<T> {
+abstract class RestorableValueNotifier<T> extends RestorableProperty<T> implements ValueListenable<T> {
   final T defaultValue;
 
   T _value;

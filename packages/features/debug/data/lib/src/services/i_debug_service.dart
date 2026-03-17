@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:app_domain/app_domain.dart';
 
-
 /// {@template i_debug_service}
 /// An interface for the debug service.
 /// {@endtemplate}

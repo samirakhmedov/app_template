@@ -11,13 +11,11 @@ part 'splash_state.dart';
 class SplashBloc extends Bloc<SplashEvent, SplashState> {
   final ISplashRepository _repository;
 
-  SplashBloc({required ISplashRepository repository})
-    : _repository = repository,
-      super(const SplashState.initial()) {
+  SplashBloc({required ISplashRepository repository}) : _repository = repository, super(const SplashState.initial()) {
     on<SplashInitialize>(_initialize);
   }
 
-   Future<void> _initialize(SplashInitialize _, Emitter<SplashState> emit) async {
+  Future<void> _initialize(SplashInitialize _, Emitter<SplashState> emit) async {
     emit(const SplashState.loading());
     await _repository.initialize();
     emit(const SplashState.loaded());

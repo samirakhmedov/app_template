@@ -11,9 +11,7 @@ class FillValidator<T extends Object?> extends FieldValidator<T> {
 
   @override
   String? validate(Object? value) {
-    if (value == null ||
-        (value is String && value.trim().isEmpty) ||
-        (value is Iterable && value.isEmpty)) {
+    if (value == null || (value is String && value.trim().isEmpty) || (value is Iterable && value.isEmpty)) {
       return localizations.commonRequiredField;
     }
 

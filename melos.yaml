@@ -18,23 +18,17 @@ packages:
 
 scripts:
   format:
-    exec: dart format -l 100 .
+    exec: dart format -l 120 .
 
   analyze:
     exec: dart analyze .
 
-  build:
+  codegen:
     description: Run build_runner in all packages that use code generation
+    run: dart run build_runner build --delete-conflicting-outputs
     exec:
-      command: dart run build_runner build --delete-conflicting-outputs
       concurrency: 6
     packageFilters:
       dependsOn: build_runner
 
-  build:watch:
-    description: Watch and rebuild in all packages that use code generation
-    exec:
-      command: dart run build_runner watch --delete-conflicting-outputs
-      concurrency: 6
-    packageFilters:
-      dependsOn: build_runner
+

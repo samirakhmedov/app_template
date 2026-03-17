@@ -13,12 +13,10 @@ class DeviceSettingsComponent extends Component<EmptyViewModel, ChildLayout> {
   });
 
   @override
-  ComponentState<DeviceSettingsComponent, EmptyViewModel, ChildLayout>
-  createState() => _DeviceSettingsComponentState();
+  ComponentState<DeviceSettingsComponent, EmptyViewModel, ChildLayout> createState() => _DeviceSettingsComponentState();
 }
 
-class _DeviceSettingsComponentState
-    extends ComponentState<DeviceSettingsComponent, EmptyViewModel, ChildLayout> {
+class _DeviceSettingsComponentState extends ComponentState<DeviceSettingsComponent, EmptyViewModel, ChildLayout> {
   late final DeviceSettingsBloc deviceSettingsBloc;
 
   @override
@@ -27,7 +25,7 @@ class _DeviceSettingsComponentState
     deviceSettingsBloc = context.read<DeviceSettingsBloc>();
     deviceSettingsBloc.add(const DeviceSettingsEvent.initialize());
   }
-  
+
   @override
   ChildLayout view() => ChildLayout(child: widget.child);
 }

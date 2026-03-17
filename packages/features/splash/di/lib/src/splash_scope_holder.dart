@@ -10,6 +10,5 @@ class SplashScopeHolder extends ChildScopeHolder<SplashScopeContainer, ISplashPa
   SplashScopeHolder(super.parent);
 
   @override
-  SplashScopeContainer createContainer(ISplashParentScope parent) =>
-      SplashScopeContainer(parent: parent);
+  SplashScopeContainer createContainer(ISplashParentScope parent) => SplashScopeContainer(parent: parent);
 }

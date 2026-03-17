@@ -5,8 +5,7 @@ import 'package:yx_scope/yx_scope.dart';
 /// {@template debug_scope_container}
 /// Stub debug scope container — no dependencies, no initialization queue.
 /// {@endtemplate}
-class DebugScopeContainer extends ChildScopeContainer<IDebugParentScope>
-    implements IDebugScope {
+class DebugScopeContainer extends ChildScopeContainer<IDebugParentScope> implements IDebugScope {
   @override
   List<Set<AsyncDep<Object>>> get initializeQueue => const [];
 

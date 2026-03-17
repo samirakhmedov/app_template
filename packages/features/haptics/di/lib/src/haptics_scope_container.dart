@@ -8,8 +8,7 @@ import 'package:yx_scope/yx_scope.dart';
 /// {@template haptics_scope_container}
 /// A container for the haptics scope.
 /// {@endtemplate}
-class HapticsScopeContainer extends ChildScopeContainer<IHapticsParentScope>
-    implements IHapticsScope {
+class HapticsScopeContainer extends ChildScopeContainer<IHapticsParentScope> implements IHapticsScope {
   /// The haptics service dependency.
   late final hapticsServiceDep = rawAsyncDep<IHapticsService>(
     HapticsService.new,
@@ -34,9 +33,9 @@ class HapticsScopeContainer extends ChildScopeContainer<IHapticsParentScope>
 
   @override
   List<Set<AsyncDepType>> get initializeQueue => [
-        {hapticsServiceDep},
-        {hapticsBlocDep},
-      ];
+    {hapticsServiceDep},
+    {hapticsBlocDep},
+  ];
 
   @override
   HapticsBloc get hapticsBloc => hapticsBlocDep.get;

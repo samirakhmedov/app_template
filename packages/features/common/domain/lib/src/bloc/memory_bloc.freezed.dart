@@ -13,17 +13,11 @@ part of 'memory_bloc.dart';
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
-mixin _$MemoryEvent implements DiagnosticableTreeMixin {
+mixin _$MemoryEvent {
 
 
 
 
-@override
-void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
-    ..add(DiagnosticsProperty('type', 'MemoryEvent'))
-    ;
-}
 
 @override
 bool operator ==(Object other) {
@@ -35,7 +29,7 @@ bool operator ==(Object other) {
 int get hashCode => runtimeType.hashCode;
 
 @override
-String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
+String toString() {
   return 'MemoryEvent()';
 }
 
@@ -51,7 +45,7 @@ $MemoryEventCopyWith(MemoryEvent _, $Res Function(MemoryEvent) __);
 /// @nodoc
 
 
-class MemoryInitialize with DiagnosticableTreeMixin implements MemoryEvent {
+class MemoryInitialize implements MemoryEvent {
   const MemoryInitialize();
   
 
@@ -59,12 +53,6 @@ class MemoryInitialize with DiagnosticableTreeMixin implements MemoryEvent {
 
 
 
-@override
-void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
-    ..add(DiagnosticsProperty('type', 'MemoryEvent.initialize'))
-    ;
-}
 
 @override
 bool operator ==(Object other) {
@@ -76,7 +64,7 @@ bool operator ==(Object other) {
 int get hashCode => runtimeType.hashCode;
 
 @override
-String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
+String toString() {
   return 'MemoryEvent.initialize()';
 }
 
@@ -89,7 +77,7 @@ String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
 /// @nodoc
 
 
-class MemoryHandleMemoryPressure with DiagnosticableTreeMixin implements MemoryEvent {
+class MemoryHandleMemoryPressure implements MemoryEvent {
   const MemoryHandleMemoryPressure();
   
 
@@ -97,12 +85,6 @@ class MemoryHandleMemoryPressure with DiagnosticableTreeMixin implements MemoryE
 
 
 
-@override
-void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
-    ..add(DiagnosticsProperty('type', 'MemoryEvent.handleMemoryPressure'))
-    ;
-}
 
 @override
 bool operator ==(Object other) {
@@ -114,7 +96,7 @@ bool operator ==(Object other) {
 int get hashCode => runtimeType.hashCode;
 
 @override
-String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
+String toString() {
   return 'MemoryEvent.handleMemoryPressure()';
 }
 
@@ -127,7 +109,7 @@ String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
 /// @nodoc
 
 
-class MemoryRevive with DiagnosticableTreeMixin implements MemoryEvent {
+class MemoryRevive implements MemoryEvent {
   const MemoryRevive();
   
 
@@ -135,12 +117,6 @@ class MemoryRevive with DiagnosticableTreeMixin implements MemoryEvent {
 
 
 
-@override
-void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
-    ..add(DiagnosticsProperty('type', 'MemoryEvent.revive'))
-    ;
-}
 
 @override
 bool operator ==(Object other) {
@@ -152,7 +128,7 @@ bool operator ==(Object other) {
 int get hashCode => runtimeType.hashCode;
 
 @override
-String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
+String toString() {
   return 'MemoryEvent.revive()';
 }
 
@@ -163,17 +139,11 @@ String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
 
 
 /// @nodoc
-mixin _$MemoryState implements DiagnosticableTreeMixin {
+mixin _$MemoryState {
 
 
 
 
-@override
-void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
-    ..add(DiagnosticsProperty('type', 'MemoryState'))
-    ;
-}
 
 @override
 bool operator ==(Object other) {
@@ -185,7 +155,7 @@ bool operator ==(Object other) {
 int get hashCode => runtimeType.hashCode;
 
 @override
-String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
+String toString() {
   return 'MemoryState()';
 }
 
@@ -201,7 +171,7 @@ $MemoryStateCopyWith(MemoryState _, $Res Function(MemoryState) __);
 /// @nodoc
 
 
-class MemoryStateInitial with DiagnosticableTreeMixin implements MemoryState {
+class MemoryStateInitial implements MemoryState {
   const MemoryStateInitial();
   
 
@@ -209,12 +179,6 @@ class MemoryStateInitial with DiagnosticableTreeMixin implements MemoryState {
 
 
 
-@override
-void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
-    ..add(DiagnosticsProperty('type', 'MemoryState.initial'))
-    ;
-}
 
 @override
 bool operator ==(Object other) {
@@ -226,7 +190,7 @@ bool operator ==(Object other) {
 int get hashCode => runtimeType.hashCode;
 
 @override
-String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
+String toString() {
   return 'MemoryState.initial()';
 }
 
@@ -239,7 +203,7 @@ String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
 /// @nodoc
 
 
-class MemoryStateHandlingPressure with DiagnosticableTreeMixin implements MemoryState {
+class MemoryStateHandlingPressure implements MemoryState {
   const MemoryStateHandlingPressure();
   
 
@@ -247,12 +211,6 @@ class MemoryStateHandlingPressure with DiagnosticableTreeMixin implements Memory
 
 
 
-@override
-void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
-    ..add(DiagnosticsProperty('type', 'MemoryState.handlingPressure'))
-    ;
-}
 
 @override
 bool operator ==(Object other) {
@@ -264,7 +222,7 @@ bool operator ==(Object other) {
 int get hashCode => runtimeType.hashCode;
 
 @override
-String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
+String toString() {
   return 'MemoryState.handlingPressure()';
 }
 
@@ -277,7 +235,7 @@ String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
 /// @nodoc
 
 
-class MemoryStateRevived with DiagnosticableTreeMixin implements MemoryState {
+class MemoryStateRevived implements MemoryState {
   const MemoryStateRevived();
   
 
@@ -285,12 +243,6 @@ class MemoryStateRevived with DiagnosticableTreeMixin implements MemoryState {
 
 
 
-@override
-void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
-    ..add(DiagnosticsProperty('type', 'MemoryState.revived'))
-    ;
-}
 
 @override
 bool operator ==(Object other) {
@@ -302,7 +254,7 @@ bool operator ==(Object other) {
 int get hashCode => runtimeType.hashCode;
 
 @override
-String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
+String toString() {
   return 'MemoryState.revived()';
 }
 

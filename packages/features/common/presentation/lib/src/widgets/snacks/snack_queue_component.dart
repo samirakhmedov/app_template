@@ -24,12 +24,10 @@ class SnackQueueComponent extends Component<EmptyViewModel, ChildLayout> {
   static SnackQueueController of(BuildContext context) => context.read<SnackQueueController>();
 
   @override
-  ComponentState<SnackQueueComponent, EmptyViewModel, ChildLayout> createState() =>
-      _SnackQueueComponentState();
+  ComponentState<SnackQueueComponent, EmptyViewModel, ChildLayout> createState() => _SnackQueueComponentState();
 }
 
-class _SnackQueueComponentState
-    extends ComponentState<SnackQueueComponent, EmptyViewModel, ChildLayout>
+class _SnackQueueComponentState extends ComponentState<SnackQueueComponent, EmptyViewModel, ChildLayout>
     implements EmptyViewModel, SnackQueueController {
   late final DefaultSnackController _snackController;
 

@@ -13,17 +13,11 @@ part of 'debug_bloc.dart';
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
-mixin _$DebugEvent implements DiagnosticableTreeMixin {
+mixin _$DebugEvent {
 
 
 
 
-@override
-void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
-    ..add(DiagnosticsProperty('type', 'DebugEvent'))
-    ;
-}
 
 @override
 bool operator ==(Object other) {
@@ -35,7 +29,7 @@ bool operator ==(Object other) {
 int get hashCode => runtimeType.hashCode;
 
 @override
-String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
+String toString() {
   return 'DebugEvent()';
 }
 
@@ -51,7 +45,7 @@ $DebugEventCopyWith(DebugEvent _, $Res Function(DebugEvent) __);
 /// @nodoc
 
 
-class DebugInitialize with DiagnosticableTreeMixin implements DebugEvent {
+class DebugInitialize implements DebugEvent {
   const DebugInitialize({required this.environmentUrl});
   
 
@@ -64,12 +58,6 @@ class DebugInitialize with DiagnosticableTreeMixin implements DebugEvent {
 $DebugInitializeCopyWith<DebugInitialize> get copyWith => _$DebugInitializeCopyWithImpl<DebugInitialize>(this, _$identity);
 
 
-@override
-void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
-    ..add(DiagnosticsProperty('type', 'DebugEvent.initialize'))
-    ..add(DiagnosticsProperty('environmentUrl', environmentUrl));
-}
 
 @override
 bool operator ==(Object other) {
@@ -81,7 +69,7 @@ bool operator ==(Object other) {
 int get hashCode => Object.hash(runtimeType,environmentUrl);
 
 @override
-String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
+String toString() {
   return 'DebugEvent.initialize(environmentUrl: $environmentUrl)';
 }
 
@@ -123,7 +111,7 @@ as Urls,
 /// @nodoc
 
 
-class DebugSetBaseUrl with DiagnosticableTreeMixin implements DebugEvent {
+class DebugSetBaseUrl implements DebugEvent {
   const DebugSetBaseUrl({required this.baseUrl});
   
 
@@ -136,12 +124,6 @@ class DebugSetBaseUrl with DiagnosticableTreeMixin implements DebugEvent {
 $DebugSetBaseUrlCopyWith<DebugSetBaseUrl> get copyWith => _$DebugSetBaseUrlCopyWithImpl<DebugSetBaseUrl>(this, _$identity);
 
 
-@override
-void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
-    ..add(DiagnosticsProperty('type', 'DebugEvent.setBaseUrl'))
-    ..add(DiagnosticsProperty('baseUrl', baseUrl));
-}
 
 @override
 bool operator ==(Object other) {
@@ -153,7 +135,7 @@ bool operator ==(Object other) {
 int get hashCode => Object.hash(runtimeType,baseUrl);
 
 @override
-String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
+String toString() {
   return 'DebugEvent.setBaseUrl(baseUrl: $baseUrl)';
 }
 
@@ -193,7 +175,7 @@ as Urls,
 }
 
 /// @nodoc
-mixin _$DebugState implements DiagnosticableTreeMixin {
+mixin _$DebugState {
 
  Urls? get baseUrl;
 /// Create a copy of DebugState
@@ -203,12 +185,6 @@ mixin _$DebugState implements DiagnosticableTreeMixin {
 $DebugStateCopyWith<DebugState> get copyWith => _$DebugStateCopyWithImpl<DebugState>(this as DebugState, _$identity);
 
 
-@override
-void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
-    ..add(DiagnosticsProperty('type', 'DebugState'))
-    ..add(DiagnosticsProperty('baseUrl', baseUrl));
-}
 
 @override
 bool operator ==(Object other) {
@@ -220,7 +196,7 @@ bool operator ==(Object other) {
 int get hashCode => Object.hash(runtimeType,baseUrl);
 
 @override
-String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
+String toString() {
   return 'DebugState(baseUrl: $baseUrl)';
 }
 
@@ -262,7 +238,7 @@ as Urls?,
 /// @nodoc
 
 
-class _DebugState with DiagnosticableTreeMixin implements DebugState {
+class _DebugState implements DebugState {
   const _DebugState({this.baseUrl});
   
 
@@ -275,12 +251,6 @@ class _DebugState with DiagnosticableTreeMixin implements DebugState {
 _$DebugStateCopyWith<_DebugState> get copyWith => __$DebugStateCopyWithImpl<_DebugState>(this, _$identity);
 
 
-@override
-void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
-    ..add(DiagnosticsProperty('type', 'DebugState'))
-    ..add(DiagnosticsProperty('baseUrl', baseUrl));
-}
 
 @override
 bool operator ==(Object other) {
@@ -292,7 +262,7 @@ bool operator ==(Object other) {
 int get hashCode => Object.hash(runtimeType,baseUrl);
 
 @override
-String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
+String toString() {
   return 'DebugState(baseUrl: $baseUrl)';
 }
 

@@ -34,8 +34,7 @@ class ThemeComponent extends Component<ThemeViewModel, ThemeLayout> {
   }
 
   @override
-  ComponentState<ThemeComponent, ThemeViewModel, ThemeLayout> createState() =>
-      _ThemeComponentState();
+  ComponentState<ThemeComponent, ThemeViewModel, ThemeLayout> createState() => _ThemeComponentState();
 }
 
 class _ThemeComponentState extends ComponentState<ThemeComponent, ThemeViewModel, ThemeLayout>

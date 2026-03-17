@@ -1,4 +1,3 @@
-
 import 'package:app_domain/app_domain.dart';
 
 /// {@template i_debug_repository}

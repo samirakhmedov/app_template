@@ -18,8 +18,7 @@ final class HapticsRepository extends BaseRepository implements IHapticsReposito
   Future<void> impact(HapticImpactType type) => makeCall(() => _service.impact(type));
 
   @override
-  Future<void> notification(HapticNotificationType type) =>
-      makeCall(() => _service.notification(type));
+  Future<void> notification(HapticNotificationType type) => makeCall(() => _service.notification(type));
 
   @override
   Future<void> feedback(HapticFeedbackType type) => makeCall(() => _service.feedback(type));

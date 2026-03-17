@@ -1,7 +1,4 @@
-import 'dart:async';
-
 import 'package:app_presentation/app_presentation.dart';
-import 'package:auto_route/auto_route.dart';
 import 'package:core/core.dart';
 import 'package:debug_domain/debug_domain.dart';
 import 'package:debug_presentation/debug_presentation.dart';
@@ -10,18 +7,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 /// {@template debug_component}
 /// A component for the debug screen.
 /// {@endtemplate}
-@RoutePage()
 class DebugSettingsComponent extends Component<DebugViewModel, DebugLayout> {
   /// {@macro debug_component}
   const DebugSettingsComponent({super.key});
 
   @override
-  ComponentState<DebugSettingsComponent, DebugViewModel, DebugLayout> createState() =>
-      _DebugSettingsComponentState();
+  ComponentState<DebugSettingsComponent, DebugViewModel, DebugLayout> createState() => _DebugSettingsComponentState();
 }
 
-class _DebugSettingsComponentState
-    extends ComponentState<DebugSettingsComponent, DebugViewModel, DebugLayout>
+class _DebugSettingsComponentState extends ComponentState<DebugSettingsComponent, DebugViewModel, DebugLayout>
     with ThemeMixin
     implements DebugViewModel {
   DebugBloc get _debugBloc => context.read<DebugBloc>();
@@ -41,7 +35,6 @@ class _DebugSettingsComponentState
   @override
   void openEasterEgg() {
     // TODO(task-7): Replace with EasterEggRoute from router package.
-    unawaited(context.router.pushPath(debugEasterEggPath));
   }
 
   @override

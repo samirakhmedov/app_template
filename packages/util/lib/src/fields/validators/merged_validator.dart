@@ -1,4 +1,3 @@
-
 import 'package:util/src/fields/validators/field_validator.dart';
 
 /// Validator that combines multiple validators.

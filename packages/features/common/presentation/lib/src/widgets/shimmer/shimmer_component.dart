@@ -29,8 +29,7 @@ class ShimmerComponent extends Component<EmptyViewModel, ChildLayout> {
   }
 
   @override
-  ComponentState<ShimmerComponent, EmptyViewModel, ChildLayout> createState() =>
-      _ShimmerComponentState();
+  ComponentState<ShimmerComponent, EmptyViewModel, ChildLayout> createState() => _ShimmerComponentState();
 }
 
 class _ShimmerComponentState extends ComponentState<ShimmerComponent, EmptyViewModel, ChildLayout>

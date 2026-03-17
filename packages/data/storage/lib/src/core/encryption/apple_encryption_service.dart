@@ -11,8 +11,7 @@ class AppleEncryptionService implements EncryptionService {
   final SecureEnclavePlus _secureEnclave;
 
   /// {@macro apple_encryption_service}
-  const AppleEncryptionService({required SecureEnclave secureEnclave})
-    : _secureEnclave = secureEnclave;
+  const AppleEncryptionService({required SecureEnclave secureEnclave}) : _secureEnclave = secureEnclave;
 
   @override
   Future<String> encrypt(String value) async {
@@ -37,8 +36,7 @@ class AppleEncryptionService implements EncryptionService {
 
   @override
   Future<void> initialize() async {
-    final isKeyGenerated =
-        (await _secureEnclave.isKeyCreated(tag: kDefaultEncryptionTag)).value ?? false;
+    final isKeyGenerated = (await _secureEnclave.isKeyCreated(tag: kDefaultEncryptionTag)).value ?? false;
 
     if (isKeyGenerated) {
       return;

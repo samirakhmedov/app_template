@@ -13,7 +13,6 @@ dependencies:
   app_presentation:
   app_router:
   async: ^2.13.0
-  auto_route: 10.1.0+1
   common_presentation:
   core:
   debug_di:
@@ -28,5 +27,4 @@ dependencies:
   uikit:
 
 dev_dependencies:
-  auto_route_generator: 10.2.3
-  build_runner: 2.5.4
+

@@ -17,8 +17,7 @@ final class AppSystemUiModeConverter extends Converter<AppSystemUiMode, SystemUi
   }
 }
 
-final class AppSystemUiOverlayStyleConverter
-    extends Converter<AppSystemUiOverlayStyle, SystemUiOverlayStyle> {
+final class AppSystemUiOverlayStyleConverter extends Converter<AppSystemUiOverlayStyle, SystemUiOverlayStyle> {
   const AppSystemUiOverlayStyleConverter();
 
   @override

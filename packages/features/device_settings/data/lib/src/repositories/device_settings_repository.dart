@@ -18,8 +18,7 @@ final class DeviceSettingsRepository extends BaseRepository implements IDeviceSe
     required super.logger,
     AppDeviceOrientationConverter orientationConverter = const AppDeviceOrientationConverter(),
     AppSystemUiModeConverter systemUiModeConverter = const AppSystemUiModeConverter(),
-    AppSystemUiOverlayStyleConverter overlayStyleConverter =
-        const AppSystemUiOverlayStyleConverter(),
+    AppSystemUiOverlayStyleConverter overlayStyleConverter = const AppSystemUiOverlayStyleConverter(),
   }) : _orientationConverter = orientationConverter,
        _systemUiModeConverter = systemUiModeConverter,
        _overlayStyleConverter = overlayStyleConverter;

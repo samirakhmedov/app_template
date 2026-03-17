@@ -17,7 +17,7 @@ final class DebugRepository extends BaseRepository implements IDebugRepository {
 
   @override
   RequestOperation<void> setBaseUri(Uri uri) => makeCall(() async => _debugService.setBaseUri(uri));
-  
+
   @override
   RequestOperation<Uri> getBaseUri() => makeCall(() async {
     if (_debugService.baseUri case final uri?) {

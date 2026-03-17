@@ -107,12 +107,9 @@ class AppButtonScheme extends ThemeExtension<AppButtonScheme> with _$AppButtonSc
       primaryLarge: ButtonStyle.lerp(primaryLarge, other.primaryLarge, t) ?? primaryLarge,
       primaryMedium: ButtonStyle.lerp(primaryMedium, other.primaryMedium, t) ?? primaryMedium,
       primarySmall: ButtonStyle.lerp(primarySmall, other.primarySmall, t) ?? primarySmall,
-      transparentLarge:
-          ButtonStyle.lerp(transparentLarge, other.transparentLarge, t) ?? transparentLarge,
-      transparentMedium:
-          ButtonStyle.lerp(transparentMedium, other.transparentMedium, t) ?? transparentMedium,
-      transparentSmall:
-          ButtonStyle.lerp(transparentSmall, other.transparentSmall, t) ?? transparentSmall,
+      transparentLarge: ButtonStyle.lerp(transparentLarge, other.transparentLarge, t) ?? transparentLarge,
+      transparentMedium: ButtonStyle.lerp(transparentMedium, other.transparentMedium, t) ?? transparentMedium,
+      transparentSmall: ButtonStyle.lerp(transparentSmall, other.transparentSmall, t) ?? transparentSmall,
       primaryIcon: ButtonStyle.lerp(primaryIcon, other.primaryIcon, t) ?? primaryIcon,
     );
   }

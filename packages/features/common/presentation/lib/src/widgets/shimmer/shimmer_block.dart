@@ -30,8 +30,7 @@ class ShimmerBlock extends StatelessWidget {
     return DecoratedBox(
       decoration: BoxDecoration(
         color: context.appColorScheme.skeletonSecondary,
-        borderRadius:
-            borderRadius.let(BorderRadius.circular) ?? context.appSizesScheme.borderRadiusGeneral,
+        borderRadius: borderRadius.let(BorderRadius.circular) ?? context.appSizesScheme.borderRadiusGeneral,
       ),
       child: SizedBox(
         width: width,

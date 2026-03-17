@@ -19,8 +19,8 @@ class HapticsBloc extends Bloc<HapticsEvent, HapticsState> {
 
   /// {@macro haptics_bloc}
   HapticsBloc({required IHapticsRepository repository})
-      : _repository = repository,
-        super(const HapticsState.initial()) {
+    : _repository = repository,
+      super(const HapticsState.initial()) {
     on<HapticsInitialize>(_initialize);
     on<HapticsTriggerImpact>(_triggerImpact);
     on<HapticsTriggerNotification>(_triggerNotification);

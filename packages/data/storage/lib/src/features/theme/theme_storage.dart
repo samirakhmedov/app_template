@@ -22,7 +22,8 @@ class ThemeStorage implements IThemeStorage {
 }
 
 enum _ThemeStorageKeys {
-  theme('theme');
+  theme('theme')
+  ;
 
   final String key;
 

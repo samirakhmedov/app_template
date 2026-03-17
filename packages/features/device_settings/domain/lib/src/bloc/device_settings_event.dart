@@ -10,9 +10,7 @@ sealed class DeviceSettingsEvent with _$DeviceSettingsEvent {
     List<AppDeviceOrientation> orientations,
   ) = DeviceSettingsSetOrientations;
 
-  const factory DeviceSettingsEvent.setSystemUiMode(AppSystemUiMode mode) =
-      DeviceSettingsSetSystemUiMode;
+  const factory DeviceSettingsEvent.setSystemUiMode(AppSystemUiMode mode) = DeviceSettingsSetSystemUiMode;
 
-  const factory DeviceSettingsEvent.setOverlayStyle(AppSystemUiOverlayStyle? style) =
-      DeviceSettingsSetOverlayStyle;
+  const factory DeviceSettingsEvent.setOverlayStyle(AppSystemUiOverlayStyle? style) = DeviceSettingsSetOverlayStyle;
 }

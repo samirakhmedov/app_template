@@ -48,7 +48,8 @@ enum AppTextStyle {
   ),
   bodyLarge(TextStyle(fontSize: 16, height: 16 / 24)),
   bodyMedium(TextStyle(fontSize: 14, height: 14 / 20)),
-  bodySmall(TextStyle(fontSize: 12, height: 12 / 16));
+  bodySmall(TextStyle(fontSize: 12, height: 12 / 16))
+  ;
 
   final TextStyle value;
 

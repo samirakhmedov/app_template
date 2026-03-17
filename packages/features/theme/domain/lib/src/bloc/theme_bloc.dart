@@ -13,7 +13,7 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
 
   ThemeBloc({required IThemeRepository themeRepository})
     : _themeRepository = themeRepository,
-      super(const ThemeState(themeMode: ThemeMode.system))  {
+      super(const ThemeState(themeMode: ThemeMode.system)) {
     on<ThemeInitialize>(_initialize);
     on<ThemeSetMode>(_setMode);
   }

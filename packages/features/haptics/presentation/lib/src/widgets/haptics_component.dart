@@ -26,12 +26,10 @@ class HapticsComponent extends Component<EmptyViewModel, ChildLayout> {
   }
 
   @override
-  ComponentState<HapticsComponent, EmptyViewModel, ChildLayout> createState() =>
-      _HapticsComponentState();
+  ComponentState<HapticsComponent, EmptyViewModel, ChildLayout> createState() => _HapticsComponentState();
 }
 
-class _HapticsComponentState
-    extends ComponentState<HapticsComponent, EmptyViewModel, ChildLayout>
+class _HapticsComponentState extends ComponentState<HapticsComponent, EmptyViewModel, ChildLayout>
     implements EmptyViewModel, IHapticProvider {
   late final HapticsBloc _bloc;
 
@@ -49,16 +47,13 @@ class _HapticsComponentState
   }
 
   @override
-  void impact(HapticImpactType impact) =>
-      _bloc.add(HapticsEvent.triggerImpact(impact));
+  void impact(HapticImpactType impact) => _bloc.add(HapticsEvent.triggerImpact(impact));
 
   @override
-  void notification(HapticNotificationType notification) =>
-      _bloc.add(HapticsEvent.triggerNotification(notification));
+  void notification(HapticNotificationType notification) => _bloc.add(HapticsEvent.triggerNotification(notification));
 
   @override
-  void feedback(HapticFeedbackType feedback) =>
-      _bloc.add(HapticsEvent.triggerFeedback(feedback));
+  void feedback(HapticFeedbackType feedback) => _bloc.add(HapticsEvent.triggerFeedback(feedback));
 
   @override
   void selection() => _bloc.add(const HapticsEvent.triggerSelection());

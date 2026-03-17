@@ -28,7 +28,8 @@ class DebugStorage implements IDebugStorage {
 }
 
 enum _DebugStorageKeys {
-  baseUri('base_uri');
+  baseUri('base_uri')
+  ;
 
   final String key;
 

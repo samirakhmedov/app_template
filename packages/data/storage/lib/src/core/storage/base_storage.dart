@@ -8,8 +8,7 @@ class BaseStorage implements Storage {
   final SharedPreferencesAsync _sharedPreferences;
 
   /// {@macro base_storage}
-  const BaseStorage({required SharedPreferencesAsync sharedPreferences})
-    : _sharedPreferences = sharedPreferences;
+  const BaseStorage({required SharedPreferencesAsync sharedPreferences}) : _sharedPreferences = sharedPreferences;
 
   @override
   Future<void> setString(String key, String value) async {

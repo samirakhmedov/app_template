@@ -34,6 +34,5 @@ final class Push implements PushServiceInterface {
   Future<void> subscribeToTopic(String topic) => FirebaseMessaging.instance.subscribeToTopic(topic);
 
   @override
-  Future<void> unsubscribeFromTopic(String topic) =>
-      FirebaseMessaging.instance.unsubscribeFromTopic(topic);
+  Future<void> unsubscribeFromTopic(String topic) => FirebaseMessaging.instance.unsubscribeFromTopic(topic);
 }

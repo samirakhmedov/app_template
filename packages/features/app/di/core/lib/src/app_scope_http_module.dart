@@ -16,8 +16,7 @@ class AppScopeHttpModule<T extends IHttpModuleContext> extends ScopeModule<T> {
   late final rootDioDep = rawAsyncDep(
     () => httpClientFactoryDep.get.getClientForScope('root_http_client'),
     init: (_) => SynchronousFuture(null),
-    dispose: (_) async =>
-        httpClientFactoryDep.get.disposeScopeClient('root_http_client'),
+    dispose: (_) async => httpClientFactoryDep.get.disposeScopeClient('root_http_client'),
   );
 
   /// The HTTP client factory dependency.

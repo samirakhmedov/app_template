@@ -14,17 +14,13 @@ init:
 get:
 	fvm flutter pub get
 
-get-packages:
-	melos bootstrap
-
 codegen:
-	melos run build
+	melos run codegen --no-select
 
 codegen-assets:
 	cd packages/features/app/assets && fluttergen -c pubspec.yaml
 
-
-format-packages:
+format:
 	melos run format
 
 propagate-secrets:

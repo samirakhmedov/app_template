@@ -180,9 +180,7 @@ class _AppTextFieldState extends State<AppTextField> {
     final colorScheme = context.appColorScheme;
     final disabled = !widget.enabled;
     final decoration = widget.decoration ?? const InputDecoration();
-    final fillColor = disabled
-        ? colorScheme.inactive
-        : (decoration.fillColor ?? colorScheme.background);
+    final fillColor = disabled ? colorScheme.inactive : (decoration.fillColor ?? colorScheme.background);
 
     return TextFormField(
       key: widget.fieldKey,

@@ -10,6 +10,5 @@ class HapticsScopeHolder extends ChildScopeHolder<HapticsScopeContainer, IHaptic
   HapticsScopeHolder(super.parent);
 
   @override
-  HapticsScopeContainer createContainer(IHapticsParentScope parent) =>
-      HapticsScopeContainer(parent: parent);
+  HapticsScopeContainer createContainer(IHapticsParentScope parent) => HapticsScopeContainer(parent: parent);
 }

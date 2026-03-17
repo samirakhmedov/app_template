@@ -14,17 +14,17 @@ class SplashCentralLayout extends Layout<SplashViewModel> {
 
   @override
   Widget layout(SplashViewModel vm) {
-    return         Scaffold(
-          body: Center(
-            child: RepaintBoundary(
-              child: FadeTransition(
-                opacity: vm.fadeAnimation,
-                child: FlutterLogo(
-                  size: 200,
-                ),
-              ),
+    return Scaffold(
+      body: Center(
+        child: RepaintBoundary(
+          child: FadeTransition(
+            opacity: vm.fadeAnimation,
+            child: FlutterLogo(
+              size: 200,
             ),
           ),
-        );
+        ),
+      ),
+    );
   }
 }

@@ -71,6 +71,5 @@ abstract class VersionUtil {
     return version.replaceAll('-dev', '');
   }
 
-  static Uint16List _versionNumbers(String version) =>
-      Uint16List.fromList(version.split('.').map(int.parse).toList());
+  static Uint16List _versionNumbers(String version) => Uint16List.fromList(version.split('.').map(int.parse).toList());
 }

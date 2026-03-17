@@ -32,8 +32,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get debugScreenProxySubtitle => 'Proxy settings';
 
   @override
-  String get debugScreenProxyInfo =>
-      'Enter a proxy URL to intercept network traffic for debugging purposes.';
+  String get debugScreenProxyInfo => 'Enter a proxy URL to intercept network traffic for debugging purposes.';
 
   @override
   String get debugScreenProxyEditTextLabel => 'Proxy URL';

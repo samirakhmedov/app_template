@@ -6,16 +6,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
-abstract class Component<V extends ViewModel, L extends Layout<V>> extends StatefulWidget
-    with WidgetsBindingObserver {
+abstract class Component<V extends ViewModel, L extends Layout<V>> extends StatefulWidget with WidgetsBindingObserver {
   const Component({super.key});
 
   @override
   ComponentState<Component<V, L>, V, L> createState();
 }
 
-abstract class ComponentState<C extends Component<V, L>, V extends ViewModel, L extends Layout<V>>
-    extends State<C>
+abstract class ComponentState<C extends Component<V, L>, V extends ViewModel, L extends Layout<V>> extends State<C>
     with WidgetsBindingObserver {
   ComponentState();
 

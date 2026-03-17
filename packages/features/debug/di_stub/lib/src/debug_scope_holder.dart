@@ -10,6 +10,5 @@ class DebugScopeHolder extends ChildScopeHolder<DebugScopeContainer, IDebugParen
   DebugScopeHolder(super.parent);
 
   @override
-  DebugScopeContainer createContainer(IDebugParentScope parent) =>
-      DebugScopeContainer(parent: parent);
+  DebugScopeContainer createContainer(IDebugParentScope parent) => DebugScopeContainer(parent: parent);
 }

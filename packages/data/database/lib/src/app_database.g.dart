@@ -263,8 +263,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
   late final $TodoTableTable todoTable = $TodoTableTable(this);
   @override
-  Iterable<TableInfo<Table, Object?>> get allTables =>
-      allSchemaEntities.whereType<TableInfo<Table, Object?>>();
+  Iterable<TableInfo<Table, Object?>> get allTables => allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities => [todoTable];
 }
@@ -352,14 +351,11 @@ class $$TodoTableTableAnnotationComposer extends Composer<_$AppDatabase, $TodoTa
   });
   GeneratedColumn<int> get id => $composableBuilder(column: $table.id, builder: (column) => column);
 
-  GeneratedColumn<String> get title =>
-      $composableBuilder(column: $table.title, builder: (column) => column);
+  GeneratedColumn<String> get title => $composableBuilder(column: $table.title, builder: (column) => column);
 
-  GeneratedColumn<String> get content =>
-      $composableBuilder(column: $table.content, builder: (column) => column);
+  GeneratedColumn<String> get content => $composableBuilder(column: $table.content, builder: (column) => column);
 
-  GeneratedColumn<DateTime> get createdAt =>
-      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+  GeneratedColumn<DateTime> get createdAt => $composableBuilder(column: $table.createdAt, builder: (column) => column);
 }
 
 class $$TodoTableTableTableManager
@@ -373,7 +369,10 @@ class $$TodoTableTableTableManager
           $$TodoTableTableAnnotationComposer,
           $$TodoTableTableCreateCompanionBuilder,
           $$TodoTableTableUpdateCompanionBuilder,
-          (TodoTableData, BaseReferences<_$AppDatabase, $TodoTableTable, TodoTableData>),
+          (
+            TodoTableData,
+            BaseReferences<_$AppDatabase, $TodoTableTable, TodoTableData>,
+          ),
           TodoTableData,
           PrefetchHooks Function()
         > {
@@ -384,8 +383,7 @@ class $$TodoTableTableTableManager
           table: table,
           createFilteringComposer: () => $$TodoTableTableFilterComposer($db: db, $table: table),
           createOrderingComposer: () => $$TodoTableTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$TodoTableTableAnnotationComposer($db: db, $table: table),
+          createComputedFieldComposer: () => $$TodoTableTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
@@ -410,8 +408,7 @@ class $$TodoTableTableTableManager
                 content: content,
                 createdAt: createdAt,
               ),
-          withReferenceMapper: (p0) =>
-              p0.map((e) => (e.readTable(table), BaseReferences(db, table, e))).toList(),
+          withReferenceMapper: (p0) => p0.map((e) => (e.readTable(table), BaseReferences(db, table, e))).toList(),
           prefetchHooksCallback: null,
         ),
       );
@@ -427,7 +424,10 @@ typedef $$TodoTableTableProcessedTableManager =
       $$TodoTableTableAnnotationComposer,
       $$TodoTableTableCreateCompanionBuilder,
       $$TodoTableTableUpdateCompanionBuilder,
-      (TodoTableData, BaseReferences<_$AppDatabase, $TodoTableTable, TodoTableData>),
+      (
+        TodoTableData,
+        BaseReferences<_$AppDatabase, $TodoTableTable, TodoTableData>,
+      ),
       TodoTableData,
       PrefetchHooks Function()
     >;

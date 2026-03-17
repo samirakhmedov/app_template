@@ -40,12 +40,10 @@ class ShaderProviderComponent extends Component<EmptyViewModel, ChildLayout> {
   final Widget child;
 
   @override
-  ComponentState<ShaderProviderComponent, EmptyViewModel, ChildLayout>
-      createState() => _ShaderProviderComponentState();
+  ComponentState<ShaderProviderComponent, EmptyViewModel, ChildLayout> createState() => _ShaderProviderComponentState();
 }
 
-class _ShaderProviderComponentState
-    extends ComponentState<ShaderProviderComponent, EmptyViewModel, ChildLayout>
+class _ShaderProviderComponentState extends ComponentState<ShaderProviderComponent, EmptyViewModel, ChildLayout>
     with LifecycleObserverMixin
     implements EmptyViewModel {
   /// Shaders keyed by asset path. A null value means not yet loaded.
@@ -98,10 +96,10 @@ class _ShaderProviderComponentState
 
   @override
   List<SingleChildWidget> providers() => [
-        ValueListenableProvider<Map<String, ui.FragmentShader?>>.value(
-          value: _shadersNotifier,
-        ),
-      ];
+    ValueListenableProvider<Map<String, ui.FragmentShader?>>.value(
+      value: _shadersNotifier,
+    ),
+  ];
 
   @override
   ChildLayout view() => ChildLayout(child: widget.child);

@@ -6,8 +6,7 @@ import 'package:yx_scope/yx_scope.dart';
 /// {@template debug_scope_container}
 /// A container for the debug scope.
 /// {@endtemplate}
-class DebugScopeContainer extends ChildScopeContainer<IDebugParentScope>
-    implements IDebugScope {
+class DebugScopeContainer extends ChildScopeContainer<IDebugParentScope> implements IDebugScope {
   /// The debug bloc dependency.
   late final debugBlocDep = rawAsyncDep<DebugBloc>(
     _createDebugBloc,

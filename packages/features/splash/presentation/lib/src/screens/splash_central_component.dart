@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:app_presentation/app_presentation.dart';
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/widgets.dart';
 import 'package:splash_presentation/splash_presentation.dart';
 import 'package:uikit/uikit.dart';
@@ -9,18 +8,15 @@ import 'package:uikit/uikit.dart';
 /// {@template splash_component}
 /// A component for the splash screen.
 /// {@endtemplate}
-@RoutePage()
 class SplashCentralComponent extends Component<SplashViewModel, SplashCentralLayout> {
   /// {@macro splash_component}
   const SplashCentralComponent({super.key});
 
   @override
-  ComponentState<SplashCentralComponent, SplashViewModel, SplashCentralLayout> createState() =>
-      _SplashComponentState();
+  ComponentState<SplashCentralComponent, SplashViewModel, SplashCentralLayout> createState() => _SplashComponentState();
 }
 
-class _SplashComponentState
-    extends ComponentState<SplashCentralComponent, SplashViewModel, SplashCentralLayout>
+class _SplashComponentState extends ComponentState<SplashCentralComponent, SplashViewModel, SplashCentralLayout>
     with SingleTickerProviderStateMixin
     implements SplashViewModel {
   late final _animationController = AnimationController(

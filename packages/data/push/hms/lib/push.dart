@@ -16,7 +16,8 @@ final class Push implements PushServiceInterface {
       )
       .where(
         (event) => event != null,
-      ).cast<huawei.RemoteMessageNotification>()
+      )
+      .cast<huawei.RemoteMessageNotification>()
       .map((event) {
         return Notification(
           title: event.title ?? '',
@@ -50,7 +51,7 @@ final class Push implements PushServiceInterface {
   Future<void> initialize() {
     _tokenSubscription = huawei.Push.getTokenStream.listen(_listenToToken);
     huawei.Push.getToken('');
-    
+
     return Future.wait([
       huawei.Push.consentOn(),
       huawei.Push.setAutoInitEnabled(true),

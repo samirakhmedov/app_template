@@ -175,8 +175,7 @@ class UrlSessionAdapter implements HttpClientAdapter {
     URLRequest request,
   ) {
     final taskTracker = _tracker(task)..numRedirects += 1;
-    if (taskTracker.options.followRedirects &&
-        taskTracker.numRedirects <= taskTracker.options.maxRedirects) {
+    if (taskTracker.options.followRedirects && taskTracker.numRedirects <= taskTracker.options.maxRedirects) {
       taskTracker.lastUrl = request.url;
 
       return request;

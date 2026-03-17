@@ -34,12 +34,10 @@ class RotationComponent extends Component<RotationViewModel, RotationLayout> {
   }
 
   @override
-  ComponentState<RotationComponent, RotationViewModel, RotationLayout> createState() =>
-      _RotationComponentState();
+  ComponentState<RotationComponent, RotationViewModel, RotationLayout> createState() => _RotationComponentState();
 }
 
-class _RotationComponentState
-    extends ComponentState<RotationComponent, RotationViewModel, RotationLayout>
+class _RotationComponentState extends ComponentState<RotationComponent, RotationViewModel, RotationLayout>
     with TickerProviderStateMixin, RestorationMixin
     implements RotationViewModel, IRotationProvider {
   late final _angleState = DoubleValueNotifier(0);
@@ -214,7 +212,8 @@ abstract class RotationViewModel implements ViewModel {
 
 enum _RestorationKeys {
   angle('angle'),
-  rotationTargetKey('rotation_target_key');
+  rotationTargetKey('rotation_target_key')
+  ;
 
   final String key;
 

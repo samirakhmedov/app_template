@@ -11,6 +11,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  auto_route: 10.1.0+1
+  auto_route:
   splash_presentation:
 

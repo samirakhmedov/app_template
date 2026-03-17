@@ -32,8 +32,8 @@ class ShimmerLoadingComponent extends Component<ShimmerLoadingViewModel, Shimmer
   final String? shimmerShaderPath;
 
   @override
-  ComponentState<ShimmerLoadingComponent, ShimmerLoadingViewModel, ShimmerLoadingLayout>
-  createState() => _ShimmerLoadingComponentState();
+  ComponentState<ShimmerLoadingComponent, ShimmerLoadingViewModel, ShimmerLoadingLayout> createState() =>
+      _ShimmerLoadingComponentState();
 }
 
 class _ShimmerLoadingComponentState
@@ -131,10 +131,7 @@ class _ShimmerLoadingComponentState
   }
 
   @override
-  String get shimmerShaderPath =>
-      widget.shimmerShaderPath ??
-      ShimmerComponent.of(context).shimmerShaderPath ??
-      '';
+  String get shimmerShaderPath => widget.shimmerShaderPath ?? ShimmerComponent.of(context).shimmerShaderPath ?? '';
 
   @override
   Offset getDescendantOffset({required RenderBox descendant, Offset offset = Offset.zero}) =>

@@ -10,8 +10,7 @@ import 'package:yx_scope/yx_scope.dart';
 /// {@template splash_scope_container}
 /// A container for the splash scope.
 /// {@endtemplate}
-class SplashScopeContainer extends ChildScopeContainer<ISplashParentScope>
-    implements ISplashScope {
+class SplashScopeContainer extends ChildScopeContainer<ISplashParentScope> implements ISplashScope {
   /// The splash Dio dependency.
   late final splashDioDep = rawAsyncDep<Dio>(
     () => parent.httpClientFactory.getClientForScope('splash_scope'),
