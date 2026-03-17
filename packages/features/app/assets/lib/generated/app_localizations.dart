@@ -282,6 +282,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Test'**
   String get debugScreenSnackTestMessage;
+
+  /// Example of a plain string with no parameters.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to the app'**
+  String get exampleSimpleString;
+
+  /// Example of a string with a single String placeholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Hello, {userName}!'**
+  String exampleWithPlaceholder(String userName);
+
+  /// Example of a plural message based on item count.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No items} =1{1 item} other{{count} items}}'**
+  String exampleItemCount(num count);
+
+  /// Example of a select message for gender-based pronoun.
+  ///
+  /// In en, this message translates to:
+  /// **'{gender, select, male{He} female{She} other{They}} signed in'**
+  String examplePronoun(String gender);
+
+  /// Example of a DateTime placeholder formatted as month/day/year.
+  ///
+  /// In en, this message translates to:
+  /// **'Last seen on {date}'**
+  String exampleLastSeen(DateTime date);
+
+  /// Example of a double placeholder formatted as a simple currency.
+  ///
+  /// In en, this message translates to:
+  /// **'Price: {amount}'**
+  String examplePrice(double amount);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

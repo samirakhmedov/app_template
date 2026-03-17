@@ -18,10 +18,9 @@ packages:
 
 scripts:
   format:
-    exec: dart format -l 120 .
-
-  analyze:
-    exec: dart analyze .
+    run: dart format -l 120 .
+    exec:
+      concurrency: 6
 
   codegen:
     description: Run build_runner in all packages that use code generation

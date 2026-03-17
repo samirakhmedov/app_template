@@ -10,15 +10,15 @@
 class $AssetsResourcesGen {
   const $AssetsResourcesGen();
 
-  /// Directory path: assets/resources/vectors
-  $AssetsResourcesVectorsGen get vectors => const $AssetsResourcesVectorsGen();
+  /// Directory path: assets/resources/icons
+  $AssetsResourcesIconsGen get icons => const $AssetsResourcesIconsGen();
 }
 
-class $AssetsResourcesVectorsGen {
-  const $AssetsResourcesVectorsGen();
+class $AssetsResourcesIconsGen {
+  const $AssetsResourcesIconsGen();
 
-  /// File path: assets/resources/vectors/logo.vec
-  String get logo => 'packages/app_assets/assets/resources/vectors/logo.vec';
+  /// File path: assets/resources/icons/logo.svg
+  String get logo => 'packages/app_assets/assets/resources/icons/logo.svg';
 
   /// List of all assets
   List<String> get values => [logo];

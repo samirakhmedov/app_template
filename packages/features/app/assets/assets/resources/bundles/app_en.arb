@@ -133,5 +133,67 @@
     "debugScreenSnackTestMessage": "Test",
     "@debugScreenSnackTestMessage": {
         "description": "Snack message text for testing the snack queue."
+    },
+
+    "exampleSimpleString": "Welcome to the app",
+    "@exampleSimpleString": {
+        "description": "Example of a plain string with no parameters."
+    },
+
+    "exampleWithPlaceholder": "Hello, {userName}!",
+    "@exampleWithPlaceholder": {
+        "description": "Example of a string with a single String placeholder.",
+        "placeholders": {
+            "userName": {
+                "type": "String",
+                "example": "Alice"
+            }
+        }
+    },
+
+    "exampleItemCount": "{count, plural, =0{No items} =1{1 item} other{{count} items}}",
+    "@exampleItemCount": {
+        "description": "Example of a plural message based on item count.",
+        "placeholders": {
+            "count": {
+                "type": "num",
+                "format": "compact"
+            }
+        }
+    },
+
+    "examplePronoun": "{gender, select, male{He} female{She} other{They}} signed in",
+    "@examplePronoun": {
+        "description": "Example of a select message for gender-based pronoun.",
+        "placeholders": {
+            "gender": {
+                "type": "String"
+            }
+        }
+    },
+
+    "exampleLastSeen": "Last seen on {date}",
+    "@exampleLastSeen": {
+        "description": "Example of a DateTime placeholder formatted as month/day/year.",
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMd"
+            }
+        }
+    },
+
+    "examplePrice": "Price: {amount}",
+    "@examplePrice": {
+        "description": "Example of a double placeholder formatted as a simple currency.",
+        "placeholders": {
+            "amount": {
+                "type": "double",
+                "format": "simpleCurrency",
+                "optionalParameters": {
+                    "decimalDigits": 2
+                }
+            }
+        }
     }
 }

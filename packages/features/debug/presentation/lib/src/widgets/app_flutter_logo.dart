@@ -12,7 +12,7 @@ class AppFlutterLogo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VectorImageWidget(
-      asset: Assets.resources.vectors.logo,
+      asset: Assets.resources.icons.logo,
       width: context.appSizesScheme.iconsSizeEnormous,
       height: context.appSizesScheme.iconsSizeEnormous,
       fit: BoxFit.contain,

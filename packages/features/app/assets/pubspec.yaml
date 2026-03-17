@@ -20,7 +20,14 @@ dev_dependencies:
 flutter:
   generate: true
   assets:
-    - assets/resources/vectors/
+    - path: assets/resources/icons/logo.svg
+      transformers:
+        - package: vector_graphics_compiler
+    # - path: assets/bird.png
+    #   transformers:
+    #     - package: grayscale_filter
+    #     - package: png_optimizer
+
   shaders:
     - assets/shaders/shimmer.frag
 

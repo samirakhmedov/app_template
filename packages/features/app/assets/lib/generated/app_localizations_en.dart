@@ -105,4 +105,61 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get debugScreenSnackTestMessage => 'Test';
+
+  @override
+  String get exampleSimpleString => 'Welcome to the app';
+
+  @override
+  String exampleWithPlaceholder(String userName) {
+    return 'Hello, $userName!';
+  }
+
+  @override
+  String exampleItemCount(num count) {
+    final intl.NumberFormat countNumberFormat = intl.NumberFormat.compact(
+      locale: localeName,
+    );
+    final String countString = countNumberFormat.format(count);
+
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$countString items',
+      one: '1 item',
+      zero: 'No items',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String examplePronoun(String gender) {
+    String _temp0 = intl.Intl.selectLogic(
+      gender,
+      {
+        'male': 'He',
+        'female': 'She',
+        'other': 'They',
+      },
+    );
+    return '$_temp0 signed in';
+  }
+
+  @override
+  String exampleLastSeen(DateTime date) {
+    final intl.DateFormat dateDateFormat = intl.DateFormat.yMd(localeName);
+    final String dateString = dateDateFormat.format(date);
+
+    return 'Last seen on $dateString';
+  }
+
+  @override
+  String examplePrice(double amount) {
+    final intl.NumberFormat amountNumberFormat = intl.NumberFormat.simpleCurrency(
+      locale: localeName,
+      decimalDigits: 2,
+    );
+    final String amountString = amountNumberFormat.format(amount);
+
+    return 'Price: $amountString';
+  }
 }
