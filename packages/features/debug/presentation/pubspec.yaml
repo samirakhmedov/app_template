@@ -12,6 +12,7 @@ dependencies:
   app_assets:
   app_presentation:
   app_router:
+  auto_route:
   async: ^2.13.0
   common_presentation:
   core:

@@ -9,6 +9,7 @@ environment:
   flutter: 3.41.4
 
 dependencies:
+  auto_route:
   flutter:
     sdk: flutter
   flutter_bloc: 9.1.1

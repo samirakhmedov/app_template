@@ -100,7 +100,6 @@ dev_dependencies:
   freezed: 3.0.6
   mocktail: 1.0.4
   melos: 6.3.3
-  surf_dcm_presets: 0.1.1
   surf_lint_rules: 4.0.0
   surf_widget_test_composer: 0.0.6
   vector_graphics_compiler: 1.1.17
