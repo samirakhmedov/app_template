@@ -31,13 +31,7 @@ class HapticsComponent extends Component<EmptyViewModel, ChildLayout> {
 
 class _HapticsComponentState extends ComponentState<HapticsComponent, EmptyViewModel, ChildLayout>
     implements EmptyViewModel, IHapticProvider {
-  late final HapticsBloc _bloc;
-
-  @override
-  void initState() {
-    super.initState();
-    _bloc = context.read<HapticsBloc>();
-  }
+  late final HapticsBloc _bloc = context.read<HapticsBloc>();
 
   @override
   List<SingleChildWidget> providers() {

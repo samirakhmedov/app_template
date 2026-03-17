@@ -9,15 +9,6 @@ environment:
   flutter: 3.41.4
 
 dependencies:
-  # analytics_interface: 
-  # analytics_gms: 
-  # analytics_hms: 
-  # push_interface: 
-  # push_gms: 
-  # push_hms: 
-  # location_interface: 
-  # location_gms: 
-  # location_hms: 
   app_assets:
   async: ^2.13.0
   auto_route: 10.1.0+1
@@ -58,6 +49,7 @@ workspace:
   - packages/features/app/di/scope
   - packages/features/app/router
   - packages/features/device_settings/data
+  - packages/features/device_settings/di
   - packages/features/device_settings/domain
   - packages/features/device_settings/presentation
   - packages/features/common/data

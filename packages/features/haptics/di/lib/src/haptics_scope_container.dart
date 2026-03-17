@@ -1,6 +1,6 @@
+import 'package:app_di/app_di.dart';
 import 'package:app_presentation/app_presentation.dart';
 import 'package:haptics_data/haptics_data.dart';
-import 'package:haptics_di/src/i_haptics_parent_scope.dart';
 import 'package:haptics_di/src/i_haptics_scope.dart';
 import 'package:haptics_domain/haptics_domain.dart';
 import 'package:yx_scope/yx_scope.dart';
@@ -8,7 +8,7 @@ import 'package:yx_scope/yx_scope.dart';
 /// {@template haptics_scope_container}
 /// A container for the haptics scope.
 /// {@endtemplate}
-class HapticsScopeContainer extends ChildScopeContainer<IHapticsParentScope> implements IHapticsScope {
+class HapticsScopeContainer extends ChildScopeContainer<IAppScope> implements IHapticsScope {
   /// The haptics service dependency.
   late final hapticsServiceDep = rawAsyncDep<IHapticsService>(
     HapticsService.new,

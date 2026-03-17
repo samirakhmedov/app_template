@@ -1,5 +1,5 @@
-name: haptics_di
-description: "Haptics feature DI layer - scope container and holder."
+name: device_settings_di
+description: "Device settings feature DI layer - scope container and holder."
 publish_to: none
 version: 1.0.0
 resolution: workspace
@@ -12,10 +12,10 @@ dependencies:
   app_di:
   app_domain:
   app_presentation:
+  device_settings_data:
+  device_settings_domain:
   flutter:
     sdk: flutter
-  haptics_data:
-  haptics_domain:
   yx_scope: 1.0.2
 
 dev_dependencies:
