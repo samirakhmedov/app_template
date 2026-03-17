@@ -18,14 +18,12 @@ dependencies:
   # location_interface: 
   # location_gms: 
   # location_hms: 
-  api:
-  async: ^2.13.0
   app_assets:
+  async: ^2.13.0
   auto_route: 10.1.0+1
   bloc: 9.0.0
   bloc_concurrency: 0.3.0
   collection: 1.19.1
-  database:
   flutter:
     sdk: flutter
   flutter_bloc: 9.1.1
@@ -37,12 +35,10 @@ dependencies:
   haptics:
     git: https://github.com/samirakhmedov/haptics.git
   intl: 0.20.2
-  network:
   provider: 6.1.5
-  storage:
-  uikit:
   vector_graphics: 1.1.19
   yx_scope: 1.0.2
+  uikit:
 
 workspace:
   - packages/core
@@ -59,6 +55,7 @@ workspace:
   - packages/features/app/di/core
   - packages/features/app/di/gms
   - packages/features/app/di/hms
+  - packages/features/app/di/scope
   - packages/features/app/router
   - packages/features/device_settings/data
   - packages/features/device_settings/domain
@@ -77,6 +74,7 @@ workspace:
   - packages/features/debug/di
   - packages/features/debug/di_stub
   - packages/features/debug/domain
+  - packages/features/debug/navigator
   - packages/features/debug/presentation
   - packages/features/debug/presentation_stub
   - packages/features/haptics/data

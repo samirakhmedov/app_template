@@ -12,6 +12,7 @@ dependencies:
   splash_domain:
   splash_data:
   api:
+  app_di:
   app_domain:
   app_presentation:
   database:

@@ -1,0 +1,17 @@
+name: app_di
+description: "App scope interface — the parent scope contract for feature DI containers."
+publish_to: none
+version: 1.0.0
+resolution: workspace
+
+environment:
+  sdk: 3.11.1
+  flutter: 3.41.4
+
+dependencies:
+  app_domain:
+  core:
+  database:
+  debug_domain:
+  network:
+  yx_scope: 1.0.2

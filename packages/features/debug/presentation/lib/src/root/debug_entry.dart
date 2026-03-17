@@ -1,3 +1,4 @@
+import 'package:app_di/app_di.dart';
 import 'package:app_presentation/app_presentation.dart';
 import 'package:debug_di/debug_di.dart';
 import 'package:flutter/widgets.dart';
@@ -18,7 +19,7 @@ class DebugEntry extends FeatureEntry<IDebugScope> {
 
   @override
   DependenciesRegistrar<IDebugScope> scope(BuildContext context) {
-    final parent = context.read<IDebugParentScope>();
+    final parent = context.read<IAppScope>();
 
     return DebugScopeRegistrar(DebugScopeHolder(parent));
   }

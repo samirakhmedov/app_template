@@ -1,7 +1,10 @@
 import 'dart:async';
 
 import 'package:app_presentation/app_presentation.dart';
+import 'package:debug_navigator/debug_navigator.dart';
 import 'package:flutter/widgets.dart';
+import 'package:haptics_presentation/haptics_presentation.dart';
+import 'package:provider/provider.dart';
 import 'package:splash_presentation/splash_presentation.dart';
 import 'package:uikit/uikit.dart';
 
@@ -41,6 +44,16 @@ class _SplashComponentState extends ComponentState<SplashCentralComponent, Splas
 
   @override
   Animation<double> get fadeAnimation => _animationController;
+
+  @override
+  void openDebugScreen() {
+    try {
+      HapticsComponent.of(context).impact(.heavy);
+      context.read<IDebugNavigator>().openDebugScreen();
+    } on ProviderNotFoundException {
+      // IDebugNavigator not registered — no-op by design.
+    }
+  }
 }
 
 /// {@template splash_view_model}
@@ -49,4 +62,8 @@ class _SplashComponentState extends ComponentState<SplashCentralComponent, Splas
 abstract class SplashViewModel implements ViewModel {
   /// The fade animation.
   Animation<double> get fadeAnimation;
+
+  /// Opens the debug screen if [IDebugNavigator] is registered in the tree.
+  /// Silently no-ops when absent.
+  void openDebugScreen();
 }

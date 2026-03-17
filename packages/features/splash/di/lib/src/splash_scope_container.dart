@@ -1,8 +1,8 @@
 import 'package:api/api.dart';
+import 'package:app_di/app_di.dart';
 import 'package:flutter/foundation.dart';
 import 'package:network/network.dart';
 import 'package:splash_data/splash_data.dart';
-import 'package:splash_di/src/i_splash_parent_scope.dart';
 import 'package:splash_di/src/i_splash_scope.dart';
 import 'package:splash_domain/splash_domain.dart';
 import 'package:yx_scope/yx_scope.dart';
@@ -10,7 +10,7 @@ import 'package:yx_scope/yx_scope.dart';
 /// {@template splash_scope_container}
 /// A container for the splash scope.
 /// {@endtemplate}
-class SplashScopeContainer extends ChildScopeContainer<ISplashParentScope> implements ISplashScope {
+class SplashScopeContainer extends ChildScopeContainer<IAppScope> implements ISplashScope {
   /// The splash Dio dependency.
   late final splashDioDep = rawAsyncDep<Dio>(
     () => parent.httpClientFactory.getClientForScope('splash_scope'),

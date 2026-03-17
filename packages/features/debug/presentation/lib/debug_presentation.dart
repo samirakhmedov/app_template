@@ -5,7 +5,6 @@ export 'src/screens/debug_settings_component.dart';
 export 'src/screens/easter_egg/easter_egg_component.dart';
 export 'src/screens/easter_egg/easter_egg_layout.dart';
 export 'src/widgets/app_flutter_logo.dart';
-export 'src/widgets/debug_wrapper_widget.dart';
 export 'src/widgets/drag/drag_component.dart';
 export 'src/widgets/drag/drag_layout.dart';
 export 'src/widgets/rotation/rotation_component.dart';

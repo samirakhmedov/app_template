@@ -1,3 +1,4 @@
+import 'package:app_di/app_di.dart';
 import 'package:app_presentation/app_presentation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,7 +19,7 @@ class SplashEntry extends FeatureEntry<ISplashScope> {
 
   @override
   DependenciesRegistrar<ISplashScope> scope(BuildContext context) {
-    final parent = context.read<ISplashParentScope>();
+    final parent = context.read<IAppScope>();
 
     return SplashScopeRegistrar(SplashScopeHolder(parent));
   }

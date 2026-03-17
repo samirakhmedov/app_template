@@ -2,6 +2,7 @@ import 'package:app_presentation/app_presentation.dart';
 import 'package:core/core.dart';
 import 'package:debug_domain/debug_domain.dart';
 import 'package:debug_presentation/debug_presentation.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 /// {@template debug_component}
@@ -9,7 +10,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 /// {@endtemplate}
 class DebugSettingsComponent extends Component<DebugViewModel, DebugLayout> {
   /// {@macro debug_component}
-  const DebugSettingsComponent({super.key});
+  const DebugSettingsComponent({required this.onOpenEasterEgg, super.key});
+
+  /// Called when the user triggers navigation to the easter egg screen.
+  final VoidCallback onOpenEasterEgg;
 
   @override
   ComponentState<DebugSettingsComponent, DebugViewModel, DebugLayout> createState() => _DebugSettingsComponentState();
@@ -33,9 +37,7 @@ class _DebugSettingsComponentState extends ComponentState<DebugSettingsComponent
   }
 
   @override
-  void openEasterEgg() {
-    // TODO(task-7): Replace with EasterEggRoute from router package.
-  }
+  void openEasterEgg() => widget.onOpenEasterEgg();
 
   @override
   StateStreamable<DebugState> get debugBloc => _debugBloc;

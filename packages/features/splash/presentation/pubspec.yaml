@@ -10,7 +10,10 @@ environment:
 
 dependencies:
   app_assets:
+  app_di:
   app_router:
+  debug_navigator:
+  haptics_presentation:
   splash_domain:
   splash_di:
   flutter:
