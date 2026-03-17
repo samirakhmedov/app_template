@@ -4,12 +4,13 @@ import 'package:app_assets/app_assets.dart';
 import 'package:app_di/app_di.dart' as app_di;
 import 'package:app_presentation/app_presentation.dart';
 import 'package:app_router/app_router.dart';
+import 'package:app_target/src/di/app_scope_container.dart';
 import 'package:app_target/src/di/app_scope_registrar.dart';
 import 'package:app_target/src/di/i_app_scope.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:common_presentation/common_presentation.dart';
 import 'package:core/core.dart';
-import 'package:device_settings_presentation/device_settings_presentation.dart';
+import 'package:debug_di_interface/debug_di_interface.dart';
 import 'package:flutter/material.dart' hide ThemeMode;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easy_dialogs/flutter_easy_dialogs.dart';
@@ -31,6 +32,7 @@ class App extends StatefulWidget {
     required this.environment,
     this.featureRoutes = const [],
     this.debugNavigatorWrapper,
+    this.debugModuleFactory,
     super.key,
   });
 
@@ -46,6 +48,12 @@ class App extends StatefulWidget {
   /// a wrapper that adds `DebugNavigatorScope`.
   final Widget Function(Widget child, AppRouter router)? debugNavigatorWrapper;
 
+  /// Optional factory for the app-scope debug infrastructure module.
+  ///
+  /// `null` in production targets — [NoOpDebugModule] is used by default.
+  /// Pass `AppScopeDebugModule.new` (from `debug_di`) in the debug target.
+  final IDebugModule Function(AppScopeContainer)? debugModuleFactory;
+
   @override
   State<App> createState() => _AppState();
 }
@@ -56,7 +64,10 @@ class _AppState extends State<App> {
   static const _rootRestorationId = 'root_restoration_scope';
 
   late final _router = AppRouter(featureRoutes: widget.featureRoutes);
-  late final _appScopeRegistrar = AppScopeRegistrar(environment: widget.environment);
+  late final _appScopeRegistrar = AppScopeRegistrar(
+    environment: widget.environment,
+    debugModuleFactory: widget.debugModuleFactory,
+  );
 
   final _scope = ValueNotifier<IAppScope?>(null);
 
@@ -133,22 +144,20 @@ class _AppWrapperWidget extends StatelessWidget {
 
     Widget tree = ShaderProviderComponent(
       shaderPaths: const [AppShaders.shimmerFrag],
-      child: DeviceSettingsComponent(
-        child: MemoryComponent(
-          child: ThemeComponent(
-            lightTheme: AppThemeData.lightTheme,
-            darkTheme: AppThemeData.darkTheme,
-            child: HapticsComponent(
-              child: Overlay(
-                initialEntries: [
-                  OverlayEntry(
-                    builder: (overlayContext) => easyDialogsBuilder(
-                      overlayContext,
-                      SnackQueueComponent(child: child),
-                    ),
+      child: MemoryComponent(
+        child: ThemeComponent(
+          lightTheme: AppThemeData.lightTheme,
+          darkTheme: AppThemeData.darkTheme,
+          child: HapticsComponent(
+            child: Overlay(
+              initialEntries: [
+                OverlayEntry(
+                  builder: (overlayContext) => easyDialogsBuilder(
+                    overlayContext,
+                    SnackQueueComponent(child: child),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),

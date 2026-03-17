@@ -1,4 +1,4 @@
-import 'package:app_template/features/app/di/i_app_scope.dart';
+import 'package:app_target/app_target.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

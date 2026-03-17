@@ -1,0 +1,16 @@
+name: debug_di_interface
+description: "Debug DI interface — IDebugModule, IDebugModuleContext, NoOpDebugModule."
+publish_to: none
+version: 1.0.0
+resolution: workspace
+
+environment:
+  sdk: 3.11.1
+  flutter: 3.41.4
+
+dependencies:
+  app_domain:       # LoggerStrategy
+  app_presentation: # AsyncDepType
+  debug_domain:     # IDebugRepository, RequestOperation
+  storage:          # Storage
+  yx_scope: 1.0.2   # BaseScopeContainer

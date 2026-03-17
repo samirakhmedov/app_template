@@ -2,11 +2,9 @@ import 'dart:developer';
 import 'dart:typed_data';
 
 import 'package:app_assets/app_assets.dart';
-import 'package:app_template/features/common/presentation/state/shader/shader_bloc.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mocktail/mocktail.dart';
 import 'package:surf_widget_test_composer/surf_widget_test_composer.dart' as helper;
 import 'package:uikit/uikit.dart';
 
@@ -42,15 +40,6 @@ Future<void> testExecutable(TestMainCallback testMain) {
   ];
 
   final appScope = AppScopeMock();
-
-  final shaderBlocMock = ShaderBlocMock();
-
-  when(
-    () => shaderBlocMock.stream,
-  ).thenAnswer((_) => Stream.value(ShaderState()));
-  when(() => shaderBlocMock.state).thenReturn(ShaderState());
-
-  when(() => appScope.shaderBloc).thenReturn(shaderBlocMock);
 
   return helper.testExecutable(
     testMain: testMain,

@@ -6,7 +6,7 @@ import 'package:common_data/common_data.dart';
 import 'package:common_domain/common_domain.dart';
 import 'package:core/core.dart';
 import 'package:database/database.dart';
-import 'package:debug_data/debug_data.dart';
+import 'package:debug_di_interface/debug_di_interface.dart';
 import 'package:debug_domain/debug_domain.dart';
 import 'package:device_settings_data/device_settings_data.dart';
 import 'package:device_settings_domain/device_settings_domain.dart';
@@ -27,7 +27,7 @@ import 'package:yx_scope/yx_scope.dart';
 /// Composes all feature modules and child scope holders.
 /// {@endtemplate}
 class AppScopeContainer extends DataScopeContainer<Environment>
-    implements IAppScope, IHttpModuleContext {
+    implements IAppScope, IHttpModuleContext, IDebugModuleContext {
   // ── Shared infrastructure modules (from di_core) ──────────────────────────
 
   /// Storage module: database, secure storage, shared prefs, encryption.
@@ -38,7 +38,7 @@ class AppScopeContainer extends DataScopeContainer<Environment>
 
   // ── Feature modules (inline) ──────────────────────────────────────────────
 
-  late final debugModule = AppScopeDebugModule(this);
+  late final crashModule = AppScopeCrashModule(this);
   late final themeModule = AppScopeThemeModule(this);
   late final memoryModule = AppScopeMemoryModule(this);
   late final deviceSettingsModule = AppScopeDeviceSettingsModule(this);
@@ -47,6 +47,13 @@ class AppScopeContainer extends DataScopeContainer<Environment>
 
   late final hapticsScopeHolder = HapticsScopeHolder(this);
   late final splashScopeHolder = SplashScopeHolder(this);
+
+  // ── Debug module (lazy — only materialised when factory is provided) ────────
+
+  final IDebugModule Function(AppScopeContainer)? _debugModuleFactory;
+
+  late final IDebugModule _debugModule =
+      _debugModuleFactory?.call(this) ?? const NoOpDebugModule();
 
   // ── Direct deps ───────────────────────────────────────────────────────────
 
@@ -74,8 +81,8 @@ class AppScopeContainer extends DataScopeContainer<Environment>
     {
       storageModule.revivableDatabaseManagerDep,
       storageModule.encryptionServiceDep,
-      debugModule.debugServiceDep,
-      debugModule.crashStrategyDep,
+      crashModule.crashStrategyDep,
+      ..._debugModule.initDeps,
       httpModule.httpClientFactoryDep,
       _hapticsScopeReadyDep,
     },
@@ -94,7 +101,10 @@ class AppScopeContainer extends DataScopeContainer<Environment>
   ];
 
   /// {@macro app_scope_container}
-  AppScopeContainer({required super.data});
+  AppScopeContainer({
+    required super.data,
+    IDebugModule Function(AppScopeContainer)? debugModuleFactory,
+  }) : _debugModuleFactory = debugModuleFactory;
 
   // ── app_di.IAppScope ──────────────────────────────────────────────────────
 
@@ -108,7 +118,7 @@ class AppScopeContainer extends DataScopeContainer<Environment>
   IRevivableDatabase get appDatabase => storageModule.revivableDatabaseManagerDep.get;
 
   @override
-  IDebugRepository get debugRepository => debugModule.debugRepositoryDep.get;
+  IDebugRepository get debugRepository => _debugModule.repository;
 
   @override
   Urls get environmentUrl => data.url;
@@ -134,12 +144,18 @@ class AppScopeContainer extends DataScopeContainer<Environment>
   // ── IHttpModuleContext ────────────────────────────────────────────────────
 
   @override
-  String? get debugBaseUri => debugModule.rawBaseUri;
+  String? get debugBaseUri => _debugModule.rawBaseUri;
 
   @override
   String get baseUrl => data.url.value;
 
+  // ── IDebugModuleContext ───────────────────────────────────────────────────
+
+  @override
+  Storage get debugStorage => storageModule.storageDep.get;
+
   // IHapticsParentScope is satisfied by [logger] above.
+  // IDebugModuleContext.logger is satisfied by [logger] above.
 }
 
 // ── AppScopeHolder ────────────────────────────────────────────────────────────
@@ -148,39 +164,38 @@ class AppScopeContainer extends DataScopeContainer<Environment>
 /// Holds the [AppScopeContainer] lifecycle.
 /// {@endtemplate}
 class AppScopeHolder extends DataScopeHolder<AppScopeContainer, Environment> {
+  AppScopeHolder({this.debugModuleFactory});
+
+  /// Optional factory that produces the debug module bound to the container.
+  ///
+  /// Pass `null` (default) for production targets (basic, huawei) — a
+  /// [NoOpDebugModule] is used instead. Pass `AppScopeDebugModule.new` (from
+  /// `debug_di`) for the debug target.
+  final IDebugModule Function(AppScopeContainer)? debugModuleFactory;
+
   @override
-  AppScopeContainer createContainer(Environment data) => AppScopeContainer(data: data);
+  AppScopeContainer createContainer(Environment data) => AppScopeContainer(
+        data: data,
+        debugModuleFactory: debugModuleFactory,
+      );
 }
 
 // ── Inline modules ────────────────────────────────────────────────────────────
 
-/// {@template app_scope_debug_module}
-/// Provides debug infrastructure: crash strategy, debug service/repository.
+/// {@template app_scope_crash_module}
+/// Provides crash handling for all app targets.
+///
+/// Always wired — unconditional across basic, huawei, and debug targets.
 /// {@endtemplate}
-class AppScopeDebugModule extends ScopeModule<AppScopeContainer> {
-  late final debugRepositoryDep = dep<IDebugRepository>(
-    () => DebugRepository(debugService: debugServiceDep.get, logger: container.logger),
-  );
-
-  late final debugServiceDep = rawAsyncDep<IDebugService>(
-    () => DebugService(
-      debugStorage: DebugStorage(storage: container.storageModule.storageDep.get),
-    ),
-    init: (service) => service.initialize(),
-    dispose: (service) => service.dispose(),
-  );
-
+class AppScopeCrashModule extends ScopeModule<AppScopeContainer> {
   late final crashStrategyDep = rawAsyncDep<CrashStrategy>(
     () => Crashlytics(strategies: []),
     init: _initCrashStrategy,
     dispose: (s) => s.dispose(),
   );
 
-  /// Override base URI from the debug service (null in production builds).
-  String? get rawBaseUri => debugServiceDep.get.baseUri?.toString();
-
-  /// {@macro app_scope_debug_module}
-  AppScopeDebugModule(super.container);
+  /// {@macro app_scope_crash_module}
+  AppScopeCrashModule(super.container);
 
   Future<void> _initCrashStrategy(CrashStrategy crashStrategy) async {
     await crashStrategy.initialize();

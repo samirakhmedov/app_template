@@ -33,7 +33,8 @@ migrate_working_dir/
 .pub/
 *.lock
 **/*.lock
-/build/
+apps/**/build/
+build/
 
 # Symbolication related
 app.*.symbols

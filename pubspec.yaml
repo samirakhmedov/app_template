@@ -55,7 +55,6 @@ workspace:
   - packages/features/device_settings/data
   - packages/features/device_settings/di
   - packages/features/device_settings/domain
-  - packages/features/device_settings/presentation
   - packages/features/common/data
   - packages/features/common/domain
   - packages/features/common/presentation
@@ -68,6 +67,7 @@ workspace:
   - packages/features/splash/presentation
   - packages/features/debug/data
   - packages/features/debug/di
+  - packages/features/debug/di_interface
   - packages/features/debug/di_stub
   - packages/features/debug/domain
   - packages/features/debug/navigator
@@ -88,6 +88,10 @@ workspace:
   - packages/uikit
 
 dev_dependencies:
+  app_target:
+  core:
+  debug_domain:
+  debug_presentation:
   build_runner: 2.5.4
   flutter_test:
     sdk: flutter
@@ -121,7 +125,5 @@ flutter:
 # TODO: introduce accessibility package
 # TODO: test precompilation options for assets: https://docs.flutter.dev/ui/assets/asset-transformation
 # TODO: built in FFI
-# TODO: state restoration for Bloc
 # TODO: add Intl usage at localizations
-# TODO: true monorepo support
 # TODO: implement shader warm up for all shaders

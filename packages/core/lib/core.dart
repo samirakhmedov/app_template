@@ -1,11 +1,9 @@
 export 'src/config/constants.dart';
 export 'src/config/environment/build_type.dart';
 export 'src/config/environment/environment.dart';
-export 'src/config/environment/mobile_services_type.dart';
 export 'src/config/environment/raw_environment.dart';
 export 'src/config/environment/registrar/base_environment_registrar.dart';
 export 'src/config/environment/registrar/environment_registrar.dart';
-export 'src/config/environment/store_type.dart';
 export 'src/config/environment/test_env_detector.dart';
 export 'src/config/urls.dart';
 export 'src/pragma_presets.dart';

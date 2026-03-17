@@ -1,13 +1,7 @@
 import 'package:core/src/config/environment/build_type.dart';
-import 'package:core/src/config/environment/mobile_services_type.dart';
-import 'package:core/src/config/environment/store_type.dart';
 
 final class Environment {
   final BuildType buildType;
-
-  final StoreType storeType;
-
-  final MobileServicesType mobileServicesType;
 
   bool get isRelease => buildType == BuildType.production;
 
@@ -15,9 +9,5 @@ final class Environment {
 
   bool get isQA => buildType == BuildType.qa;
 
-  const Environment({
-    required this.buildType,
-    required this.storeType,
-    required this.mobileServicesType,
-  });
+  const Environment({required this.buildType});
 }

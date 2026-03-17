@@ -1,5 +1,0 @@
-enum MobileServicesType {
-  gms,
-
-  hms,
-}

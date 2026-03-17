@@ -3,24 +3,6 @@
 
 android {
     signingConfigs {
-        prod {
-            apply from: '../keystore/keystoreConfig.gradle'
-
-            keyAlias prodKeystoreConfig.keyAlias
-            keyPassword prodKeystoreConfig.keyPassword
-            storeFile file(prodKeystoreConfig.storeFile)
-            storePassword prodKeystoreConfig.storePassword
-        }
-
-        dev {
-            apply from: '../keystore/keystoreConfig.gradle'
-
-            keyAlias devKeystoreConfig.keyAlias
-            keyPassword devKeystoreConfig.keyPassword
-            storeFile file(devKeystoreConfig.storeFile)
-            storePassword devKeystoreConfig.storePassword
-        }
-
         huawei {
             apply from: '../keystore/keystoreConfig.gradle'
 

@@ -4,6 +4,7 @@ export 'package:common_domain/common_domain.dart' show SnackData, SnackMessageTy
 export 'src/widgets/layout/height.dart';
 export 'src/widgets/layout/width.dart';
 export 'src/widgets/memory/memory_component.dart';
+export 'src/widgets/shader/all_shaders_warm_up.dart';
 export 'src/widgets/shader/shader_provider_component.dart';
 export 'src/widgets/shimmer/shimmer_block.dart';
 export 'src/widgets/shimmer/shimmer_component.dart';

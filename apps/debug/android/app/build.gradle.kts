@@ -54,7 +54,6 @@ android {
     }
 
     flavorDimensions += "release-type"
-    flavorDimensions += "service-type"
 
     productFlavors {
         create("dev") {
@@ -73,19 +72,6 @@ android {
             signingConfig = signingConfigs.getByName("prod")
         }
     }
-
-    productFlavors {
-        create("gms") {
-            dimension = "service-type"
-            applicationIdSuffix = ".gms"
-        }
-
-        create("hms") {
-            dimension = "service-type"
-            applicationIdSuffix = ".hms"
-            signingConfig = signingConfigs.getByName("huawei")
-        }
-    }
 }
 
 flutter {
@@ -95,6 +81,5 @@ flutter {
 dependencies {
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.5")
     implementation("androidx.core:core-splashscreen:1.0.1")
-    "hmsImplementation"("com.huawei.agconnect:agconnect-core:1.9.3.301")
-    "gmsImplementation"("com.google.gms:google-services:4.4.3")
+    implementation("com.google.gms:google-services:4.4.3")
 }

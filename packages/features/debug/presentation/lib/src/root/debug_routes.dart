@@ -53,7 +53,7 @@ final List<AutoRoute> debugRoutes = [
         restorationId: (_) => debugSettingsRestorationId,
         initial: true,
         builder: (context, data) => DebugSettingsComponent(
-          onOpenEasterEgg: () => context.router.pushPath(debugEasterEggPath),
+          onOpenEasterEgg: () => context.router.pushPath(easterEggPath),
         ),
       ),
       NamedRouteDef(

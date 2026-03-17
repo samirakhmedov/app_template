@@ -4,8 +4,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id("dev.flutter.flutter-gradle-plugin")
-//    id("com.huawei.agconnect")
-//    id("com.google.gms.google-services")
+    id("com.huawei.agconnect")
 }
 
 apply(from = "../keystore/signingConfigs.gradle")
@@ -54,7 +53,6 @@ android {
     }
 
     flavorDimensions += "release-type"
-    flavorDimensions += "service-type"
 
     productFlavors {
         create("dev") {
@@ -63,26 +61,13 @@ android {
             versionNameSuffix = "-dev"
             resValue("string", "app_name", "App Template (Dev)")
             resValue("string", "app_icon", "@mipmap/ic_launcher_dev")
-            signingConfig = signingConfigs.getByName("dev")
+            signingConfig = signingConfigs.getByName("huawei")
         }
 
         create("prod") {
             dimension = "release-type"
             resValue("string", "app_name", "App Template")
             resValue("string", "app_icon", "@mipmap/ic_launcher")
-            signingConfig = signingConfigs.getByName("prod")
-        }
-    }
-
-    productFlavors {
-        create("gms") {
-            dimension = "service-type"
-            applicationIdSuffix = ".gms"
-        }
-
-        create("hms") {
-            dimension = "service-type"
-            applicationIdSuffix = ".hms"
             signingConfig = signingConfigs.getByName("huawei")
         }
     }
@@ -95,6 +80,5 @@ flutter {
 dependencies {
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.5")
     implementation("androidx.core:core-splashscreen:1.0.1")
-    "hmsImplementation"("com.huawei.agconnect:agconnect-core:1.9.3.301")
-    "gmsImplementation"("com.google.gms:google-services:4.4.3")
+    implementation("com.huawei.agconnect:agconnect-core:1.9.3.301")
 }

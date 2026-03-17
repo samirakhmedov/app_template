@@ -26,13 +26,12 @@ dependencies:
   theme_domain:
   theme_data:
   theme_presentation:
-  # Debug (data layer only — no debug UI)
+  # Debug
   debug_domain:
-  debug_data:
+  debug_di_interface:
   # Device settings
   device_settings_domain:
   device_settings_data:
-  device_settings_presentation:
   # Haptics
   haptics_di:
   haptics_domain:

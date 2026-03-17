@@ -1,10 +1,9 @@
 // ignore_for_file: avoid-passing-async-when-sync-expected
 
-import 'package:app_template/core/config/urls.dart';
-import 'package:app_template/features/debug/presentation/screens/debug/debug_settings_component.dart';
-import 'package:app_template/features/debug/presentation/screens/debug/debug_settings_layout.dart';
-import 'package:app_template/features/debug/presentation/state/bloc/debug_bloc.dart';
 import 'package:bloc/bloc.dart';
+import 'package:core/core.dart';
+import 'package:debug_domain/debug_domain.dart';
+import 'package:debug_presentation/debug_presentation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:surf_widget_test_composer/surf_widget_test_composer.dart';
@@ -31,7 +30,7 @@ void main() {
 
   group('Debug Screen Tests', () {
     testWidget(
-      widgetBuilder: (_, _) => DebugSettingsLayout(viewModel: mockDebugViewModel),
+      widgetBuilder: (_, _) => DebugLayout(viewModel: mockDebugViewModel),
       desc: 'Debug Screen - Release URL',
       setup: (ctx, _) {
         when(() => mockDebugViewModel.sizes).thenReturn(ctx.appSizesScheme);
@@ -47,7 +46,7 @@ void main() {
     );
 
     testWidget(
-      widgetBuilder: (_, _) => DebugSettingsLayout(viewModel: mockDebugViewModel),
+      widgetBuilder: (_, _) => DebugLayout(viewModel: mockDebugViewModel),
       desc: 'Debug Screen - Debug URL',
       setup: (ctx, _) {
         when(() => mockDebugViewModel.sizes).thenReturn(ctx.appSizesScheme);

@@ -13,7 +13,10 @@ dependencies:
   app_domain:
   app_presentation:
   core:
+  debug_data:
+  debug_di_interface:
   debug_domain:
+  storage:
   flutter:
     sdk: flutter
   yx_scope: 1.0.2

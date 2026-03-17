@@ -5,25 +5,63 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "App Template (devGms, legacy)",
+            "name": "basic (dev)",
             "request": "launch",
             "type": "dart",
-            "program": "lib/main.dart",
+            "program": "apps/basic/lib/main.dart",
             "args": [
                 "--flavor",
-                "devGms",
-                "--dart-define=STORE_TYPE=legacy",
+                "dev",
             ]
         },
         {
-            "name": "App template (prodGms, legacy)",
+            "name": "basic (prod)",
             "request": "launch",
             "type": "dart",
-            "program": "lib/main.dart",
+            "program": "apps/basic/lib/main.dart",
             "args": [
                 "--flavor",
-                "prodGms",
-                "--dart-define=STORE_TYPE=legacy",
+                "prod",
+            ]
+        },
+        {
+            "name": "huawei (dev)",
+            "request": "launch",
+            "type": "dart",
+            "program": "apps/huawei/lib/main.dart",
+            "args": [
+                "--flavor",
+                "dev",
+            ]
+        },
+        {
+            "name": "huawei (prod)",
+            "request": "launch",
+            "type": "dart",
+            "program": "apps/huawei/lib/main.dart",
+            "args": [
+                "--flavor",
+                "prod",
+            ]
+        },
+        {
+            "name": "debug (dev)",
+            "request": "launch",
+            "type": "dart",
+            "program": "apps/debug/lib/main.dart",
+            "args": [
+                "--flavor",
+                "dev",
+            ]
+        },
+        {
+            "name": "debug (prod)",
+            "request": "launch",
+            "type": "dart",
+            "program": "apps/debug/lib/main.dart",
+            "args": [
+                "--flavor",
+                "prod",
             ]
         }
     ]

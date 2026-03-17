@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:ui' as ui;
 
 import 'package:app_presentation/app_presentation.dart';
+import 'package:common_presentation/src/widgets/shader/all_shaders_warm_up.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
@@ -52,6 +53,9 @@ class _ShaderProviderComponentState extends ComponentState<ShaderProviderCompone
   @override
   void initState() {
     super.initState(); // registers WidgetsBinding observer via LifecycleObserverMixin
+    PaintingBinding.shaderWarmUp = AllShadersWarmUp(
+      fragmentShaderPaths: widget.shaderPaths,
+    );
     _loadAll();
   }
 
