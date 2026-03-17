@@ -52,8 +52,7 @@ class AppScopeContainer extends DataScopeContainer<Environment>
 
   final IDebugModule Function(AppScopeContainer)? _debugModuleFactory;
 
-  late final IDebugModule _debugModule =
-      _debugModuleFactory?.call(this) ?? const NoOpDebugModule();
+  late final IDebugModule _debugModule = _debugModuleFactory?.call(this) ?? const NoOpDebugModule();
 
   // ── Direct deps ───────────────────────────────────────────────────────────
 
@@ -175,9 +174,9 @@ class AppScopeHolder extends DataScopeHolder<AppScopeContainer, Environment> {
 
   @override
   AppScopeContainer createContainer(Environment data) => AppScopeContainer(
-        data: data,
-        debugModuleFactory: debugModuleFactory,
-      );
+    data: data,
+    debugModuleFactory: debugModuleFactory,
+  );
 }
 
 // ── Inline modules ────────────────────────────────────────────────────────────

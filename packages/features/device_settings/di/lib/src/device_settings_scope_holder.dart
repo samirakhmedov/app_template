@@ -10,6 +10,5 @@ class DeviceSettingsScopeHolder extends ChildScopeHolder<DeviceSettingsScopeCont
   DeviceSettingsScopeHolder(super.parent);
 
   @override
-  DeviceSettingsScopeContainer createContainer(IAppScope parent) =>
-      DeviceSettingsScopeContainer(parent: parent);
+  DeviceSettingsScopeContainer createContainer(IAppScope parent) => DeviceSettingsScopeContainer(parent: parent);
 }

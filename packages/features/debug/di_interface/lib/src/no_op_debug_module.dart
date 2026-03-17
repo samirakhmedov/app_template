@@ -23,10 +23,8 @@ final class _NoOpDebugRepository implements IDebugRepository {
   const _NoOpDebugRepository();
 
   @override
-  RequestOperation<Uri> getBaseUri() =>
-      throw UnimplementedError('debug module disabled');
+  RequestOperation<Uri> getBaseUri() => throw UnimplementedError('debug module disabled');
 
   @override
-  RequestOperation<void> setBaseUri(Uri uri) =>
-      throw UnimplementedError('debug module disabled');
+  RequestOperation<void> setBaseUri(Uri uri) => throw UnimplementedError('debug module disabled');
 }

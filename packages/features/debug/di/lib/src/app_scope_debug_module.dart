@@ -12,8 +12,7 @@ import 'package:yx_scope/yx_scope.dart';
 /// and can be used by any container that provides [IDebugModuleContext.debugStorage]
 /// and [IDebugModuleContext.logger].
 /// {@endtemplate}
-class AppScopeDebugModule<T extends IDebugModuleContext> extends ScopeModule<T>
-    implements IDebugModule {
+class AppScopeDebugModule<T extends IDebugModuleContext> extends ScopeModule<T> implements IDebugModule {
   late final debugRepositoryDep = dep<IDebugRepository>(
     () => DebugRepository(
       debugService: debugServiceDep.get,
