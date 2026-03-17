@@ -3,7 +3,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:debug_di/debug_di.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
 /// {@template debug_entry}

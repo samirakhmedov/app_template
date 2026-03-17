@@ -1,6 +1,5 @@
 import 'package:app_data/app_data.dart';
-import 'package:app_domain/src/entities/request_operation.dart';
-import 'package:app_domain/src/entities/result.dart';
+import 'package:app_domain/app_domain.dart';
 import 'package:common_domain/common_domain.dart';
 import 'package:database/database.dart';
 import 'package:network/network.dart';

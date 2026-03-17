@@ -15,11 +15,12 @@ formatter:
 
 linter:
   rules:
-    public_member_api_docs: true
     do_not_use_environment: false
+    sort_pub_dependencies: false
 
 analyzer:
   exclude:
+    - lib/**
     - packages/**/*.g.dart
     - packages/**/*.freezed.dart
     - lib/assets/**

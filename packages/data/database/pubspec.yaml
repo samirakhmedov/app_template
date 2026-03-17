@@ -6,7 +6,7 @@ resolution: workspace
 
 
 environment:
-  sdk: 3.11.0
+  sdk: 3.11.1
 
 dependencies:
   drift: 2.26.1

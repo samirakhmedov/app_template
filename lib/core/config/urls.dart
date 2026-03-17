@@ -8,7 +8,8 @@ enum Urls {
   release('$kDefaultUrl/release'),
 
   /// The development URL.
-  development('$kDefaultUrl/test');
+  development('$kDefaultUrl/test')
+  ;
 
   /// The value of the URL.
   const Urls(this.value);

@@ -1,8 +1,8 @@
 import 'dart:developer';
 import 'dart:typed_data';
 
+import 'package:app_assets/app_assets.dart';
 import 'package:app_template/features/common/presentation/state/shader/shader_bloc.dart';
-import 'package:app_template/generated/app_localizations.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';

@@ -1,4 +1,4 @@
-import 'package:app_domain/src/entities/request_operation.dart';
+import 'package:app_domain/app_domain.dart';
 
 abstract interface class IMemoryRepository {
   RequestOperation<void> handleMemoryPressure();

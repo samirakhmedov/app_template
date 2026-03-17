@@ -7,8 +7,6 @@ init:
 
 	make codegen-assets
 
-	make codegen-packages
-
 	make format
 
 	make format-packages
@@ -20,25 +18,11 @@ get-packages:
 	melos bootstrap
 
 codegen:
-	sh ./scripts/build_runner.sh
-
-codegen-db:
-	cd packages/database && sh ./scripts/build_runner.sh
-
-codegen-uikit:
-	cd packages/uikit && sh ./scripts/build_runner.sh
-
-codegen-api:
-	cd packages/api && sh ./scripts/build_runner.sh
+	melos run build
 
 codegen-assets:
-	fluttergen -c pubspec.yaml
+	cd packages/features/app/assets && fluttergen -c pubspec.yaml
 
-codegen-packages:
-	melos exec --category="buildable" -- sh scripts/build_runner.sh
-
-format:
-	sh ./scripts/format.sh
 
 format-packages:
 	melos run format
@@ -61,7 +45,9 @@ clean-ios:
 	sh ./scripts/clean_ios.sh
 
 intl-with-format:
-	sh ./scripts/intl_with_format.sh
+	fvm flutter gen-l10n
+
+	melos run format
 
 reset-goldens:
 	sh ./scripts/reset_goldens.sh

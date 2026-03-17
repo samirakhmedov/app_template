@@ -1,7 +1,7 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:device_settings_domain/src/entities/app_device_orientation.dart';
 import 'package:device_settings_domain/src/entities/app_system_ui_mode.dart';
 import 'package:device_settings_domain/src/entities/app_system_ui_overlay_style.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'device_settings.freezed.dart';
 

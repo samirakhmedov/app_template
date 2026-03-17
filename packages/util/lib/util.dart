@@ -2,7 +2,11 @@ export 'src/extensions/closures.dart';
 export 'src/extensions/iterable_x.dart';
 export 'src/extensions/string_extension.dart';
 export 'src/fields/formatters/capitalize_first_letter_formatter.dart';
+export 'src/fields/validators/cap_validator.dart';
+export 'src/fields/validators/email_validator.dart';
+export 'src/fields/validators/field_validator.dart';
+export 'src/fields/validators/fill_validator.dart';
+export 'src/fields/validators/link_validator.dart';
+export 'src/fields/validators/merged_validator.dart';
+export 'src/fields/validators/name_validator.dart';
 export 'src/helpers/version_util.dart';
-
-// TODO: Validators depend on AppLocalizations - will be added when assets package is created
-// export 'src/fields/validators/...';

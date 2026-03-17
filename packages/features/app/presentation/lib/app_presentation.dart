@@ -1,5 +1,3 @@
-library app_presentation;
-
 export 'src/di/dependencies_registrar.dart';
 export 'src/di/di_scope.dart';
 export 'src/mixins/lifecycle_observer_mixin.dart';

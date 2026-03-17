@@ -5,8 +5,8 @@ version: 1.0.0
 resolution: workspace
 
 environment:
-  sdk: 3.11.0
-  flutter: 3.41.0
+  sdk: 3.11.1
+  flutter: 3.41.4
 
 dependencies:
   analytics_gms:

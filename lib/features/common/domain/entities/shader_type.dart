@@ -5,7 +5,8 @@ enum ShaderType {
   /// Shimmer effect shader for creating animated shimmer effects.
   shimmer(
     displayName: ShaderNames.shimmer,
-  );
+  )
+  ;
 
   /// Creates a new [ShaderType] with the specified [displayName].
   const ShaderType({

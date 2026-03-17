@@ -4,23 +4,37 @@ sdkPath: .fvm/flutter_sdk
 
 categories:
   buildable:
-    - packages/database
-    - packages/api
+    - packages/data/database
+    - packages/data/api
     - packages/uikit
+    - packages/features/**
 
 ide:
   intellij:
     enabled: false
 
 packages:
-  - packages/storage
-  - packages/network
-  - packages/database
-  - packages/api
-  - packages/uikit
+  - packages/**
 
 scripts:
   format:
     exec: dart format -l 100 .
+
   analyze:
     exec: dart analyze .
+
+  build:
+    description: Run build_runner in all packages that use code generation
+    exec:
+      command: dart run build_runner build --delete-conflicting-outputs
+      concurrency: 6
+    packageFilters:
+      dependsOn: build_runner
+
+  build:watch:
+    description: Watch and rebuild in all packages that use code generation
+    exec:
+      command: dart run build_runner watch --delete-conflicting-outputs
+      concurrency: 6
+    packageFilters:
+      dependsOn: build_runner

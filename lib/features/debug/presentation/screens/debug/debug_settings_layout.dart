@@ -260,38 +260,32 @@ class _HapticFeedbackCard extends StatelessWidget {
                   child: Text(l10n.debugScreenHapticSelectionHapticButton),
                 ),
                 AppPrimaryButton(
-                  onPressed: () =>
-                      HapticsComponent.of(context).feedback(.contextClick),
+                  onPressed: () => HapticsComponent.of(context).feedback(.contextClick),
                   size: .small,
                   child: Text(l10n.debugScreenHapticContextClickFeedbackButton),
                 ),
                 AppPrimaryButton(
-                  onPressed: () =>
-                      HapticsComponent.of(context).feedback(.dragStart),
+                  onPressed: () => HapticsComponent.of(context).feedback(.dragStart),
                   size: .small,
                   child: Text(l10n.debugScreenHapticDragStartFeedbackButton),
                 ),
                 AppPrimaryButton(
-                  onPressed: () =>
-                      HapticsComponent.of(context).feedback(.gestureEnd),
+                  onPressed: () => HapticsComponent.of(context).feedback(.gestureEnd),
                   size: .small,
                   child: Text(l10n.debugScreenHapticGestureEndFeedbackButton),
                 ),
                 AppPrimaryButton(
-                  onPressed: () =>
-                      HapticsComponent.of(context).feedback(.gestureStart),
+                  onPressed: () => HapticsComponent.of(context).feedback(.gestureStart),
                   size: .small,
                   child: Text(l10n.debugScreenHapticGestureStartFeedbackButton),
                 ),
                 AppPrimaryButton(
-                  onPressed: () =>
-                      HapticsComponent.of(context).feedback(.textHandleMove),
+                  onPressed: () => HapticsComponent.of(context).feedback(.textHandleMove),
                   size: .small,
                   child: Text(l10n.debugScreenHapticTextHandleMoveFeedbackButton),
                 ),
                 AppPrimaryButton(
-                  onPressed: () =>
-                      HapticsComponent.of(context).feedback(.virtualKeyRelease),
+                  onPressed: () => HapticsComponent.of(context).feedback(.virtualKeyRelease),
                   size: .small,
                   child: Text(l10n.debugScreenHapticVirtualKeyReleaseFeedbackButton),
                 ),
