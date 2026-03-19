@@ -1,84 +1,103 @@
 # App Template
 
-A production-ready Flutter template with a robust architecture, modular design, and a focus on developer productivity.
+Flutter monorepo template with clean architecture, modular packages, and one-command project initialization.
+
+## Prerequisites
+
+- [FVM](https://fvm.app/) — Flutter version manager
+- [Melos](https://melos.invertase.dev/) — monorepo package orchestration
+- [Make](https://www.gnu.org/software/make/) — build automation
+- [CocoaPods](https://cocoapods.org/) — iOS dependency manager
+- [Xcode](https://developer.apple.com/xcode/) — iOS builds
+- [Android SDK](https://developer.android.com/studio) — Android builds
 
 ## Getting Started
 
-This project is a starting point for a Flutter application. To get started, you'll need to have the Flutter SDK installed. This project uses [FVM](https://fvm.app/) to manage the Flutter version, so make sure you have it installed and configured.
+Clone the repo, then run the init script:
 
-1.  **Install FVM:**
-    ```bash
-    dart pub global activate fvm
-    ```
-2.  **Install the correct Flutter version:**
-    ```bash
-    fvm install
-    ```
-3.  **Run the app:**
-    ```bash
-    fvm flutter run
-    ```
+```bash
+scripts/init.sh
+```
+
+The script prompts for an app display name and two bundle IDs (Android and iOS), renames all platform
+identifiers across the project, and runs `make init` to bootstrap the workspace.
+Run `scripts/init.sh --help` for details.
 
 ## Project Structure
 
-The project is divided into a main application and a set of modular packages. This separation of concerns allows for better code organization, reusability, and maintainability.
+```text
+apps/
+  basic/      # GMS production target (main.dart only)
+  debug/      # Debug target with debug screen (main.dart + app.dart)
+packages/
+  core/       # Environment config, Urls, BuildType, TestEnvDetector
+  util/       # Closures, string/iterable extensions
+  data/       # Infrastructure (analytics, api, database, location, network, push, storage)
+  uikit/      # Reusable UI widget library
+  features/   # Feature packages (app, common, debug, device_settings, haptics, splash, theme)
+```
 
-### Core Architecture (`lib/core`)
+Each feature under `packages/features/` follows clean architecture with sub-packages:
 
-The `lib/core` directory contains the foundational building blocks of the application's architecture.
+- `domain/` — entities, repository interfaces, BLoCs (@freezed events/states)
+- `data/` — repository and service implementations
+- `di/` — DI scope (yx_scope containers, holders, registrars)
+- `presentation/` — UI components, layouts, feature entry
 
-*   **`architecture`**: This directory defines the core architectural components, including:
-    *   **`component.dart`**: A base class for building UI components with a corresponding `ViewModel`.
-    *   **`layout.dart`**: A base class for the layout of a component.
-    *   **`presentation/state/restorable_value_notifier.dart`**: A `ValueNotifier` that automatically saves and restores its value, which is useful for preserving state across app restarts.
-    *   **`mixin/lifecycle_observer_mixin.dart`**: A mixin that simplifies reacting to `AppLifecycleState` changes and memory-pressure notifications.
-    *   **`mixin/theme_mixin.dart`**: A mixin that provides easy access to the current theme.
-*   **`pragma_presets.dart`**: This file contains pragma presets for the Dart compiler, which can be used to enable or disable certain compiler warnings and errors.
+## Architecture Patterns
 
-### Packages (`packages/`)
+- **DI (yx_scope)** — Root scope `AppScopeContainer` in `packages/features/app/target/`. Feature scopes
+  use `ChildScopeContainer`, `ChildScopeHolder`, and `DependenciesRegistrar` pattern.
+- **State Management** — `bloc`/`flutter_bloc` with `@freezed` events and states. BLoCs created in DI
+  scopes, provided via `BlocProvider.value`.
+- **UI** — `Component<VM, L>` (StatefulWidget + ViewModel) paired with `Layout<VM>` (pure rendering).
+  Screens wrapped by `FeatureEntry` for DI scope creation.
+- **Routing** — `AppRouter` using `NamedRouteDef` — no code generation. Cross-feature navigation via
+  `context.router.pushPath(...)`.
 
-The `packages/` directory contains a set of modular packages that provide specific functionality to the application. Each package has its own `pubspec.yaml` file and can be developed and tested independently.
+## Make Targets
 
-*   **`analytics`**: Provides an interface for analytics services, with concrete implementations for GMS (Firebase) and HMS (Huawei).
-*   **`api`**: Handles communication with a remote API using `dio` and `retrofit`.
-*   **`database`**: Manages the local database using `drift`.
-*   **`haptics`**: Provides a simple interface for haptic feedback.
-*   **`location`**: Provides an interface for location services, with concrete implementations for GMS and HMS.
-*   **`network`**: A low-level networking package that provides a `Dio` instance with interceptors.
-*   **`push`**: Provides an interface for push notifications, with concrete implementations for GMS (FCM) and HMS.
-*   **`secure_enclave`**: A plugin for accessing the Apple Secure Enclave.
-*   **`storage`**: A package for simple key-value storage using `shared_preferences` and `flutter_secure_storage`.
-*   **`uikit`**: A component library with a set of reusable UI widgets.
+| Command                 | Description                                               |
+|-------------------------|-----------------------------------------------------------|
+| `make init`             | Full setup: pub get, codegen, codegen-assets, format      |
+| `make get`              | Just `fvm flutter pub get`                                |
+| `make codegen`          | Run build_runner across all packages (freezed, etc.)      |
+| `make codegen-assets`   | Run fluttergen in `packages/features/app/assets/`         |
+| `make intl-with-format` | Regenerate l10n files and format                          |
+| `make format`           | Format all packages (line length 120)                     |
+| `make test`             | Run all tests                                             |
+| `make clean`            | Remove .dart_tool and flutter clean                       |
+| `make force-clean`      | Clean + pub cache repair                                  |
 
-## Dependencies
+### Run Commands
 
-The project uses a set of well-established and reliable dependencies to provide a solid foundation for development.
+```bash
+fvm flutter run --flavor dev -t apps/basic/lib/main.dart   # basic target
+fvm flutter run --flavor dev -t apps/debug/lib/main.dart   # debug target
+```
 
-*   **`auto_route`**: A powerful routing library that generates all the necessary routing code for you.
-*   **`bloc`**: A predictable state management library that helps to implement the BLoC design pattern.
-*   **`freezed`**: A code generation library that helps to create immutable classes.
-*   **`drift`**: A reactive persistence library for Flutter and Dart, built on top of `sqlite`.
-*   **`dio`**: A powerful HTTP client for Dart, which supports interceptors, global configuration, FormData, request cancellation, file downloading, timeout, and more.
-*   **`retrofit`**: A type-safe HTTP client for Dart and Flutter, based on `dio`.
+## Where Things Go
 
-## Scripts
+| I want to...                  | Put it in...                                                                  |
+|-------------------------------|-------------------------------------------------------------------------------|
+| Add a new feature             | `packages/features/<name>/` with domain/, data/, di/, presentation/ sub-packages |
+| Add a new BLoC                | `packages/features/<feature>/domain/` with @freezed events/states            |
+| Add a shared UI widget        | `packages/uikit/`                                                             |
+| Add an API client             | `packages/data/api/`                                                          |
+| Add a utility extension       | `packages/util/`                                                              |
+| Add a data sub-package        | `packages/data/<name>/`                                                       |
 
-The `scripts/` directory contains a set of useful scripts for automating common development tasks.
+### Mason Bricks
 
-*   **`build_runner.sh`**: Runs the `build_runner` to generate code.
-*   **`clean_ios.sh`**: Cleans the iOS build artifacts.
-*   **`compile_icons.sh`**: Compiles the icons into a font.
-*   **`format.sh`**: Formats the code using `dart format`.
-*   **`intl_with_format.sh`**: Generates the localization files and formats the code.
-*   **`propagate_secrets.sh`**: Propagates secrets to the native projects.
-*   **`reset_goldens.sh`**: Resets the golden files for widget tests.
+Templates in `tools/mason/` generate boilerplate:
 
-## Mason
+- **feature** — full feature package with domain/data/di/presentation
+- **bloc** — BLoC with @freezed events and states
+- **screen** — Component + Layout pair
+- **widget** — reusable widget
 
-The project uses [Mason](https://github.com/felangel/mason) to generate boilerplate code for features, blocs, screens, and widgets. The templates are located in the `tools/mason/` directory.
+### New Package
 
-## Localization
-
-The project is set up for localization using the `intl` package. The localization files are located in the `assets/resources/bundles/` directory, and the generated code is in `lib/generated/`.
-
-To add a new language, create a new `.arb` file in the `assets/resources/bundles/` directory and run the `intl_with_format.sh` script.
+1. Create the package directory under `packages/`
+2. Add it to the `workspace:` list in root `pubspec.yaml`
+3. Run `make get`
