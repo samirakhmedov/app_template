@@ -31,7 +31,6 @@ dependencies:
 
 workspace:
   - apps/basic
-  - apps/huawei
   - apps/debug
   - packages/core
   - packages/util
