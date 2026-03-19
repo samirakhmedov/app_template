@@ -1,19 +1,14 @@
 init:
 	fvm flutter pub get
 
-	melos bootstrap
-
 	make codegen
 
 	make codegen-assets
 
 	make format
 
-	make format-packages
-
 get:
 	fvm flutter pub get
-
 
 format:
 	melos run format
