@@ -1,0 +1,22 @@
+name: {{name.snakeCase()}}_presentation
+description: "{{name.pascalCase()}} feature presentation layer - widgets and screens."
+publish_to: none
+version: 1.0.0
+resolution: workspace
+
+environment:
+  sdk: 3.11.1
+  flutter: 3.41.4
+
+dependencies:
+  {{name.snakeCase()}}_domain:
+  {{name.snakeCase()}}_di:
+  app_di:
+  app_presentation:
+  flutter:
+    sdk: flutter
+  flutter_bloc: 9.1.1
+  provider: 6.1.5
+  uikit:
+
+dev_dependencies:

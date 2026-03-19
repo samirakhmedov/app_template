@@ -67,14 +67,6 @@ PLIST
 
   # Root pubspec.yaml
   printf 'name: app_template\nversion: 1.0.0\n' > "$TMPDIR/pubspec.yaml"
-
-  # Mason bricks with package:app_template/ imports
-  mkdir -p "$TMPDIR/tools/mason/feature/__brick__/lib"
-  printf "import 'package:app_template/core/architecture.dart';\n" \
-    > "$TMPDIR/tools/mason/feature/__brick__/lib/my_feature.dart"
-  mkdir -p "$TMPDIR/tools/mason/screen/__brick__/lib"
-  printf "import 'package:app_template/utils/helpers.dart';\n" \
-    > "$TMPDIR/tools/mason/screen/__brick__/lib/my_screen.dart"
 }
 
 teardown() {
@@ -252,30 +244,6 @@ teardown() {
     "$TMPDIR/apps/basic/android/app/src/main/kotlin/com/newco/myapp/MainActivity.kt"
   ! grep -q 'com.example.app_template' \
     "$TMPDIR/apps/basic/android/app/src/main/kotlin/com/newco/myapp/MainActivity.kt"
-}
-
-# ---------------------------------------------------------------------------
-# INIT-10: Mason brick templates rename
-# ---------------------------------------------------------------------------
-
-@test "INIT-10: rename_mason_bricks replaces package:app_template/ in feature brick" {
-  PROJECT_ROOT="$TMPDIR" bash -c '
-    main() { :; }
-    source "'"$PROJECT_DIR/$SCRIPT"'"
-    rename_mason_bricks "my_app"
-  '
-  grep -q "package:my_app/" "$TMPDIR/tools/mason/feature/__brick__/lib/my_feature.dart"
-  ! grep -q "package:app_template/" "$TMPDIR/tools/mason/feature/__brick__/lib/my_feature.dart"
-}
-
-@test "INIT-10: rename_mason_bricks replaces package:app_template/ in screen brick" {
-  PROJECT_ROOT="$TMPDIR" bash -c '
-    main() { :; }
-    source "'"$PROJECT_DIR/$SCRIPT"'"
-    rename_mason_bricks "my_app"
-  '
-  grep -q "package:my_app/" "$TMPDIR/tools/mason/screen/__brick__/lib/my_screen.dart"
-  ! grep -q "package:app_template/" "$TMPDIR/tools/mason/screen/__brick__/lib/my_screen.dart"
 }
 
 # ---------------------------------------------------------------------------

@@ -93,8 +93,37 @@ confirm_proceed() {
 }
 
 # ---------------------------------------------------------------------------
-# Phase 2: File rename functions
+# Phase 2: Target discovery & file rename functions
 # ---------------------------------------------------------------------------
+
+# APP_TARGETS — populated by discover_app_targets; array of directory basenames under apps/.
+APP_TARGETS=()
+
+# discover_app_targets
+# Scans apps/ for subdirectories and populates APP_TARGETS. Prints what was found.
+discover_app_targets() {
+  APP_TARGETS=()
+  for dir in "$PROJECT_ROOT"/apps/*/; do
+    [ -d "$dir" ] || continue
+    APP_TARGETS+=("$(basename "$dir")")
+  done
+
+  if [[ ${#APP_TARGETS[@]} -eq 0 ]]; then
+    printf "${RED}Error: no app targets found under apps/${RESET}\n" >&2
+    exit 1
+  fi
+
+  printf "${BOLD}Detected app targets:${RESET}\n"
+  for target in "${APP_TARGETS[@]}"; do
+    local files=""
+    [ -f "$PROJECT_ROOT/apps/${target}/android/app/build.gradle.kts" ] && files+="gradle "
+    [ -f "$PROJECT_ROOT/apps/${target}/ios/Flutter/common.xcconfig" ] && files+="xcconfig "
+    [ -f "$PROJECT_ROOT/apps/${target}/ios/Runner/Info.plist" ] && files+="plist "
+    [ -d "$PROJECT_ROOT/apps/${target}/android/app/src/main/kotlin/com/example/app_template" ] && files+="kotlin "
+    printf "  %s (%s)\n" "$target" "${files% }"
+  done
+  printf "\n"
+}
 
 # _rename_file <file> <description> [sed-args...]
 # Runs sed -i '' with the given args on the file. Prints green check on success,
@@ -112,12 +141,18 @@ _rename_file() {
 }
 
 # check_already_initialized
-# Exits 0 with a warning if the sentinel value is absent (project already initialized).
+# Exits 0 with a warning if the sentinel value is absent from ALL build.gradle.kts files.
 check_already_initialized() {
-  if ! grep -q "com\.example\.app_template" \
-    "$PROJECT_ROOT/apps/basic/android/app/build.gradle.kts" 2>/dev/null; then
+  local found=false
+  for gradle in "$PROJECT_ROOT"/apps/*/android/app/build.gradle.kts; do
+    if [ -f "$gradle" ] && grep -q "com\.example\.app_template" "$gradle" 2>/dev/null; then
+      found=true
+      break
+    fi
+  done
+  if [[ "$found" == false ]]; then
     printf "${BOLD}Warning:${RESET} This project appears to already be initialized.\n"
-    printf "Sentinel value 'com.example.app_template' not found in build.gradle.kts.\n"
+    printf "Sentinel value 'com.example.app_template' not found in any build.gradle.kts.\n"
     printf "If you want to re-initialize, manually restore the sentinel values first.\n"
     exit 0
   fi
@@ -130,8 +165,8 @@ derive_dart_package_name() {
 }
 
 # rename_android <app_name> <android_bundle_id>
-# INIT-05: Updates namespace, applicationId, and resValue strings in both
-# apps/basic and apps/debug build.gradle.kts files.
+# INIT-05: Updates namespace, applicationId, and resValue strings in all
+# discovered app targets that have build.gradle.kts.
 rename_android() {
   local app_name="$1"
   local android_bundle_id="$2"
@@ -139,8 +174,9 @@ rename_android() {
   local old_android_escaped
   old_android_escaped="$(printf '%s' "$old_android" | sed 's/\./\\./g')"
 
-  for target in basic debug; do
+  for target in "${APP_TARGETS[@]}"; do
     local file="$PROJECT_ROOT/apps/${target}/android/app/build.gradle.kts"
+    [ -f "$file" ] || continue
     # Replace namespace and applicationId (same sentinel, two occurrences)
     _rename_file "$file" "apps/${target}/android/app/build.gradle.kts (bundle ID)" \
       "s/${old_android_escaped}/${android_bundle_id}/g"
@@ -154,29 +190,31 @@ rename_android() {
 }
 
 # rename_ios_xcconfig <ios_bundle_id>
-# INIT-06: Updates identifier= in both apps/basic and apps/debug common.xcconfig files.
+# INIT-06: Updates identifier= in all discovered targets that have common.xcconfig.
 rename_ios_xcconfig() {
   local ios_bundle_id="$1"
   local old_ios="com.example.appTemplate"
   local old_ios_escaped
   old_ios_escaped="$(printf '%s' "$old_ios" | sed 's/\./\\./g')"
 
-  for target in basic debug; do
+  for target in "${APP_TARGETS[@]}"; do
     local file="$PROJECT_ROOT/apps/${target}/ios/Flutter/common.xcconfig"
+    [ -f "$file" ] || continue
     _rename_file "$file" "apps/${target}/ios/Flutter/common.xcconfig" \
       "s/identifier=${old_ios_escaped}/identifier=${ios_bundle_id}/"
   done
 }
 
 # rename_ios_plist <app_name> <dart_package_name>
-# INIT-07: Updates CFBundleDisplayName and CFBundleName in both
-# apps/basic and apps/debug Info.plist files.
+# INIT-07: Updates CFBundleDisplayName and CFBundleName in all discovered targets
+# that have Info.plist.
 rename_ios_plist() {
   local app_name="$1"
   local dart_package_name="$2"
 
-  for target in basic debug; do
+  for target in "${APP_TARGETS[@]}"; do
     local file="$PROJECT_ROOT/apps/${target}/ios/Runner/Info.plist"
+    [ -f "$file" ] || continue
     _rename_file "$file" "apps/${target}/ios/Runner/Info.plist" \
       -e "s|<string>App Template</string>|<string>${app_name}</string>|g" \
       -e "s|<string>app_template</string>|<string>${dart_package_name}</string>|g"
@@ -194,7 +232,7 @@ rename_pubspec() {
 
 # rename_kotlin_dir <android_bundle_id>
 # INIT-09: Moves MainActivity.kt from old package path to new path derived from
-# the Android bundle ID, and updates the package declaration in the moved file.
+# the Android bundle ID. Operates on all discovered targets that have the old Kotlin path.
 rename_kotlin_dir() {
   local android_bundle_id="$1"
   local old_kotlin_path="com/example/app_template"
@@ -203,9 +241,10 @@ rename_kotlin_dir() {
   local old_android_escaped
   old_android_escaped="$(printf '%s' "com.example.app_template" | sed 's/\./\\./g')"
 
-  for target in basic debug; do
+  for target in "${APP_TARGETS[@]}"; do
     local base="$PROJECT_ROOT/apps/${target}/android/app/src/main/kotlin"
     local old_dir="$base/$old_kotlin_path"
+    [ -d "$old_dir" ] || continue
     local new_dir="$base/$new_kotlin_path"
 
     mkdir -p "$new_dir" || {
@@ -233,21 +272,6 @@ rename_kotlin_dir() {
 
     printf "${GREEN}✓${RESET} apps/%s android Kotlin dir + MainActivity.kt\n" "$target"
   done
-}
-
-# rename_mason_bricks <dart_package_name>
-# INIT-10: Replaces package:app_template/ with package:<dart_package_name>/ in all
-# .dart files under tools/mason/.
-rename_mason_bricks() {
-  local dart_package_name="$1"
-
-  if ! find "$PROJECT_ROOT/tools/mason" -name '*.dart' \
-    -exec sed -i '' "s|package:app_template/|package:${dart_package_name}/|g" {} +; then
-    printf "${RED}Error: mason brick rename failed${RESET}\n" >&2
-    exit 1
-  fi
-  printf "${GREEN}✓${RESET} tools/mason dart files (package:app_template/ -> package:%s/)\n" \
-    "$dart_package_name"
 }
 
 # verify_no_residuals
@@ -319,7 +343,6 @@ main() {
     rename_ios_plist "$app_name" "$dart_package_name"
     rename_pubspec "$dart_package_name"
     rename_kotlin_dir "$android_bundle_id"
-    rename_mason_bricks "$dart_package_name"
 
     printf "\n"
     verify_no_residuals

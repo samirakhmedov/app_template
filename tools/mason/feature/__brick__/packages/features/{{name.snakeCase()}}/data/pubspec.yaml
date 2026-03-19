@@ -1,0 +1,17 @@
+name: {{name.snakeCase()}}_data
+description: "{{name.pascalCase()}} feature data layer - repositories and services."
+publish_to: none
+version: 1.0.0
+resolution: workspace
+
+environment:
+  sdk: 3.11.1
+  flutter: 3.41.4
+
+dependencies:
+  {{name.snakeCase()}}_domain:
+  app_domain:
+  app_data:
+
+dev_dependencies:
+  build_runner: 2.5.4

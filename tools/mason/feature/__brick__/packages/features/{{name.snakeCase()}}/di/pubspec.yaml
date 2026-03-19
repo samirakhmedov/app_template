@@ -1,0 +1,22 @@
+name: {{name.snakeCase()}}_di
+description: "{{name.pascalCase()}} feature DI layer - scope container, holder, and registrar."
+publish_to: none
+version: 1.0.0
+resolution: workspace
+
+environment:
+  sdk: 3.11.1
+  flutter: 3.41.4
+
+dependencies:
+  {{name.snakeCase()}}_domain:
+  {{name.snakeCase()}}_data:
+  app_di:
+  app_domain:
+  app_presentation:
+  yx_scope: 1.0.2
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  build_runner: 2.5.4
