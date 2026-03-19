@@ -81,6 +81,7 @@ teardown() {
   PROJECT_ROOT="$TMPDIR" bash -c '
     main() { :; }
     source "'"$PROJECT_DIR/$SCRIPT"'"
+    APP_TARGETS=(basic debug)
     rename_android "My App" "com.newco.myapp"
   '
   grep -q 'namespace = "com.newco.myapp"' "$TMPDIR/apps/basic/android/app/build.gradle.kts"
@@ -92,6 +93,7 @@ teardown() {
   PROJECT_ROOT="$TMPDIR" bash -c '
     main() { :; }
     source "'"$PROJECT_DIR/$SCRIPT"'"
+    APP_TARGETS=(basic debug)
     rename_android "My App" "com.newco.myapp"
   '
   grep -q 'namespace = "com.newco.myapp"' "$TMPDIR/apps/debug/android/app/build.gradle.kts"
@@ -103,6 +105,7 @@ teardown() {
   PROJECT_ROOT="$TMPDIR" bash -c '
     main() { :; }
     source "'"$PROJECT_DIR/$SCRIPT"'"
+    APP_TARGETS=(basic debug)
     rename_android "My App" "com.newco.myapp"
   '
   grep -q '"My App (Dev)"' "$TMPDIR/apps/basic/android/app/build.gradle.kts"
@@ -113,6 +116,7 @@ teardown() {
   PROJECT_ROOT="$TMPDIR" bash -c '
     main() { :; }
     source "'"$PROJECT_DIR/$SCRIPT"'"
+    APP_TARGETS=(basic debug)
     rename_android "My App" "com.newco.myapp"
   '
   grep -q '"My App"' "$TMPDIR/apps/basic/android/app/build.gradle.kts"
@@ -127,6 +131,7 @@ teardown() {
   PROJECT_ROOT="$TMPDIR" bash -c '
     main() { :; }
     source "'"$PROJECT_DIR/$SCRIPT"'"
+    APP_TARGETS=(basic debug)
     rename_ios_xcconfig "com.newco.myApp"
   '
   grep -q 'identifier=com.newco.myApp' "$TMPDIR/apps/basic/ios/Flutter/common.xcconfig"
@@ -137,6 +142,7 @@ teardown() {
   PROJECT_ROOT="$TMPDIR" bash -c '
     main() { :; }
     source "'"$PROJECT_DIR/$SCRIPT"'"
+    APP_TARGETS=(basic debug)
     rename_ios_xcconfig "com.newco.myApp"
   '
   grep -q 'identifier=com.newco.myApp' "$TMPDIR/apps/debug/ios/Flutter/common.xcconfig"
@@ -151,6 +157,7 @@ teardown() {
   PROJECT_ROOT="$TMPDIR" bash -c '
     main() { :; }
     source "'"$PROJECT_DIR/$SCRIPT"'"
+    APP_TARGETS=(basic debug)
     rename_ios_plist "My App" "my_app"
   '
   grep -q '<string>My App</string>' "$TMPDIR/apps/basic/ios/Runner/Info.plist"
@@ -161,6 +168,7 @@ teardown() {
   PROJECT_ROOT="$TMPDIR" bash -c '
     main() { :; }
     source "'"$PROJECT_DIR/$SCRIPT"'"
+    APP_TARGETS=(basic debug)
     rename_ios_plist "My App" "my_app"
   '
   grep -q '<string>my_app</string>' "$TMPDIR/apps/basic/ios/Runner/Info.plist"
@@ -171,6 +179,7 @@ teardown() {
   PROJECT_ROOT="$TMPDIR" bash -c '
     main() { :; }
     source "'"$PROJECT_DIR/$SCRIPT"'"
+    APP_TARGETS=(basic debug)
     rename_ios_plist "My App" "my_app"
   '
   grep -q '<string>My App</string>' "$TMPDIR/apps/debug/ios/Runner/Info.plist"
@@ -211,6 +220,7 @@ teardown() {
   PROJECT_ROOT="$TMPDIR" bash -c '
     main() { :; }
     source "'"$PROJECT_DIR/$SCRIPT"'"
+    APP_TARGETS=(basic debug)
     rename_kotlin_dir "com.newco.myapp"
   '
   [ -f "$TMPDIR/apps/basic/android/app/src/main/kotlin/com/newco/myapp/MainActivity.kt" ]
@@ -220,6 +230,7 @@ teardown() {
   PROJECT_ROOT="$TMPDIR" bash -c '
     main() { :; }
     source "'"$PROJECT_DIR/$SCRIPT"'"
+    APP_TARGETS=(basic debug)
     rename_kotlin_dir "com.newco.myapp"
   '
   [ -f "$TMPDIR/apps/debug/android/app/src/main/kotlin/com/newco/myapp/MainActivity.kt" ]
@@ -229,6 +240,7 @@ teardown() {
   PROJECT_ROOT="$TMPDIR" bash -c '
     main() { :; }
     source "'"$PROJECT_DIR/$SCRIPT"'"
+    APP_TARGETS=(basic debug)
     rename_kotlin_dir "com.newco.myapp"
   '
   [ ! -d "$TMPDIR/apps/basic/android/app/src/main/kotlin/com/example/app_template" ]
@@ -238,6 +250,7 @@ teardown() {
   PROJECT_ROOT="$TMPDIR" bash -c '
     main() { :; }
     source "'"$PROJECT_DIR/$SCRIPT"'"
+    APP_TARGETS=(basic debug)
     rename_kotlin_dir "com.newco.myapp"
   '
   grep -q '^package com.newco.myapp$' \
@@ -277,6 +290,8 @@ teardown() {
 @test "check_already_initialized exits 0 with warning when sentinel absent" {
   sed -i '' 's/com.example.app_template/com.newco.myapp/g' \
     "$TMPDIR/apps/basic/android/app/build.gradle.kts"
+  sed -i '' 's/com.example.app_template/com.newco.myapp/g' \
+    "$TMPDIR/apps/debug/android/app/build.gradle.kts"
 
   run bash -c '
     main() { :; }
