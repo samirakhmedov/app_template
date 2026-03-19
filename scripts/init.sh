@@ -14,6 +14,15 @@ BUNDLE_ID_REGEX='^[a-zA-Z][a-zA-Z0-9_-]*(\.[a-zA-Z][a-zA-Z0-9_-]*){1,}$'
 # Global result variable — prompt functions set this; caller reads it after function returns
 _INPUT_RESULT=""
 
+# Project root: resolved relative to this script's location so the script
+# works regardless of the caller's working directory. Tests override PROJECT_ROOT.
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_ROOT="${PROJECT_ROOT:-$(cd "$SCRIPT_DIR/.." && pwd)}"
+
+# ---------------------------------------------------------------------------
+# Phase 1: Interactive input functions
+# ---------------------------------------------------------------------------
+
 show_help() {
   printf "${BOLD}Usage:${RESET} scripts/init.sh [--help]\n"
   printf "\n"
@@ -83,6 +92,197 @@ confirm_proceed() {
   fi
 }
 
+# ---------------------------------------------------------------------------
+# Phase 2: File rename functions
+# ---------------------------------------------------------------------------
+
+# _rename_file <file> <description> [sed-args...]
+# Runs sed -i '' with the given args on the file. Prints green check on success,
+# red error and exits 1 on failure.
+_rename_file() {
+  local file="$1"
+  local description="$2"
+  shift 2
+  if sed -i '' "$@" "$file"; then
+    printf "${GREEN}✓${RESET} %s\n" "$description"
+  else
+    printf "${RED}Error: failed to rename %s${RESET}\n" "$file" >&2
+    exit 1
+  fi
+}
+
+# check_already_initialized
+# Exits 0 with a warning if the sentinel value is absent (project already initialized).
+check_already_initialized() {
+  if ! grep -q "com\.example\.app_template" \
+    "$PROJECT_ROOT/apps/basic/android/app/build.gradle.kts" 2>/dev/null; then
+    printf "${BOLD}Warning:${RESET} This project appears to already be initialized.\n"
+    printf "Sentinel value 'com.example.app_template' not found in build.gradle.kts.\n"
+    printf "If you want to re-initialize, manually restore the sentinel values first.\n"
+    exit 0
+  fi
+}
+
+# derive_dart_package_name <app_name>
+# Sets _INPUT_RESULT to snake_case version of app_name ("My Cool App" -> "my_cool_app").
+derive_dart_package_name() {
+  _INPUT_RESULT="$(printf '%s' "$1" | tr '[:upper:]' '[:lower:]' | tr ' ' '_')"
+}
+
+# rename_android <app_name> <android_bundle_id>
+# INIT-05: Updates namespace, applicationId, and resValue strings in both
+# apps/basic and apps/debug build.gradle.kts files.
+rename_android() {
+  local app_name="$1"
+  local android_bundle_id="$2"
+  local old_android="com.example.app_template"
+  local old_android_escaped
+  old_android_escaped="$(printf '%s' "$old_android" | sed 's/\./\\./g')"
+
+  for target in basic debug; do
+    local file="$PROJECT_ROOT/apps/${target}/android/app/build.gradle.kts"
+    # Replace namespace and applicationId (same sentinel, two occurrences)
+    _rename_file "$file" "apps/${target}/android/app/build.gradle.kts (bundle ID)" \
+      "s/${old_android_escaped}/${android_bundle_id}/g"
+    # Replace dev resValue first (must precede prod to avoid double-replace if names overlap)
+    _rename_file "$file" "apps/${target}/android/app/build.gradle.kts (dev name)" \
+      "s|\"App Template (Dev)\"|\"${app_name} (Dev)\"|g"
+    # Replace prod resValue
+    _rename_file "$file" "apps/${target}/android/app/build.gradle.kts (prod name)" \
+      "s|\"App Template\"|\"${app_name}\"|g"
+  done
+}
+
+# rename_ios_xcconfig <ios_bundle_id>
+# INIT-06: Updates identifier= in both apps/basic and apps/debug common.xcconfig files.
+rename_ios_xcconfig() {
+  local ios_bundle_id="$1"
+  local old_ios="com.example.appTemplate"
+  local old_ios_escaped
+  old_ios_escaped="$(printf '%s' "$old_ios" | sed 's/\./\\./g')"
+
+  for target in basic debug; do
+    local file="$PROJECT_ROOT/apps/${target}/ios/Flutter/common.xcconfig"
+    _rename_file "$file" "apps/${target}/ios/Flutter/common.xcconfig" \
+      "s/identifier=${old_ios_escaped}/identifier=${ios_bundle_id}/"
+  done
+}
+
+# rename_ios_plist <app_name> <dart_package_name>
+# INIT-07: Updates CFBundleDisplayName and CFBundleName in both
+# apps/basic and apps/debug Info.plist files.
+rename_ios_plist() {
+  local app_name="$1"
+  local dart_package_name="$2"
+
+  for target in basic debug; do
+    local file="$PROJECT_ROOT/apps/${target}/ios/Runner/Info.plist"
+    _rename_file "$file" "apps/${target}/ios/Runner/Info.plist" \
+      -e "s|<string>App Template</string>|<string>${app_name}</string>|g" \
+      -e "s|<string>app_template</string>|<string>${dart_package_name}</string>|g"
+  done
+}
+
+# rename_pubspec <dart_package_name>
+# INIT-08: Updates the name: field in root pubspec.yaml only (not sub-packages).
+rename_pubspec() {
+  local dart_package_name="$1"
+  local file="$PROJECT_ROOT/pubspec.yaml"
+  _rename_file "$file" "pubspec.yaml" \
+    "s|^name: app_template$|name: ${dart_package_name}|"
+}
+
+# rename_kotlin_dir <android_bundle_id>
+# INIT-09: Moves MainActivity.kt from old package path to new path derived from
+# the Android bundle ID, and updates the package declaration in the moved file.
+rename_kotlin_dir() {
+  local android_bundle_id="$1"
+  local old_kotlin_path="com/example/app_template"
+  local new_kotlin_path
+  new_kotlin_path="$(printf '%s' "$android_bundle_id" | tr '.' '/')"
+  local old_android_escaped
+  old_android_escaped="$(printf '%s' "com.example.app_template" | sed 's/\./\\./g')"
+
+  for target in basic debug; do
+    local base="$PROJECT_ROOT/apps/${target}/android/app/src/main/kotlin"
+    local old_dir="$base/$old_kotlin_path"
+    local new_dir="$base/$new_kotlin_path"
+
+    mkdir -p "$new_dir" || {
+      printf "${RED}Error: mkdir -p %s${RESET}\n" "$new_dir" >&2
+      exit 1
+    }
+    mv "$old_dir/MainActivity.kt" "$new_dir/MainActivity.kt" || {
+      printf "${RED}Error: mv MainActivity.kt in apps/%s${RESET}\n" "$target" >&2
+      exit 1
+    }
+
+    # Clean up empty old leaf directory (best-effort; ignore failure if non-empty)
+    rmdir "$old_dir" 2>/dev/null
+    # Clean up empty parent dirs (best-effort)
+    rmdir "$base/com/example" 2>/dev/null
+    rmdir "$base/com" 2>/dev/null
+
+    # Fix package declaration in moved file
+    if ! sed -i '' \
+      "s|^package ${old_android_escaped}$|package ${android_bundle_id}|" \
+      "$new_dir/MainActivity.kt"; then
+      printf "${RED}Error: sed package declaration in apps/%s/MainActivity.kt${RESET}\n" "$target" >&2
+      exit 1
+    fi
+
+    printf "${GREEN}✓${RESET} apps/%s android Kotlin dir + MainActivity.kt\n" "$target"
+  done
+}
+
+# rename_mason_bricks <dart_package_name>
+# INIT-10: Replaces package:app_template/ with package:<dart_package_name>/ in all
+# .dart files under tools/mason/.
+rename_mason_bricks() {
+  local dart_package_name="$1"
+
+  if ! find "$PROJECT_ROOT/tools/mason" -name '*.dart' \
+    -exec sed -i '' "s|package:app_template/|package:${dart_package_name}/|g" {} +; then
+    printf "${RED}Error: mason brick rename failed${RESET}\n" >&2
+    exit 1
+  fi
+  printf "${GREEN}✓${RESET} tools/mason dart files (package:app_template/ -> package:%s/)\n" \
+    "$dart_package_name"
+}
+
+# verify_no_residuals
+# Scans the project for residual references to old sentinel values.
+# Prints warnings but does NOT modify any files (non-blocking).
+verify_no_residuals() {
+  local found
+  found="$(grep -rl \
+    --include='*.kt' --include='*.kts' --include='*.plist' \
+    --include='*.xcconfig' --include='*.yaml' --include='*.dart' \
+    --include='*.pbxproj' \
+    --exclude-dir='.git' --exclude-dir='.dart_tool' \
+    --exclude-dir='Pods' --exclude-dir='build' \
+    -e "com\.example\.app_template" \
+    -e "com\.example\.appTemplate" \
+    -e "app_template" \
+    -e "App Template" \
+    "$PROJECT_ROOT" 2>/dev/null || true)"
+
+  if [[ -n "$found" ]]; then
+    printf "\n${BOLD}Warning: residual references found in:${RESET}\n"
+    printf '%s\n' "$found" | while IFS= read -r f; do
+      printf "  %s\n" "${f#"$PROJECT_ROOT"/}"
+    done
+    printf "Some residuals (e.g. project.pbxproj) are expected — review manually.\n"
+    printf "For App Store submissions, update PRODUCT_BUNDLE_IDENTIFIER in Xcode.\n"
+  else
+    printf "${GREEN}✓${RESET} No residual references found.\n"
+  fi
+}
+
+# ---------------------------------------------------------------------------
+# main
+# ---------------------------------------------------------------------------
+
 main() {
   # Argument parsing: check for --help or -h
   for arg in "$@"; do
@@ -91,6 +291,9 @@ main() {
       exit 0
     fi
   done
+
+  # Idempotency: abort if project already initialized
+  check_already_initialized
 
   printf "${BOLD}=== App Template Init ===${RESET}\n\n"
 
@@ -106,8 +309,31 @@ main() {
   show_summary "$app_name" "$android_bundle_id" "$ios_bundle_id"
 
   if confirm_proceed; then
-    exit 0
+    printf "\n${BOLD}=== Renaming ===${RESET}\n\n"
+
+    derive_dart_package_name "$app_name"
+    dart_package_name="$_INPUT_RESULT"
+
+    rename_android "$app_name" "$android_bundle_id"
+    rename_ios_xcconfig "$ios_bundle_id"
+    rename_ios_plist "$app_name" "$dart_package_name"
+    rename_pubspec "$dart_package_name"
+    rename_kotlin_dir "$android_bundle_id"
+    rename_mason_bricks "$dart_package_name"
+
+    printf "\n"
+    verify_no_residuals
+
+    printf "\n${BOLD}=== Bootstrap ===${RESET}\n\n"
+    if make -C "$PROJECT_ROOT" init; then
+      printf "\n${GREEN}✓${RESET} Project initialized successfully!\n"
+    else
+      printf "\n${RED}Renames succeeded but bootstrap (make init) failed.${RESET}\n"
+      printf "Run 'make init' manually to complete setup.\n"
+      exit 1
+    fi
   else
+    printf "Aborted.\n"
     exit 0
   fi
 }

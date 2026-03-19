@@ -312,7 +312,8 @@ teardown() {
 
   run bash -c '
     main() { :; }
-    PROJECT_ROOT="'"$TMPDIR"'" source "'"$PROJECT_DIR/$SCRIPT"'"
+    export PROJECT_ROOT="'"$TMPDIR"'"
+    source "'"$PROJECT_DIR/$SCRIPT"'"
     check_already_initialized
   '
   [ "$status" -eq 0 ]
@@ -322,7 +323,8 @@ teardown() {
 @test "check_already_initialized does NOT exit when sentinel is present" {
   run bash -c '
     main() { :; }
-    PROJECT_ROOT="'"$TMPDIR"'" source "'"$PROJECT_DIR/$SCRIPT"'"
+    export PROJECT_ROOT="'"$TMPDIR"'"
+    source "'"$PROJECT_DIR/$SCRIPT"'"
     check_already_initialized
     printf "sentinel_found"
   '
