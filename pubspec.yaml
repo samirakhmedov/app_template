@@ -104,3 +104,4 @@ dev_dependencies:
 # TODO: introduce accessibility package (components for buttons, texts, system events, etc)
 # TODO: built in FFI (Rust?)
 # TODO: remove Urls enum from non-debug builds
+# TODO (Android): add baseline profiles
